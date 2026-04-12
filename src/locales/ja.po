@@ -18,3 +18,18 @@ msgstr ""
 #: src/lib/vitest-examples/Welcome.svelte
 msgid "Vitest"
 msgstr ""
+
+#: src/lib/components/AppHeader.svelte
+msgid "Roka"
+msgstr ""
+
+#: src/routes/(app)/csv-studio/+page.svelte
+#: src/routes/+page.svelte
+msgid "CSV Studio"
+msgstr ""
+
+#~ msgid "Dashboard"
+#~ msgstr ""
+
+#~ msgid "a href={0} <0>Roka</0> <1/>"
+#~ msgstr ""

@@ -1,6 +1,6 @@
 
                 /** @type import('wuchale').CompiledElement[] */
-export let c = ["Welcome to Roka 🎉","SvelteKit","Vitest"]
+export let c = ["Welcome to Roka 🎉","SvelteKit","Vitest","Roka","CSV Studio","Dashboard",["a href=",0," ",[0,"Roka"]," ",[1]]]
                 // only during dev, for HMR
                 let latestVersion = -1
                 // @ts-ignore
