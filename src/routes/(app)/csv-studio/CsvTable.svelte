@@ -57,7 +57,7 @@
 		</div>
 	{/if}
 
-	<Table>
+	<Table class="border-b border-border">
 		<TableHeader class="sticky top-0 z-10 bg-card">
 			<TableRow class="border-b-2 hover:bg-transparent">
 				{#each columns as col (col)}

@@ -135,7 +135,12 @@
 		<!-- Stats row -->
 		<div class="flex shrink-0 items-center gap-5 border-b border-border px-4 py-2 text-xs">
 			<span>Rows: <strong class="text-secondary">{rows.length}</strong></span>
-			<span>Filtered: <strong class="text-secondary">{filteredRows.length}</strong></span>
+			<span>
+				Filtered:
+				<strong class="text-secondary">
+					{filteredRows.length === rows.length ? '-' : filteredRows.length}
+				</strong>
+			</span>
 			<span>Columns: <strong class="text-secondary">{visibleColumns.length}</strong></span>
 			<div class="flex-1"></div>
 			{#if filename}
@@ -146,13 +151,11 @@
 		<!-- Main grid -->
 		<div class="flex flex-1 overflow-hidden">
 			<!-- Left sidebar -->
-			<aside class="w-64 overflow-y-auto border-r border-border">
+			<aside class="w-64 overflow-y-auto border-r border-border bg-muted/50">
 				<div
-					class="sticky top-0 z-10 flex items-center gap-2 border-b border-border bg-background py-2 pr-2 pl-1"
+					class="sticky top-0 z-10 flex items-center gap-2 border-b border-border bg-muted py-2 pr-2 pl-1"
 				>
-					<p
-						class="grow-1 px-3 text-xs font-semibold tracking-wider text-muted-foreground uppercase"
-					>
+					<p class="grow px-3 text-xs font-semibold tracking-wider text-muted-foreground uppercase">
 						Columns
 					</p>
 					<Button
@@ -169,7 +172,7 @@
 
 				{#each columns as col (col)}
 					<!-- Column row -->
-					<div class="flex items-center gap-1 px-3 py-1 hover:bg-muted/50">
+					<div class="flex items-center gap-1 px-3 py-1 hover:bg-muted">
 						<Checkbox bind:checked={colVisible[col]} id={col} class="shrink-0 cursor-pointer" />
 						<Label class="min-w-0 truncate text-xs" for={col}>{col}</Label>
 						<div class="flex-1"></div>
@@ -201,7 +204,7 @@
 				<!-- Rename Columns section -->
 				<div class="border-t border-border">
 					<div
-						class="sticky top-0 z-10 flex items-center gap-2 border-b border-border bg-background py-2 pr-2 pl-4"
+						class="sticky top-0 z-10 flex items-center gap-2 border-b border-border bg-muted py-2 pr-2 pl-4"
 					>
 						<p class="grow text-xs font-semibold tracking-wider text-muted-foreground uppercase">
 							Rename Columns
