@@ -150,3 +150,7 @@ msgstr "<0/> Clear"
 #: src/routes/(app)/csv-studio/+page.svelte
 msgid "<0/> Import New CSV"
 msgstr "<0/> Import New CSV"
+
+#: src/routes/(app)/csv-studio/+page.svelte
+msgid "Filter"
+msgstr "Filter"

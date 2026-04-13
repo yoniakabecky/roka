@@ -2,6 +2,7 @@
 	import Papa from 'papaparse';
 	import PawIcon from '@lucide/svelte/icons/paw-print';
 	import FilterIcon from '@lucide/svelte/icons/filter';
+	import { Tooltip, TooltipTrigger, TooltipContent } from '$lib/components/ui/tooltip';
 	import DownloadIcon from '@lucide/svelte/icons/download';
 	import FileTextIcon from '@lucide/svelte/icons/file-text';
 	import UploadIcon from '@lucide/svelte/icons/upload';
@@ -176,17 +177,27 @@
 						<Checkbox bind:checked={colVisible[col]} id={col} class="shrink-0 cursor-pointer" />
 						<Label class="min-w-0 truncate text-xs" for={col}>{col}</Label>
 						<div class="flex-1"></div>
-						<Button
-							variant="ghost"
-							size="icon-xs"
-							class={[
-								'cursor-pointer',
-								colFilters[col]?.length > 0 ? 'text-primary' : 'text-muted-foreground'
-							]}
-							onclick={() => (colFiltersOpen[col] = !colFiltersOpen[col])}
-						>
-							<FilterIcon class="size-3" />
-						</Button>
+						<Tooltip>
+							<TooltipTrigger>
+								{#snippet child({ props })}
+									<Button
+										variant="ghost"
+										size="icon-xs"
+										class={[
+											'cursor-pointer',
+											colFilters[col]?.length > 0
+												? 'text-primary hover:text-primary/60'
+												: 'text-muted-foreground'
+										]}
+										{...props}
+										onclick={() => (colFiltersOpen[col] = !colFiltersOpen[col])}
+									>
+										<FilterIcon class="size-3" />
+									</Button>
+								{/snippet}
+							</TooltipTrigger>
+							<TooltipContent side="right">Filter</TooltipContent>
+						</Tooltip>
 					</div>
 
 					<!-- Filter section -->

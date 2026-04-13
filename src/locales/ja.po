@@ -150,3 +150,7 @@ msgstr "<0/> クリア"
 #: src/routes/(app)/csv-studio/+page.svelte
 msgid "<0/> Import New CSV"
 msgstr "<0/> 新しいCSVを開く"
+
+#: src/routes/(app)/csv-studio/+page.svelte
+msgid "Filter"
+msgstr "フィルター"
