@@ -3,8 +3,15 @@
 	import { buttonVariants } from '$lib/components/ui/button';
 </script>
 
-<h1>Welcome to Roka 🎉</h1>
+<svelte:head>
+	<title>Roka</title>
+	<meta name="description" content="Roka is filtration in Japanese." />
+</svelte:head>
 
-<a href={resolve('/csv-studio')} class={buttonVariants({ variant: 'default', size: 'lg' })}>
-	CSV Studio
-</a>
+<div class="flex h-screen flex-1 flex-col items-center justify-center gap-6 p-6">
+	<h1>Welcome to Roka 🎉</h1>
+
+	<a href={resolve('/csv-studio')} class={buttonVariants({ variant: 'default', size: 'lg' })}>
+		CSV Studio
+	</a>
+</div>

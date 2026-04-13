@@ -48,7 +48,7 @@
 
 		<h2 class="text-2xl font-bold text-foreground">Drop any CSV here</h2>
 
-		<p class="text-sm text-muted-foreground">Or click Import CSV to browse</p>
+		<p class="text-sm text-muted-foreground">Or click here to browse files</p>
 
 		<input
 			bind:this={fileInput}

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Papa from 'papaparse';
-	import PawIcon from '@lucide/svelte/icons/paw-print';
+	import TurtleIcon from '@lucide/svelte/icons/turtle';
 	import FilterIcon from '@lucide/svelte/icons/filter';
 	import { Tooltip, TooltipTrigger, TooltipContent } from '$lib/components/ui/tooltip';
 	import DownloadIcon from '@lucide/svelte/icons/download';
@@ -84,11 +84,16 @@
 	};
 </script>
 
+<svelte:head>
+	<title>CSV Studio - Roka</title>
+	<meta name="description" content="CSV Studio is a tool for exporting filtered CSV data." />
+</svelte:head>
+
 <h1 class="sr-only">CSV Studio</h1>
 
 {#if loading}
 	<div class="flex flex-1 items-center justify-center gap-3 text-muted-foreground">
-		<PawIcon class="size-5" />
+		<TurtleIcon class="size-5" />
 		<span class="text-sm">Parsing file…</span>
 	</div>
 {:else if rows.length === 0}

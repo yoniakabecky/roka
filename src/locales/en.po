@@ -20,6 +20,7 @@ msgid "Vitest"
 msgstr "Vitest"
 
 #: src/lib/components/AppHeader.svelte
+#: src/routes/+page.svelte
 msgid "Roka"
 msgstr "Roka"
 
@@ -38,7 +39,6 @@ msgstr "Drop any CSV here"
 msgid "File drop zone"
 msgstr "File drop zone"
 
-#: src/lib/components/Dropzone.svelte
 #: src/lib/components/csv-studio/Dropzone.svelte
 msgid "Or click Import CSV to browse"
 msgstr "Or click Import CSV to browse"
@@ -83,9 +83,6 @@ msgstr "None"
 #: src/routes/(app)/csv-studio/+page.svelte
 msgid "Search values…"
 msgstr "Search values…"
-
-#~ msgid "+ Add Filter"
-#~ msgstr "+ Add Filter"
 
 #: src/lib/components/ui/combobox/combobox.svelte
 msgid "Select…"
@@ -144,9 +141,6 @@ msgstr "PDF file"
 msgid "<0/> Clear"
 msgstr "<0/> Clear"
 
-#~ msgid "<0/> Import new CSV"
-#~ msgstr "<0/> Import new CSV"
-
 #: src/routes/(app)/csv-studio/+page.svelte
 msgid "<0/> Import New CSV"
 msgstr "<0/> Import New CSV"
@@ -154,3 +148,19 @@ msgstr "<0/> Import New CSV"
 #: src/routes/(app)/csv-studio/+page.svelte
 msgid "Filter"
 msgstr "Filter"
+
+#: src/lib/components/Dropzone.svelte
+msgid "Or click here to browse files"
+msgstr "Or click here to browse files"
+
+#: src/routes/(app)/csv-studio/+page.svelte
+msgid "CSV Studio - Roka"
+msgstr "CSV Studio - Roka"
+
+#: src/routes/(app)/csv-studio/+page.svelte
+msgid "CSV Studio is a tool for exporting filtered CSV data."
+msgstr "CSV Studio is a tool for exporting filtered CSV data."
+
+#: src/routes/+page.svelte
+msgid "Roka is filtration in Japanese."
+msgstr "Roka is filtration in Japanese."

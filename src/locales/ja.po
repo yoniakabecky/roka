@@ -20,6 +20,7 @@ msgid "Vitest"
 msgstr ""
 
 #: src/lib/components/AppHeader.svelte
+#: src/routes/+page.svelte
 msgid "Roka"
 msgstr ""
 
@@ -38,7 +39,6 @@ msgstr "CSVファイルをここにドロップ"
 msgid "File drop zone"
 msgstr ""
 
-#: src/lib/components/Dropzone.svelte
 #: src/lib/components/csv-studio/Dropzone.svelte
 msgid "Or click Import CSV to browse"
 msgstr "またはクリックしてファイルを選択"
@@ -83,9 +83,6 @@ msgstr "全解除"
 #: src/routes/(app)/csv-studio/+page.svelte
 msgid "Search values…"
 msgstr "検索して絞り込み"
-
-#~ msgid "+ Add Filter"
-#~ msgstr ""
 
 #: src/lib/components/ui/combobox/combobox.svelte
 msgid "Select…"
@@ -144,9 +141,6 @@ msgstr ""
 msgid "<0/> Clear"
 msgstr "<0/> クリア"
 
-#~ msgid "<0/> Import new CSV"
-#~ msgstr ""
-
 #: src/routes/(app)/csv-studio/+page.svelte
 msgid "<0/> Import New CSV"
 msgstr "<0/> 新しいCSVを開く"
@@ -154,3 +148,19 @@ msgstr "<0/> 新しいCSVを開く"
 #: src/routes/(app)/csv-studio/+page.svelte
 msgid "Filter"
 msgstr "フィルター"
+
+#: src/lib/components/Dropzone.svelte
+msgid "Or click here to browse files"
+msgstr "またはクリックしてファイルを選択"
+
+#: src/routes/(app)/csv-studio/+page.svelte
+msgid "CSV Studio - Roka"
+msgstr ""
+
+#: src/routes/(app)/csv-studio/+page.svelte
+msgid "CSV Studio is a tool for exporting filtered CSV data."
+msgstr "CSV StudioはフィルタをかけたCSVデータを簡単に作成するツールです。"
+
+#: src/routes/+page.svelte
+msgid "Roka is filtration in Japanese."
+msgstr "Rokaは日本語の濾過が語源です。"

@@ -80,7 +80,7 @@
 				<TableRow>
 					{#each columns as col (col)}
 						<TableCell
-							class="max-w-[240px] overflow-hidden border-r border-border/50 text-ellipsis whitespace-nowrap text-muted-foreground last:border-r-0"
+							class="max-w-60 overflow-hidden border-r border-border/50 text-ellipsis whitespace-nowrap text-muted-foreground last:border-r-0"
 							title={row[col] ?? ''}
 						>
 							{row[col] ?? ''}
