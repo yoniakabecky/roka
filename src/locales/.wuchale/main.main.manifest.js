@@ -1,2 +1,0 @@
-/** @type {(string | string[] | {text: string | string[], context?: string, isUrl?: boolean})[]} */
-export const keys = ["Welcome to Roka 🎉","SvelteKit","Vitest","Roka","CSV Studio","Drop any CSV here","File drop zone","Or click Import CSV to browse"]
