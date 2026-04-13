@@ -123,3 +123,19 @@ msgstr ""
 #: src/routes/(app)/csv-studio/+page.svelte
 msgid "Reset"
 msgstr "リセット"
+
+#: src/lib/csv-studio/export-pdf.svelte.ts
+msgid "AbortError"
+msgstr ""
+
+#: src/routes/(app)/csv-studio/+page.svelte
+msgid "<0/> Export CSV"
+msgstr "<0/> CSV保存"
+
+#: src/routes/(app)/csv-studio/+page.svelte
+msgid "<0/> Export PDF"
+msgstr "<0/> PDF保存"
+
+#: src/lib/csv-studio/export-pdf.svelte.ts
+msgid "PDF file"
+msgstr ""

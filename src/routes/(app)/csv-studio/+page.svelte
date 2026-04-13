@@ -2,12 +2,16 @@
 	import Papa from 'papaparse';
 	import PawIcon from '@lucide/svelte/icons/paw-print';
 	import FilterIcon from '@lucide/svelte/icons/filter';
-	import Dropzone from '$lib/components/Dropzone.svelte';
-	import CsvTable from './CsvTable.svelte';
+	import DownloadIcon from '@lucide/svelte/icons/download';
+	import FileTextIcon from '@lucide/svelte/icons/file-text';
 	import { Checkbox } from '$lib/components/ui/checkbox';
-	import Label from '$lib/components/ui/label/label.svelte';
 	import { Button } from '$lib/components/ui/button';
 	import { Combobox } from '$lib/components/ui/combobox';
+	import Label from '$lib/components/ui/label/label.svelte';
+	import Dropzone from '$lib/components/Dropzone.svelte';
+	import { exportCsv } from '$lib/csv-studio/export-csv';
+	import { exportPdf } from '$lib/csv-studio/export-pdf';
+	import CsvTable from './CsvTable.svelte';
 
 	let columns = $state<string[]>([]);
 	let rows = $state<Record<string, string>[]>([]);
@@ -35,6 +39,13 @@
 				[...new Set(rows.map((r) => r[c] ?? '').filter(Boolean))].slice(0, 200)
 			])
 		)
+	);
+
+	const exportStem = $derived(
+		(() => {
+			const base = filename.replace(/\.[^.]+$/, '');
+			return base ? `${base}_roka` : 'export_roka';
+		})()
 	);
 
 	const handleFile = (file: File) => {
@@ -79,12 +90,25 @@
 		</div>
 
 		<!-- Stats row -->
-		<div class="flex shrink-0 items-center gap-6 border-b border-border px-4 py-2 text-xs">
+		<div class="flex shrink-0 items-center gap-5 border-b border-border px-4 py-2 text-xs">
 			<span>Rows: <strong class="text-secondary">{rows.length}</strong></span>
 			<span>Filtered: <strong class="text-secondary">{filteredRows.length}</strong></span>
 			<span>Columns: <strong class="text-secondary">{visibleColumns.length}</strong></span>
 			<div class="flex-1"></div>
-			<!-- export buttons added later -->
+			<Button
+				size="lg"
+				onclick={() => exportCsv(filteredRows, visibleColumns, colRename, exportStem)}
+			>
+				<DownloadIcon class="size-4" />
+				Export CSV
+			</Button>
+			<Button
+				size="lg"
+				onclick={() => exportPdf(filteredRows, visibleColumns, colRename, exportStem)}
+			>
+				<FileTextIcon class="size-4" />
+				Export PDF
+			</Button>
 		</div>
 
 		<!-- Main grid -->

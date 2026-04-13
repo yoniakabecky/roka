@@ -123,3 +123,19 @@ msgstr "Rename Columns"
 #: src/routes/(app)/csv-studio/+page.svelte
 msgid "Reset"
 msgstr "Reset"
+
+#: src/lib/csv-studio/export-pdf.svelte.ts
+msgid "AbortError"
+msgstr "AbortError"
+
+#: src/routes/(app)/csv-studio/+page.svelte
+msgid "<0/> Export CSV"
+msgstr "<0/> Export CSV"
+
+#: src/routes/(app)/csv-studio/+page.svelte
+msgid "<0/> Export PDF"
+msgstr "<0/> Export PDF"
+
+#: src/lib/csv-studio/export-pdf.svelte.ts
+msgid "PDF file"
+msgstr "PDF file"

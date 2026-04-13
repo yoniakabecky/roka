@@ -62,12 +62,15 @@
 			<TableRow class="border-b-2 hover:bg-transparent">
 				{#each columns as col (col)}
 					<TableHead
-						class="cursor-pointer border-r border-border text-xs font-semibold tracking-wider whitespace-nowrap uppercase transition-colors select-none last:border-r-0 {sortCol === col
+						class="cursor-pointer border-r border-border text-xs font-semibold tracking-wider whitespace-nowrap uppercase transition-colors select-none last:border-r-0 {sortCol ===
+						col
 							? 'text-primary hover:text-primary'
 							: 'text-muted-foreground hover:text-foreground'}"
 						onclick={() => handleSort(col)}
 					>
-						{colRename[col] ?? col}{#if sortCol === col}<span class="ml-1">{sortDir === 'asc' ? '↑' : '↓'}</span>{/if}
+						{colRename[col] ?? col}{#if sortCol === col}<span class="ml-1"
+								>{sortDir === 'asc' ? '↑' : '↓'}</span
+							>{/if}
 					</TableHead>
 				{/each}
 			</TableRow>
