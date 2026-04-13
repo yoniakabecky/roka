@@ -10,10 +10,12 @@
 
 	let {
 		rows,
-		columns
+		columns,
+		colRename = {}
 	}: {
 		rows: Record<string, string>[];
 		columns: string[];
+		colRename?: Record<string, string>;
 	} = $props();
 
 	let sortCol = $state<string | null>(null);
@@ -60,13 +62,12 @@
 			<TableRow class="border-b-2 hover:bg-transparent">
 				{#each columns as col (col)}
 					<TableHead
-						class="cursor-pointer border-r border-border text-xs font-semibold tracking-wider whitespace-nowrap uppercase transition-colors select-none last:border-r-0 hover:text-foreground {sortCol ===
-						col
-							? 'text-primary'
-							: ''}"
+						class="cursor-pointer border-r border-border text-xs font-semibold tracking-wider whitespace-nowrap uppercase transition-colors select-none last:border-r-0 {sortCol === col
+							? 'text-primary hover:text-primary'
+							: 'text-muted-foreground hover:text-foreground'}"
 						onclick={() => handleSort(col)}
 					>
-						{col}{#if sortCol === col}<span class="ml-1">{sortDir === 'asc' ? '↑' : '↓'}</span>{/if}
+						{colRename[col] ?? col}{#if sortCol === col}<span class="ml-1">{sortDir === 'asc' ? '↑' : '↓'}</span>{/if}
 					</TableHead>
 				{/each}
 			</TableRow>

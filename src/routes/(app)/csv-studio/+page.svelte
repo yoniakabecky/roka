@@ -14,6 +14,7 @@
 	let colVisible = $state<Record<string, boolean>>({});
 	let colFiltersOpen = $state<Record<string, boolean>>({});
 	let colFilters = $state<Record<string, string[]>>({});
+	let colRename = $state<Record<string, string>>({});
 	let loading = $state(false);
 	let filename = $state('');
 
@@ -49,6 +50,7 @@
 				colVisible = Object.fromEntries(columns.map((c) => [c, true]));
 				colFiltersOpen = {};
 				colFilters = Object.fromEntries(columns.map((c) => [c, []]));
+				colRename = Object.fromEntries(columns.map((c) => [c, c]));
 				rows = result.data;
 				loading = false;
 			}
@@ -89,7 +91,9 @@
 		<div class="flex flex-1 overflow-hidden">
 			<!-- Left sidebar -->
 			<aside class="w-64 overflow-y-auto border-r border-border">
-				<div class="sticky top-0 z-10 flex items-center gap-2 border-b border-border bg-background py-2 pr-2 pl-1">
+				<div
+					class="sticky top-0 z-10 flex items-center gap-2 border-b border-border bg-background py-2 pr-2 pl-1"
+				>
 					<p
 						class="grow-1 px-3 text-xs font-semibold tracking-wider text-muted-foreground uppercase"
 					>
@@ -138,11 +142,42 @@
 						</div>
 					{/if}
 				{/each}
+				<!-- Rename Columns section -->
+				<div class="border-t border-border">
+					<div
+						class="sticky top-0 z-10 flex items-center gap-2 border-b border-border bg-background py-2 pr-2 pl-4"
+					>
+						<p class="grow text-xs font-semibold tracking-wider text-muted-foreground uppercase">
+							Rename Columns
+						</p>
+						<Button
+							variant="outline"
+							size="xs"
+							onclick={() => (colRename = Object.fromEntries(columns.map((c) => [c, c])))}
+						>
+							Reset
+						</Button>
+					</div>
+					{#each columns as col (col)}
+						<div class="grid grid-cols-[1fr_auto_1fr] items-center gap-1 px-3 py-1">
+							<span class="truncate text-xs text-muted-foreground" title={col}>{col}</span>
+							<span class="text-xs text-muted-foreground">→</span>
+							<input
+								class="w-full rounded border border-border bg-muted px-1.5 py-0.5 text-xs text-foreground outline-none focus:border-primary"
+								type="text"
+								value={colRename[col] ?? col}
+								placeholder={col}
+								oninput={(e) =>
+									(colRename[col] = (e.currentTarget as HTMLInputElement).value || col)}
+							/>
+						</div>
+					{/each}
+				</div>
 			</aside>
 
 			<!-- Right: table pane -->
 			<div class="flex flex-1 flex-col overflow-hidden">
-				<CsvTable rows={filteredRows} columns={visibleColumns} />
+				<CsvTable rows={filteredRows} columns={visibleColumns} {colRename} />
 			</div>
 		</div>
 	</div>

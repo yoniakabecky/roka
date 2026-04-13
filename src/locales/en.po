@@ -84,6 +84,9 @@ msgstr "None"
 msgid "Search values…"
 msgstr "Search values…"
 
+#~ msgid "+ Add Filter"
+#~ msgstr "+ Add Filter"
+
 #: src/lib/components/ui/combobox/combobox.svelte
 msgid "Select…"
 msgstr "Select…"
@@ -112,3 +115,11 @@ msgstr "Close"
 #: src/routes/(app)/csv-studio/+page.svelte
 msgid "Filter values…"
 msgstr "Filter values…"
+
+#: src/routes/(app)/csv-studio/+page.svelte
+msgid "Rename Columns"
+msgstr "Rename Columns"
+
+#: src/routes/(app)/csv-studio/+page.svelte
+msgid "Reset"
+msgstr "Reset"
