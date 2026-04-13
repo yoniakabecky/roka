@@ -4,7 +4,7 @@
   let { email = '' }: { email?: string } = $props();
 </script>
 
-<header class="flex items-center justify-between h-14 px-6 bg-background border-b border-border">
+<header class="flex items-center justify-between h-14 px-6 bg-background border-b border-border shrink-0">
   <a href={resolve('/')}>
     <span class="font-sans font-bold text-2xl text-foreground">Roka</span>
   </a>

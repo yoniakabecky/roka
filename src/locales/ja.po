@@ -28,35 +28,44 @@ msgstr ""
 msgid "CSV Studio"
 msgstr ""
 
-#~ msgid "a href={0} <0>Roka</0> <1/>"
-#~ msgstr ""
-
 #: src/lib/components/Dropzone.svelte
 #: src/lib/components/csv-studio/Dropzone.svelte
 msgid "Drop any CSV here"
 msgstr "CSVファイルをここにドロップ"
-
-#~ msgid "<0>CSV Studio</0> <1>Drop any CSV here</1> <2>or click to select a file</2>Or click Import CSV to browse"
-#~ msgstr ""
-
-#~ msgid "or click to select a file"
-#~ msgstr ""
 
 #: src/lib/components/Dropzone.svelte
 #: src/lib/components/csv-studio/Dropzone.svelte
 msgid "File drop zone"
 msgstr ""
 
-#~ msgid "Drop here"
-#~ msgstr ""
-
 #: src/lib/components/Dropzone.svelte
 #: src/lib/components/csv-studio/Dropzone.svelte
 msgid "Or click Import CSV to browse"
 msgstr "またはクリックしてファイルを選択"
 
-#~ msgid "CSV ファイルをここにドロップ"
-#~ msgstr "CSV ファイルをここにドロップ"
+#. 0: MAX_ROWS; 1: sortedRows.length
+#. 0: MAX_ROWS; 1: sortedRows.length
+#: src/lib/components/csv-studio/CsvTable.svelte
+#: src/routes/(app)/csv-studio/CsvTable.svelte
+msgid "Showing first {0} of {1} rows"
+msgstr ""
 
-#~ msgid "または、クリックしてファイルを開く"
-#~ msgstr "または、クリックしてファイルを開く"
+#: src/routes/(app)/csv-studio/+page.svelte
+msgid "Parsing file…"
+msgstr "ファイル解析中・・・"
+
+#: src/routes/(app)/csv-studio/+page.svelte
+msgid "Rows: <0/>"
+msgstr "行数：<0/>"
+
+#: src/routes/(app)/csv-studio/+page.svelte
+msgid "Filtered: <0/>"
+msgstr "抽出数：<0/>"
+
+#: src/routes/(app)/csv-studio/+page.svelte
+msgid "Columns: <0/>"
+msgstr "列数：<0/>"
+
+#: src/routes/(app)/csv-studio/+page.svelte
+msgid "Columns"
+msgstr ""
