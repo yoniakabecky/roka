@@ -4,6 +4,8 @@
 	import FilterIcon from '@lucide/svelte/icons/filter';
 	import DownloadIcon from '@lucide/svelte/icons/download';
 	import FileTextIcon from '@lucide/svelte/icons/file-text';
+	import UploadIcon from '@lucide/svelte/icons/upload';
+	import Trash2Icon from '@lucide/svelte/icons/trash-2';
 	import { Checkbox } from '$lib/components/ui/checkbox';
 	import { Button } from '$lib/components/ui/button';
 	import { Combobox } from '$lib/components/ui/combobox';
@@ -48,6 +50,18 @@
 		})()
 	);
 
+	let fileInput = $state<HTMLInputElement | null>(null);
+
+	const clearData = () => {
+		columns = [];
+		rows = [];
+		colVisible = {};
+		colFiltersOpen = {};
+		colFilters = {};
+		colRename = {};
+		filename = '';
+	};
+
 	const handleFile = (file: File) => {
 		filename = file.name;
 		loading = true;
@@ -81,12 +95,41 @@
 {:else}
 	<div class="flex flex-1 flex-col overflow-hidden">
 		<!-- Toolbar row -->
-		<div class="flex shrink-0 items-center gap-2 px-4 py-2">
-			<!-- buttons added later -->
+		<div class="flex shrink-0 items-center gap-3 px-4 pt-2">
+			<input
+				bind:this={fileInput}
+				type="file"
+				accept=".csv"
+				class="hidden"
+				onchange={(e) => {
+					const file = (e.target as HTMLInputElement).files?.[0];
+					if (file) handleFile(file);
+					(e.target as HTMLInputElement).value = '';
+				}}
+			/>
+			<Button onclick={() => fileInput?.click()}>
+				<UploadIcon class="size-3" />
+				Import New CSV
+			</Button>
+			<Button variant="destructive" onclick={clearData}>
+				<Trash2Icon class="size-3" />
+				Clear
+			</Button>
 			<div class="flex-1"></div>
-			{#if filename}
-				<span class="rounded bg-muted px-2 py-1 text-xs text-muted-foreground">{filename}</span>
-			{/if}
+			<Button
+				variant="secondary"
+				onclick={() => exportCsv(filteredRows, visibleColumns, colRename, exportStem)}
+			>
+				<DownloadIcon class="size-3" />
+				Export CSV
+			</Button>
+			<Button
+				variant="secondary"
+				onclick={() => exportPdf(filteredRows, visibleColumns, colRename, exportStem)}
+			>
+				<FileTextIcon class="size-3" />
+				Export PDF
+			</Button>
 		</div>
 
 		<!-- Stats row -->
@@ -95,20 +138,9 @@
 			<span>Filtered: <strong class="text-secondary">{filteredRows.length}</strong></span>
 			<span>Columns: <strong class="text-secondary">{visibleColumns.length}</strong></span>
 			<div class="flex-1"></div>
-			<Button
-				size="lg"
-				onclick={() => exportCsv(filteredRows, visibleColumns, colRename, exportStem)}
-			>
-				<DownloadIcon class="size-4" />
-				Export CSV
-			</Button>
-			<Button
-				size="lg"
-				onclick={() => exportPdf(filteredRows, visibleColumns, colRename, exportStem)}
-			>
-				<FileTextIcon class="size-4" />
-				Export PDF
-			</Button>
+			{#if filename}
+				<span class="rounded bg-muted px-2 py-1 text-xs text-muted-foreground">{filename}</span>
+			{/if}
 		</div>
 
 		<!-- Main grid -->

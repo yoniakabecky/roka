@@ -139,3 +139,14 @@ msgstr "<0/> PDF保存"
 #: src/lib/csv-studio/export-pdf.svelte.ts
 msgid "PDF file"
 msgstr ""
+
+#: src/routes/(app)/csv-studio/+page.svelte
+msgid "<0/> Clear"
+msgstr "<0/> クリア"
+
+#~ msgid "<0/> Import new CSV"
+#~ msgstr ""
+
+#: src/routes/(app)/csv-studio/+page.svelte
+msgid "<0/> Import New CSV"
+msgstr "<0/> 新しいCSVを開く"
