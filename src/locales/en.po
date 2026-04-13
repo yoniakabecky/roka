@@ -69,3 +69,46 @@ msgstr "Columns: <0/>"
 #: src/routes/(app)/csv-studio/+page.svelte
 msgid "Columns"
 msgstr "Columns"
+
+#: src/lib/components/ui/combobox/combobox.svelte
+#: src/routes/(app)/csv-studio/+page.svelte
+msgid "All"
+msgstr "All"
+
+#: src/lib/components/ui/combobox/combobox.svelte
+#: src/routes/(app)/csv-studio/+page.svelte
+msgid "None"
+msgstr "None"
+
+#: src/routes/(app)/csv-studio/+page.svelte
+msgid "Search values…"
+msgstr "Search values…"
+
+#: src/lib/components/ui/combobox/combobox.svelte
+msgid "Select…"
+msgstr "Select…"
+
+#: src/lib/components/ui/combobox/combobox.svelte
+msgid "Search…"
+msgstr "Search…"
+
+#: src/lib/components/ui/combobox/combobox.svelte
+msgid "No results"
+msgstr "No results"
+
+#: src/lib/components/ui/command/command-dialog.svelte
+msgid "Command Palette"
+msgstr "Command Palette"
+
+#: src/lib/components/ui/command/command-dialog.svelte
+msgid "Search for a command to run..."
+msgstr "Search for a command to run..."
+
+#: src/lib/components/ui/dialog/dialog-content.svelte
+#: src/lib/components/ui/dialog/dialog-footer.svelte
+msgid "Close"
+msgstr "Close"
+
+#: src/routes/(app)/csv-studio/+page.svelte
+msgid "Filter values…"
+msgstr "Filter values…"

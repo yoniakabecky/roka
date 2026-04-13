@@ -69,3 +69,46 @@ msgstr "列数：<0/>"
 #: src/routes/(app)/csv-studio/+page.svelte
 msgid "Columns"
 msgstr ""
+
+#: src/lib/components/ui/combobox/combobox.svelte
+#: src/routes/(app)/csv-studio/+page.svelte
+msgid "All"
+msgstr "全選択"
+
+#: src/lib/components/ui/combobox/combobox.svelte
+#: src/routes/(app)/csv-studio/+page.svelte
+msgid "None"
+msgstr "全解除"
+
+#: src/routes/(app)/csv-studio/+page.svelte
+msgid "Search values…"
+msgstr "検索して絞り込み"
+
+#: src/lib/components/ui/combobox/combobox.svelte
+msgid "Select…"
+msgstr ""
+
+#: src/lib/components/ui/combobox/combobox.svelte
+msgid "Search…"
+msgstr ""
+
+#: src/lib/components/ui/combobox/combobox.svelte
+msgid "No results"
+msgstr "該当データなし"
+
+#: src/lib/components/ui/command/command-dialog.svelte
+msgid "Command Palette"
+msgstr ""
+
+#: src/lib/components/ui/command/command-dialog.svelte
+msgid "Search for a command to run..."
+msgstr ""
+
+#: src/lib/components/ui/dialog/dialog-content.svelte
+#: src/lib/components/ui/dialog/dialog-footer.svelte
+msgid "Close"
+msgstr ""
+
+#: src/routes/(app)/csv-studio/+page.svelte
+msgid "Filter values…"
+msgstr "絞り込み"
