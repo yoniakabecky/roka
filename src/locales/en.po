@@ -66,21 +66,21 @@ msgstr "Filtered: <0/>"
 msgid "Columns: <0/>"
 msgstr "Columns: <0/>"
 
-#: src/routes/(app)/csv-studio/+page.svelte
+#: src/routes/(app)/csv-studio/CsvSidebar.svelte
 msgid "Columns"
 msgstr "Columns"
 
 #: src/lib/components/ui/combobox/combobox.svelte
-#: src/routes/(app)/csv-studio/+page.svelte
+#: src/routes/(app)/csv-studio/CsvSidebar.svelte
 msgid "All"
 msgstr "All"
 
 #: src/lib/components/ui/combobox/combobox.svelte
-#: src/routes/(app)/csv-studio/+page.svelte
+#: src/routes/(app)/csv-studio/CsvSidebar.svelte
 msgid "None"
 msgstr "None"
 
-#: src/routes/(app)/csv-studio/+page.svelte
+#: src/routes/(app)/csv-studio/CsvSidebar.svelte
 msgid "Search values…"
 msgstr "Search values…"
 
@@ -109,15 +109,15 @@ msgstr "Search for a command to run..."
 msgid "Close"
 msgstr "Close"
 
-#: src/routes/(app)/csv-studio/+page.svelte
+#: src/routes/(app)/csv-studio/CsvSidebar.svelte
 msgid "Filter values…"
 msgstr "Filter values…"
 
-#: src/routes/(app)/csv-studio/+page.svelte
+#: src/routes/(app)/csv-studio/CsvSidebar.svelte
 msgid "Rename Columns"
 msgstr "Rename Columns"
 
-#: src/routes/(app)/csv-studio/+page.svelte
+#: src/routes/(app)/csv-studio/CsvSidebar.svelte
 msgid "Reset"
 msgstr "Reset"
 
@@ -125,11 +125,11 @@ msgstr "Reset"
 msgid "AbortError"
 msgstr "AbortError"
 
-#: src/routes/(app)/csv-studio/+page.svelte
+#: src/routes/(app)/csv-studio/CsvToolbar.svelte
 msgid "<0/> Export CSV"
 msgstr "<0/> Export CSV"
 
-#: src/routes/(app)/csv-studio/+page.svelte
+#: src/routes/(app)/csv-studio/CsvToolbar.svelte
 msgid "<0/> Export PDF"
 msgstr "<0/> Export PDF"
 
@@ -137,15 +137,15 @@ msgstr "<0/> Export PDF"
 msgid "PDF file"
 msgstr "PDF file"
 
-#: src/routes/(app)/csv-studio/+page.svelte
+#: src/routes/(app)/csv-studio/CsvToolbar.svelte
 msgid "<0/> Clear"
 msgstr "<0/> Clear"
 
-#: src/routes/(app)/csv-studio/+page.svelte
+#: src/routes/(app)/csv-studio/CsvToolbar.svelte
 msgid "<0/> Import New CSV"
 msgstr "<0/> Import New CSV"
 
-#: src/routes/(app)/csv-studio/+page.svelte
+#: src/routes/(app)/csv-studio/CsvSidebar.svelte
 msgid "Filter"
 msgstr "Filter"
 

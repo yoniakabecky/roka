@@ -66,21 +66,21 @@ msgstr "抽出数：<0/>"
 msgid "Columns: <0/>"
 msgstr "列数：<0/>"
 
-#: src/routes/(app)/csv-studio/+page.svelte
+#: src/routes/(app)/csv-studio/CsvSidebar.svelte
 msgid "Columns"
 msgstr ""
 
 #: src/lib/components/ui/combobox/combobox.svelte
-#: src/routes/(app)/csv-studio/+page.svelte
+#: src/routes/(app)/csv-studio/CsvSidebar.svelte
 msgid "All"
 msgstr "全選択"
 
 #: src/lib/components/ui/combobox/combobox.svelte
-#: src/routes/(app)/csv-studio/+page.svelte
+#: src/routes/(app)/csv-studio/CsvSidebar.svelte
 msgid "None"
 msgstr "全解除"
 
-#: src/routes/(app)/csv-studio/+page.svelte
+#: src/routes/(app)/csv-studio/CsvSidebar.svelte
 msgid "Search values…"
 msgstr "検索して絞り込み"
 
@@ -109,15 +109,15 @@ msgstr ""
 msgid "Close"
 msgstr ""
 
-#: src/routes/(app)/csv-studio/+page.svelte
+#: src/routes/(app)/csv-studio/CsvSidebar.svelte
 msgid "Filter values…"
 msgstr "絞り込み"
 
-#: src/routes/(app)/csv-studio/+page.svelte
+#: src/routes/(app)/csv-studio/CsvSidebar.svelte
 msgid "Rename Columns"
 msgstr ""
 
-#: src/routes/(app)/csv-studio/+page.svelte
+#: src/routes/(app)/csv-studio/CsvSidebar.svelte
 msgid "Reset"
 msgstr "リセット"
 
@@ -125,11 +125,11 @@ msgstr "リセット"
 msgid "AbortError"
 msgstr ""
 
-#: src/routes/(app)/csv-studio/+page.svelte
+#: src/routes/(app)/csv-studio/CsvToolbar.svelte
 msgid "<0/> Export CSV"
 msgstr "<0/> CSV保存"
 
-#: src/routes/(app)/csv-studio/+page.svelte
+#: src/routes/(app)/csv-studio/CsvToolbar.svelte
 msgid "<0/> Export PDF"
 msgstr "<0/> PDF保存"
 
@@ -137,15 +137,15 @@ msgstr "<0/> PDF保存"
 msgid "PDF file"
 msgstr ""
 
-#: src/routes/(app)/csv-studio/+page.svelte
+#: src/routes/(app)/csv-studio/CsvToolbar.svelte
 msgid "<0/> Clear"
 msgstr "<0/> クリア"
 
-#: src/routes/(app)/csv-studio/+page.svelte
+#: src/routes/(app)/csv-studio/CsvToolbar.svelte
 msgid "<0/> Import New CSV"
 msgstr "<0/> 新しいCSVを開く"
 
-#: src/routes/(app)/csv-studio/+page.svelte
+#: src/routes/(app)/csv-studio/CsvSidebar.svelte
 msgid "Filter"
 msgstr "フィルター"
 
