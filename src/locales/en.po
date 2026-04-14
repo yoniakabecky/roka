@@ -189,3 +189,18 @@ msgstr "End date"
 #: src/routes/(app)/csv-studio/DatePicker.svelte
 msgid "Pick a date"
 msgstr "Pick a date"
+
+#. 0: filename
+#: src/routes/(app)/csv-studio/csv-studio.svelte.ts
+msgid "Imported {0}"
+msgstr "Imported {0}"
+
+#. 0: exportStem
+#: src/routes/(app)/csv-studio/csv-studio.svelte.ts
+msgid "Exported {0}.csv"
+msgstr "Exported {0}.csv"
+
+#. 0: exportStem
+#: src/routes/(app)/csv-studio/csv-studio.svelte.ts
+msgid "Exported {0}.pdf"
+msgstr "Exported {0}.pdf"

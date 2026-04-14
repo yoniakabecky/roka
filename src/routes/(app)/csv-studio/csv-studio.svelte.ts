@@ -1,5 +1,6 @@
 import Papa from 'papaparse';
 import { SvelteDate } from 'svelte/reactivity';
+import { toast } from 'svelte-sonner';
 import { exportCsv } from '$lib/csv-studio/export-csv';
 import { exportPdf } from '$lib/csv-studio/export-pdf';
 
@@ -112,6 +113,7 @@ const createCsvStudio = () => {
 				colRename = Object.fromEntries(columns.map((c) => [c, c]));
 				rows = result.data;
 				loading = false;
+				toast.success(`Imported ${filename}`);
 			}
 		});
 	};
@@ -120,8 +122,14 @@ const createCsvStudio = () => {
 		colRename = Object.fromEntries(columns.map((c) => [c, c]));
 	};
 
-	const doExportCsv = () => exportCsv(filteredRows, visibleColumns, colRename, exportStem);
-	const doExportPdf = () => exportPdf(filteredRows, visibleColumns, colRename, exportStem);
+	const doExportCsv = async () => {
+		await exportCsv(filteredRows, visibleColumns, colRename, exportStem);
+		toast.success(`Exported ${exportStem}.csv`);
+	};
+	const doExportPdf = async () => {
+		await exportPdf(filteredRows, visibleColumns, colRename, exportStem);
+		toast.success(`Exported ${exportStem}.pdf`);
+	};
 
 	return {
 		get columns() {
