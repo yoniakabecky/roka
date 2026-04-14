@@ -1,8 +1,8 @@
 import Papa from 'papaparse';
-import { SvelteDate } from 'svelte/reactivity';
 import { toast } from 'svelte-sonner';
 import { exportCsv } from '$lib/csv-studio/export-csv';
 import { exportPdf } from '$lib/csv-studio/export-pdf';
+import { isLikelyDate, isMatchesDateFilters } from '$lib/csv-studio/detect-columns';
 
 const createCsvStudio = () => {
 	let columns = $state<string[]>([]);
@@ -23,36 +23,18 @@ const createCsvStudio = () => {
 		Object.entries(colDateFilters).filter(([, { from, to }]) => from !== '' || to !== '')
 	);
 
-	const filteredRows = $derived(
-		(() => {
-			let result = rows;
-			if (activeFilters.length > 0) {
-				result = result.filter((row) =>
-					activeFilters.every(([col, vals]) => vals.includes(row[col] ?? ''))
-				);
-			}
-			if (activeDateFilters.length > 0) {
-				result = result.filter((row) =>
-					activeDateFilters.every(([col, { from, to }]) => {
-						const cellVal = row[col] ?? '';
-						if (cellVal === '') return false;
-						const cellDate = new SvelteDate(cellVal);
-						if (isNaN(cellDate.getTime())) return false;
-						if (from !== '') {
-							const fromDate = new SvelteDate(from);
-							if (!isNaN(fromDate.getTime()) && cellDate < fromDate) return false;
-						}
-						if (to !== '') {
-							const endOfDay = new SvelteDate(`${to}T23:59:59.999`);
-							if (!isNaN(endOfDay.getTime()) && cellDate > endOfDay) return false;
-						}
-						return true;
-					})
-				);
-			}
-			return result;
-		})()
-	);
+	const filteredRows = $derived.by(() => {
+		let result = rows;
+		if (activeFilters.length > 0) {
+			result = result.filter((row) =>
+				activeFilters.every(([col, vals]) => vals.includes(row[col] ?? ''))
+			);
+		}
+		if (activeDateFilters.length > 0) {
+			result = result.filter((row) => isMatchesDateFilters(row, activeDateFilters));
+		}
+		return result;
+	});
 
 	const colUniqueValues = $derived(
 		Object.fromEntries(
@@ -63,27 +45,11 @@ const createCsvStudio = () => {
 		)
 	);
 
-	const isLikelyDate = (samples: string[]): boolean => {
-		if (samples.length === 0) return false;
-		const checked = samples.slice(0, 50);
-		const validCount = checked.filter((v) => {
-			if (/^\d+$/.test(v)) return false;
-			const d = new Date(v);
-			return !isNaN(d.getTime());
-		}).length;
-		return validCount / checked.length >= 0.8;
-	};
-
 	const dateColumns = $derived(
 		new Set(columns.filter((c) => isLikelyDate(colUniqueValues[c] ?? [])))
 	);
 
-	const exportStem = $derived(
-		(() => {
-			const base = filename.replace(/\.[^.]+$/, '');
-			return base ? `${base}_roka` : 'export_roka';
-		})()
-	);
+	const exportStem = $derived((filename.replace(/\.[^.]+$/, '') || 'export') + '_roka');
 
 	const clearData = () => {
 		columns = [];
@@ -114,6 +80,10 @@ const createCsvStudio = () => {
 				rows = result.data;
 				loading = false;
 				toast.success(`Imported ${filename}`);
+			},
+			error: () => {
+				loading = false;
+				toast.error(`Failed to import ${filename}`);
 			}
 		});
 	};
@@ -123,12 +93,21 @@ const createCsvStudio = () => {
 	};
 
 	const doExportCsv = async () => {
-		await exportCsv(filteredRows, visibleColumns, colRename, exportStem);
-		toast.success(`Exported ${exportStem}.csv`);
+		try {
+			await exportCsv(filteredRows, visibleColumns, colRename, exportStem);
+			toast.success(`Exported ${exportStem}.csv`);
+		} catch {
+			toast.error(`Failed to export ${exportStem}.csv`);
+		}
 	};
+
 	const doExportPdf = async () => {
-		await exportPdf(filteredRows, visibleColumns, colRename, exportStem);
-		toast.success(`Exported ${exportStem}.pdf`);
+		try {
+			await exportPdf(filteredRows, visibleColumns, colRename, exportStem);
+			toast.success(`Exported ${exportStem}.pdf`);
+		} catch {
+			toast.error(`Failed to export ${exportStem}.pdf`);
+		}
 	};
 
 	return {
