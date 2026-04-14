@@ -15,12 +15,14 @@
 	import { exportCsv } from '$lib/csv-studio/export-csv';
 	import { exportPdf } from '$lib/csv-studio/export-pdf';
 	import CsvTable from './CsvTable.svelte';
+	import DateRangeFilter from './DateRangeFilter.svelte';
 
 	let columns = $state<string[]>([]);
 	let rows = $state<Record<string, string>[]>([]);
 	let colVisible = $state<Record<string, boolean>>({});
 	let colFiltersOpen = $state<Record<string, boolean>>({});
 	let colFilters = $state<Record<string, string[]>>({});
+	let colDateFilters = $state<Record<string, { from: string; to: string }>>({});
 	let colRename = $state<Record<string, string>>({});
 	let loading = $state(false);
 	let filename = $state('');
@@ -29,10 +31,39 @@
 
 	const activeFilters = $derived(Object.entries(colFilters).filter(([, vals]) => vals.length > 0));
 
+	const activeDateFilters = $derived(
+		Object.entries(colDateFilters).filter(([, { from, to }]) => from !== '' || to !== '')
+	);
+
 	const filteredRows = $derived(
-		activeFilters.length === 0
-			? rows
-			: rows.filter((row) => activeFilters.every(([col, vals]) => vals.includes(row[col] ?? '')))
+		(() => {
+			let result = rows;
+			if (activeFilters.length > 0) {
+				result = result.filter((row) =>
+					activeFilters.every(([col, vals]) => vals.includes(row[col] ?? ''))
+				);
+			}
+			if (activeDateFilters.length > 0) {
+				result = result.filter((row) =>
+					activeDateFilters.every(([col, { from, to }]) => {
+						const cellVal = row[col] ?? '';
+						if (cellVal === '') return false;
+						const cellDate = new Date(cellVal);
+						if (isNaN(cellDate.getTime())) return false;
+						if (from !== '') {
+							const fromDate = new Date(from);
+							if (!isNaN(fromDate.getTime()) && cellDate < fromDate) return false;
+						}
+						if (to !== '') {
+							const endOfDay = new Date(`${to}T23:59:59.999`);
+							if (!isNaN(endOfDay.getTime()) && cellDate > endOfDay) return false;
+						}
+						return true;
+					})
+				);
+			}
+			return result;
+		})()
 	);
 
 	const colUniqueValues = $derived(
@@ -42,6 +73,21 @@
 				[...new Set(rows.map((r) => r[c] ?? '').filter(Boolean))].slice(0, 200)
 			])
 		)
+	);
+
+	const isLikelyDate = (samples: string[]): boolean => {
+		if (samples.length === 0) return false;
+		const checked = samples.slice(0, 50);
+		const validCount = checked.filter((v) => {
+			if (/^\d+$/.test(v)) return false;
+			const d = new Date(v);
+			return !isNaN(d.getTime());
+		}).length;
+		return validCount / checked.length >= 0.8;
+	};
+
+	const dateColumns = $derived(
+		new Set(columns.filter((c) => isLikelyDate(colUniqueValues[c] ?? [])))
 	);
 
 	const exportStem = $derived(
@@ -59,6 +105,7 @@
 		colVisible = {};
 		colFiltersOpen = {};
 		colFilters = {};
+		colDateFilters = {};
 		colRename = {};
 		filename = '';
 	};
@@ -76,6 +123,7 @@
 				colVisible = Object.fromEntries(columns.map((c) => [c, true]));
 				colFiltersOpen = {};
 				colFilters = Object.fromEntries(columns.map((c) => [c, []]));
+				colDateFilters = Object.fromEntries(columns.map((c) => [c, { from: '', to: '' }]));
 				colRename = Object.fromEntries(columns.map((c) => [c, c]));
 				rows = result.data;
 				loading = false;
@@ -190,7 +238,9 @@
 										size="icon-xs"
 										class={[
 											'cursor-pointer',
-											colFilters[col]?.length > 0
+											colFilters[col]?.length > 0 ||
+											colDateFilters[col]?.from !== '' ||
+											colDateFilters[col]?.to !== ''
 												? 'text-primary hover:text-primary/60'
 												: 'text-muted-foreground'
 										]}
@@ -207,14 +257,21 @@
 
 					<!-- Filter section -->
 					{#if colFiltersOpen[col]}
-						<div class="px-2 pb-2">
-							<Combobox
-								options={colUniqueValues[col] ?? []}
-								bind:value={colFilters[col]}
-								placeholder="Filter values…"
-								searchPlaceholder="Search values…"
+						{#if dateColumns.has(col)}
+							<DateRangeFilter
+								bind:from={colDateFilters[col].from}
+								bind:to={colDateFilters[col].to}
 							/>
-						</div>
+						{:else}
+							<div class="px-2 pb-2">
+								<Combobox
+									options={colUniqueValues[col] ?? []}
+									bind:value={colFilters[col]}
+									placeholder="Filter values…"
+									searchPlaceholder="Search values…"
+								/>
+							</div>
+						{/if}
 					{/if}
 				{/each}
 				<!-- Rename Columns section -->

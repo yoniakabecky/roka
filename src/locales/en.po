@@ -164,3 +164,28 @@ msgstr "CSV Studio is a tool for exporting filtered CSV data."
 #: src/routes/+page.svelte
 msgid "Roka is filtration in Japanese."
 msgstr "Roka is filtration in Japanese."
+
+#: src/routes/(app)/csv-studio/DateRangeFilter.svelte
+msgid "From"
+msgstr "From"
+
+#: src/routes/(app)/csv-studio/DateRangeFilter.svelte
+msgid "To"
+msgstr "To"
+
+#: src/routes/(app)/csv-studio/DateRangeFilter.svelte
+msgid "Clear"
+msgstr "Clear"
+
+#: src/routes/(app)/csv-studio/DateRangeFilter.svelte
+msgid "Start date"
+msgstr "Start date"
+
+#: src/routes/(app)/csv-studio/DateRangeFilter.svelte
+msgid "End date"
+msgstr "End date"
+
+#: src/lib/components/ui/date-picker/date-picker.svelte
+#: src/routes/(app)/csv-studio/DatePicker.svelte
+msgid "Pick a date"
+msgstr "Pick a date"
