@@ -6,9 +6,17 @@ import '../locales/main.loader.svelte.js';
 import '../locales/js.loader.js';
 
 /** @type {import('./$types').LayoutLoad} */
-export const load = async ({ url }) => {
-	const locale = (url.searchParams.get('locale') || 'en') as Locale;
-	if (browser && locales.includes(locale)) {
-		await loadLocale(locale);
-	}
+export const load = async () => {
+	const locale = (() => {
+		if (browser) {
+			const stored = localStorage.getItem('locale');
+			if (stored && locales.includes(stored as Locale)) return stored as Locale;
+			const sysLang = navigator.language.split('-')[0] as Locale;
+			if (locales.includes(sysLang)) return sysLang;
+		}
+		return 'en' as Locale;
+	})();
+
+	if (browser) await loadLocale(locale);
+	return { locale };
 };

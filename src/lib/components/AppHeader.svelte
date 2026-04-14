@@ -1,7 +1,17 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
+	import { loadLocale } from 'wuchale/load-utils';
+	import { invalidateAll } from '$app/navigation';
+	import { locales, type Locale } from '../../locales/data.js';
+	import { Tabs, TabsList, TabsTrigger } from '$lib/components/ui/tabs/index.js';
 
-	let { email = '' }: { email?: string } = $props();
+	let { email = '', locale = 'en' }: { email?: string; locale?: string } = $props();
+
+	const switchLocale = async (newLocale: Locale) => {
+		localStorage.setItem('locale', newLocale);
+		await loadLocale(newLocale);
+		await invalidateAll();
+	};
 </script>
 
 <header
@@ -11,7 +21,16 @@
 		<span class="font-sans text-2xl font-bold text-foreground">Roka</span>
 	</a>
 
-	{#if email}
-		<span class="text-sm text-muted-foreground">{email}</span>
-	{/if}
+	<div class="flex items-center gap-3">
+		{#if email}
+			<span class="text-sm text-muted-foreground">{email}</span>
+		{/if}
+		<Tabs value={locale} onValueChange={(v) => switchLocale(v as Locale)}>
+			<TabsList>
+				{#each locales as l (l)}
+					<TabsTrigger value={l}>{l.toUpperCase()}</TabsTrigger>
+				{/each}
+			</TabsList>
+		</Tabs>
+	</div>
 </header>

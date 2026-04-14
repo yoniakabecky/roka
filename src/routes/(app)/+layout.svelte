@@ -1,11 +1,11 @@
 <script>
 	import AppHeader from '$lib/components/AppHeader.svelte';
 
-	let { children } = $props();
+	let { children, data } = $props();
 </script>
 
 <div class="flex h-screen flex-col">
-	<AppHeader />
+	<AppHeader locale={data.locale} />
 	<div class="flex min-h-0 flex-1 flex-col overflow-hidden">
 		{@render children()}
 	</div>

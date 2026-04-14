@@ -9,6 +9,5 @@ loadLocales(js.key, js.loadIDs, js.loadCatalog, locales);
 
 /** @type {import('@sveltejs/kit').Handle} */
 export const handle = async ({ event, resolve }) => {
-	const locale = event.url.searchParams.get('locale') ?? 'en';
-	return await runWithLocale(locale, () => resolve(event));
+	return await runWithLocale('en', () => resolve(event));
 };
