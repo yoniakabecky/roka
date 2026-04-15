@@ -52,7 +52,7 @@
 			>
 				<CalendarIcon class={cn('shrink-0', !isIconSize && 'mr-1 size-3')} />
 				{#if !isIconSize}
-					{value ? df.format(calendarValue!.toDate(getLocalTimeZone())) : placeholder}
+					{calendarValue ? df.format(calendarValue.toDate(getLocalTimeZone())) : placeholder}
 				{/if}
 			</Button>
 		{/snippet}

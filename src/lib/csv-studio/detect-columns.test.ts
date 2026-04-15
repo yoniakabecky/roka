@@ -1,5 +1,219 @@
 import { describe, it, expect } from 'vitest';
-import { isLikelyDate, isMatchesDateFilters } from '$lib/csv-studio/detect-columns';
+import {
+	isLikelyDate,
+	isMatchesDateFilters,
+	buildColumnIndex,
+	computeFilteredRows,
+	computeCrossFilteredValues
+} from '$lib/csv-studio/detect-columns';
+
+// Shared fixture used across the three new describe blocks
+const rows = [
+	{ city: 'New York', state: 'NY', country: 'US', joined: '2024-01-15' },
+	{ city: 'Los Angeles', state: 'CA', country: 'US', joined: '2024-03-20' },
+	{ city: 'Chicago', state: 'IL', country: 'US', joined: '2024-06-01' },
+	{ city: 'Toronto', state: 'ON', country: 'CA', joined: '2023-12-01' },
+	{ city: 'Vancouver', state: 'BC', country: 'CA', joined: '2024-08-15' }
+];
+const columns = ['city', 'state', 'country', 'joined'];
+
+describe('buildColumnIndex', () => {
+	it('returns an empty map for empty rows', () => {
+		const index = buildColumnIndex([], columns);
+		expect(index.size).toBe(columns.length);
+		for (const col of columns) {
+			expect(index.get(col)?.size).toBe(0);
+		}
+	});
+
+	it('returns an empty map for empty columns', () => {
+		const index = buildColumnIndex(rows, []);
+		expect(index.size).toBe(0);
+	});
+
+	it('indexes each column', () => {
+		const index = buildColumnIndex(rows, columns);
+		expect(index.has('city')).toBe(true);
+		expect(index.has('state')).toBe(true);
+		expect(index.has('country')).toBe(true);
+	});
+
+	it('maps each value to the correct row indices', () => {
+		const index = buildColumnIndex(rows, columns);
+		expect(index.get('country')?.get('US')).toEqual(new Set([0, 1, 2]));
+		expect(index.get('country')?.get('CA')).toEqual(new Set([3, 4]));
+	});
+
+	it('each unique value gets its own entry', () => {
+		const index = buildColumnIndex(rows, columns);
+		expect(index.get('city')?.size).toBe(5); // all cities are unique
+	});
+
+	it('skips empty string values', () => {
+		const sparseRows = [{ name: 'Alice' }, { name: '' }, { name: 'Bob' }];
+		const index = buildColumnIndex(sparseRows, ['name']);
+		const nameIdx = index.get('name')!;
+		expect(nameIdx.size).toBe(2);
+		expect(nameIdx.has('')).toBe(false);
+		expect(nameIdx.get('Alice')).toEqual(new Set([0]));
+		expect(nameIdx.get('Bob')).toEqual(new Set([2]));
+	});
+
+	it('handles a missing column key in a row (treats as empty)', () => {
+		const incompleteRows = [{ city: 'NY' }, {}];
+		const index = buildColumnIndex(incompleteRows as Record<string, string>[], ['city']);
+		expect(index.get('city')?.get('NY')).toEqual(new Set([0]));
+		expect(index.get('city')?.size).toBe(1);
+	});
+
+	it('a value appearing in multiple rows produces a set with all indices', () => {
+		const repeatRows = [{ tag: 'A' }, { tag: 'B' }, { tag: 'A' }, { tag: 'A' }];
+		const index = buildColumnIndex(repeatRows, ['tag']);
+		expect(index.get('tag')?.get('A')).toEqual(new Set([0, 2, 3]));
+	});
+});
+
+describe('computeFilteredRows', () => {
+	const index = buildColumnIndex(rows, columns);
+
+	it('returns the same array reference when no filters are active', () => {
+		const result = computeFilteredRows(rows, index, [], []);
+		expect(result).toBe(rows);
+	});
+
+	it('returns all rows when filters are empty arrays', () => {
+		const result = computeFilteredRows(rows, index, [], []);
+		expect(result).toHaveLength(5);
+	});
+
+	it('filters by a single value', () => {
+		const result = computeFilteredRows(rows, index, [['country', ['US']]], []);
+		expect(result).toHaveLength(3);
+		expect(result.every((r) => r.country === 'US')).toBe(true);
+	});
+
+	it('filters by multiple values within one column (OR within column)', () => {
+		const result = computeFilteredRows(rows, index, [['state', ['NY', 'CA']]], []);
+		expect(result).toHaveLength(2);
+		expect(result.map((r) => r.state).sort()).toEqual(['CA', 'NY']);
+	});
+
+	it('applies multiple column filters with AND semantics', () => {
+		// country=US AND state=CA → only Los Angeles
+		const result = computeFilteredRows(
+			rows,
+			index,
+			[
+				['country', ['US']],
+				['state', ['CA']]
+			],
+			[]
+		);
+		expect(result).toHaveLength(1);
+		expect(result[0].city).toBe('Los Angeles');
+	});
+
+	it('returns empty array when no rows match', () => {
+		const result = computeFilteredRows(rows, index, [['state', ['ZZ']]], []);
+		expect(result).toHaveLength(0);
+	});
+
+	it('preserves original row order', () => {
+		const result = computeFilteredRows(rows, index, [['country', ['US']]], []);
+		expect(result.map((r) => r.city)).toEqual(['New York', 'Los Angeles', 'Chicago']);
+	});
+
+	it('applies a date filter only', () => {
+		// joined >= 2024-06-01
+		const result = computeFilteredRows(rows, index, [], [
+			['joined', { from: '2024-06-01', to: '' }]
+		]);
+		expect(result.map((r) => r.city).sort()).toEqual(['Chicago', 'Vancouver']);
+	});
+
+	it('combines value filter and date filter', () => {
+		// country=US AND joined <= 2024-03-31
+		const result = computeFilteredRows(
+			rows,
+			index,
+			[['country', ['US']]],
+			[['joined', { from: '', to: '2024-03-31' }]]
+		);
+		expect(result.map((r) => r.city).sort()).toEqual(['Los Angeles', 'New York']);
+	});
+
+	it('handles an unrecognised column in the filter gracefully', () => {
+		// column 'missing' is not in the index — the filter is skipped and all rows are returned
+		const result = computeFilteredRows(rows, index, [['missing', ['anything']]], []);
+		expect(result).toHaveLength(5);
+	});
+});
+
+describe('computeCrossFilteredValues', () => {
+	const index = buildColumnIndex(rows, columns);
+
+	it('returns all unique values for a column when no filters are active', () => {
+		const values = computeCrossFilteredValues('country', rows, index, [], []);
+		expect(values.sort()).toEqual(['CA', 'US']);
+	});
+
+	it('excludes the target column from filtering (own filter is ignored)', () => {
+		// filter country=US should NOT reduce country's own available values
+		const values = computeCrossFilteredValues('country', rows, index, [['country', ['US']]], []);
+		expect(values.sort()).toEqual(['CA', 'US']);
+	});
+
+	it('restricts values based on a filter on another column', () => {
+		// filter country=US → state options should only include states from US rows
+		const values = computeCrossFilteredValues('state', rows, index, [['country', ['US']]], []);
+		expect(values.sort()).toEqual(['CA', 'IL', 'NY']);
+	});
+
+	it('restricts values when multiple other-column filters are active', () => {
+		// country=US AND state=CA → only cities matching both
+		const values = computeCrossFilteredValues(
+			'city',
+			rows,
+			index,
+			[
+				['country', ['US']],
+				['state', ['CA']]
+			],
+			[]
+		);
+		expect(values).toEqual(['Los Angeles']);
+	});
+
+	it('returns empty array when other filters exclude all rows', () => {
+		const values = computeCrossFilteredValues('city', rows, index, [['country', ['ZZ']]], []);
+		expect(values).toHaveLength(0);
+	});
+
+	it('excludes empty string values from results', () => {
+		const sparseRows = [{ tag: 'A', cat: '' }, { tag: 'B', cat: 'X' }];
+		const idx = buildColumnIndex(sparseRows, ['tag', 'cat']);
+		const values = computeCrossFilteredValues('cat', sparseRows, idx, [], []);
+		expect(values).toEqual(['X']); // empty string excluded
+	});
+
+	it('restricts values based on a date filter on another column', () => {
+		// joined >= 2024-06-01 → country options should only include rows from that period
+		// Chicago (US, 2024-06-01) and Vancouver (CA, 2024-08-15)
+		const values = computeCrossFilteredValues('country', rows, index, [], [
+			['joined', { from: '2024-06-01', to: '' }]
+		]);
+		expect(values.sort()).toEqual(['CA', 'US']);
+	});
+
+	it('ignores a date filter on the target column itself', () => {
+		// date filter on 'joined' should not reduce joined's own available values
+		const values = computeCrossFilteredValues('joined', rows, index, [], [
+			['joined', { from: '2024-06-01', to: '' }]
+		]);
+		// All 5 joined dates should be available
+		expect(values).toHaveLength(5);
+	});
+});
 
 describe('isLikelyDate', () => {
 	it('returns false for empty array', () => {

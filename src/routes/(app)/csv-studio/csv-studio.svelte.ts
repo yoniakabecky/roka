@@ -2,11 +2,18 @@ import Papa from 'papaparse';
 import { toast } from 'svelte-sonner';
 import { exportCsv } from '$lib/csv-studio/export-csv';
 import { exportPdf } from '$lib/csv-studio/export-pdf';
-import { isLikelyDate, isMatchesDateFilters } from '$lib/csv-studio/detect-columns';
+import {
+	isLikelyDate,
+	buildColumnIndex,
+	computeFilteredRows,
+	computeCrossFilteredValues,
+	type FullIndex
+} from '$lib/csv-studio/detect-columns';
 
 const createCsvStudio = () => {
 	let columns = $state<string[]>([]);
 	let rows = $state<Record<string, string>[]>([]);
+	let columnIndex = $state<FullIndex>(new Map());
 	let colVisible = $state<Record<string, boolean>>({});
 	let colFiltersOpen = $state<Record<string, boolean>>({});
 	let colFilters = $state<Record<string, string[]>>({});
@@ -14,6 +21,8 @@ const createCsvStudio = () => {
 	let colRename = $state<Record<string, string>>({});
 	let loading = $state(false);
 	let filename = $state('');
+	let filteredRows = $state<Record<string, string>[]>([]);
+	let filtering = $state(false);
 
 	const visibleColumns = $derived(columns.filter((c) => colVisible[c]));
 
@@ -23,43 +32,64 @@ const createCsvStudio = () => {
 		Object.entries(colDateFilters).filter(([, { from, to }]) => from !== '' || to !== '')
 	);
 
-	const filteredRows = $derived.by(() => {
-		let result = rows;
-		if (activeFilters.length > 0) {
-			result = result.filter((row) =>
-				activeFilters.every(([col, vals]) => vals.includes(row[col] ?? ''))
-			);
-		}
-		if (activeDateFilters.length > 0) {
-			result = result.filter((row) => isMatchesDateFilters(row, activeDateFilters));
-		}
-		return result;
-	});
-
-	const colUniqueValues = $derived(
-		Object.fromEntries(
-			columns.map((c) => [
-				c,
-				[...new Set(rows.map((r) => r[c] ?? '').filter(Boolean))].slice(0, 200)
-			])
-		)
+	const dateColumns = $derived(
+		new Set(columns.filter((c) => isLikelyDate([...(columnIndex.get(c)?.keys() ?? [])])))
 	);
 
-	const dateColumns = $derived(
-		new Set(columns.filter((c) => isLikelyDate(colUniqueValues[c] ?? [])))
+	const colAvailableValues = $derived(
+		Object.fromEntries(
+			columns
+				.filter((c) => colFiltersOpen[c])
+				.map((c) => [
+					c,
+					computeCrossFilteredValues(c, rows, columnIndex, activeFilters, activeDateFilters)
+				])
+		)
 	);
 
 	const exportStem = $derived((filename.replace(/\.[^.]+$/, '') || 'export') + '_roka');
 
+	$effect.root(() => {
+		$effect(() => {
+			// Snapshot reactive values before the setTimeout boundary — Svelte only
+			// tracks reads that happen synchronously within the effect body.
+			const activeValueFilters = activeFilters.map(
+				([col, vals]) => [col, [...vals]] as [string, string[]]
+			);
+			const activeDateFiltersCopy = activeDateFilters.map(
+				([col, range]) => [col, { ...range }] as [string, { from: string; to: string }]
+			);
+			const currentRows = rows;
+			const currentIndex = columnIndex;
+
+			filtering = true;
+			const id = setTimeout(() => {
+				filteredRows = computeFilteredRows(
+					currentRows,
+					currentIndex,
+					activeValueFilters,
+					activeDateFiltersCopy
+				);
+				filtering = false;
+			}, 0);
+
+			// Cancel the pending computation if filters change before it fires.
+			return () => clearTimeout(id);
+		});
+	});
+
 	const clearData = () => {
 		columns = [];
 		rows = [];
+		columnIndex = new Map();
 		colVisible = {};
 		colFiltersOpen = {};
 		colFilters = {};
 		colDateFilters = {};
 		colRename = {};
 		filename = '';
+		filteredRows = [];
+		filtering = false;
 	};
 
 	const handleFile = (file: File) => {
@@ -78,6 +108,8 @@ const createCsvStudio = () => {
 				colDateFilters = Object.fromEntries(columns.map((c) => [c, { from: '', to: '' }]));
 				colRename = Object.fromEntries(columns.map((c) => [c, c]));
 				rows = result.data;
+				columnIndex = buildColumnIndex(result.data, columns);
+				filteredRows = result.data;
 				loading = false;
 				toast.success(`Imported ${filename}`);
 			},
@@ -144,14 +176,17 @@ const createCsvStudio = () => {
 		get filteredRows() {
 			return filteredRows;
 		},
-		get colUniqueValues() {
-			return colUniqueValues;
+		get colAvailableValues() {
+			return colAvailableValues;
 		},
 		get dateColumns() {
 			return dateColumns;
 		},
 		get exportStem() {
 			return exportStem;
+		},
+		get filtering() {
+			return filtering;
 		},
 		clearData,
 		handleFile,

@@ -71,7 +71,7 @@
 			{:else}
 				<div class="px-2 pb-2">
 					<Combobox
-						options={studio.colUniqueValues[col] ?? []}
+						options={studio.colAvailableValues[col] ?? []}
 						bind:value={studio.colFilters[col]}
 						placeholder="Filter values…"
 						searchPlaceholder="Search values…"

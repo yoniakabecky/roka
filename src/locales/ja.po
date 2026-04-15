@@ -208,14 +208,18 @@ msgstr "{0}.pdf を作成しました。"
 #. 0: filename
 #: src/routes/(app)/csv-studio/csv-studio.svelte.ts
 msgid "Failed to import {0}"
-msgstr ""
+msgstr "{0} を保存できませんでした。"
 
 #. 0: exportStem
 #: src/routes/(app)/csv-studio/csv-studio.svelte.ts
 msgid "Failed to export {0}.csv"
-msgstr ""
+msgstr "{0}.csv を保存できませんでした。"
 
 #. 0: exportStem
 #: src/routes/(app)/csv-studio/csv-studio.svelte.ts
 msgid "Failed to export {0}.pdf"
-msgstr ""
+msgstr "{0}.pdf を保存できませんでした。"
+
+#: src/routes/(app)/csv-studio/+page.svelte
+msgid "Applying filter…"
+msgstr "抽出中・・・"

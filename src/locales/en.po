@@ -219,3 +219,7 @@ msgstr "Failed to export {0}.csv"
 #: src/routes/(app)/csv-studio/csv-studio.svelte.ts
 msgid "Failed to export {0}.pdf"
 msgstr "Failed to export {0}.pdf"
+
+#: src/routes/(app)/csv-studio/+page.svelte
+msgid "Applying filter…"
+msgstr "Applying filter…"

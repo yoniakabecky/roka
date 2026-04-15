@@ -39,16 +39,23 @@
 			<span>Columns: <strong class="text-secondary">{studio.visibleColumns.length}</strong></span>
 			<div class="flex-1"></div>
 			{#if studio.filename}
-				<span class="rounded bg-muted px-2 py-1 text-xs text-muted-foreground"
-					>{studio.filename}</span
-				>
+				<span class="rounded bg-muted px-2 py-1 text-xs text-muted-foreground">
+					{studio.filename}
+				</span>
 			{/if}
 		</div>
 
 		<!-- Main grid -->
 		<div class="flex flex-1 overflow-hidden">
 			<CsvSidebar />
-			<div class="flex flex-1 flex-col overflow-hidden">
+			<div class="relative flex flex-1 flex-col overflow-hidden">
+				{#if studio.filtering}
+					<div
+						class="absolute inset-0 z-20 flex h-full w-full items-center justify-center text-muted-foreground backdrop-blur-[2px]"
+					>
+						<span class="inline-block text-sm">Applying filter…</span>
+					</div>
+				{/if}
 				<CsvTable
 					rows={studio.filteredRows}
 					columns={studio.visibleColumns}
