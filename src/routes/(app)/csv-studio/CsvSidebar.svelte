@@ -84,7 +84,7 @@
 					</TabsList>
 				</Tabs>
 			</div>
-			<div class={studio.colEmptyFilters[col] !== null ? 'pointer-events-none opacity-40' : ''}>
+			<div class={studio.colEmptyFilters[col] === 'empty' ? 'pointer-events-none opacity-40' : ''}>
 				{#if studio.dateColumns.has(col)}
 					<DateRangeFilter
 						bind:from={studio.colDateFilters[col].from}
