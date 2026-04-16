@@ -72,6 +72,7 @@ msgstr "Columns"
 
 #: src/lib/components/ui/combobox/combobox.svelte
 #: src/routes/(app)/csv-studio/CsvSidebar.svelte
+#: src/routes/(app)/csv-studio/CsvSidebar.svelte
 msgid "All"
 msgstr "All"
 
@@ -223,3 +224,11 @@ msgstr "Failed to export {0}.pdf"
 #: src/routes/(app)/csv-studio/+page.svelte
 msgid "Applying filter…"
 msgstr "Applying filter…"
+
+#: src/routes/(app)/csv-studio/CsvSidebar.svelte
+msgid "Empty"
+msgstr "Empty"
+
+#: src/routes/(app)/csv-studio/CsvSidebar.svelte
+msgid "Non-empty"
+msgstr "Non-empty"

@@ -75,9 +75,10 @@ export const computeFilteredRows = (
 	rows: Record<string, string>[],
 	index: FullIndex,
 	activeValueFilters: [string, string[]][],
-	activeDateFilters: [string, { from: string; to: string }][]
+	activeDateFilters: [string, { from: string; to: string }][],
+	activeEmptyFilters: [string, 'empty' | 'nonempty'][] = []
 ): Record<string, string>[] => {
-	if (activeValueFilters.length === 0 && activeDateFilters.length === 0) return rows;
+	if (activeValueFilters.length === 0 && activeDateFilters.length === 0 && activeEmptyFilters.length === 0) return rows;
 
 	const candidates = intersectOtherFilters(index, activeValueFilters);
 	let result: Record<string, string>[];
@@ -93,6 +94,16 @@ export const computeFilteredRows = (
 	if (activeDateFilters.length > 0) {
 		result = result.filter(makeDatePredicate(activeDateFilters));
 	}
+
+	if (activeEmptyFilters.length > 0) {
+		result = result.filter((row) =>
+			activeEmptyFilters.every(([col, mode]) => {
+				const val = row[col] ?? '';
+				return mode === 'empty' ? !val : !!val;
+			})
+		);
+	}
+
 	return result;
 };
 
@@ -101,10 +112,12 @@ export const computeCrossFilteredValues = (
 	rows: Record<string, string>[],
 	index: FullIndex,
 	activeValueFilters: [string, string[]][],
-	activeDateFilters: [string, { from: string; to: string }][]
+	activeDateFilters: [string, { from: string; to: string }][],
+	activeEmptyFilters: [string, 'empty' | 'nonempty'][] = []
 ): string[] => {
 	const otherValueFilters = activeValueFilters.filter(([c]) => c !== col);
 	const otherDateFilters = activeDateFilters.filter(([c]) => c !== col);
+	const otherEmptyFilters = activeEmptyFilters.filter(([c]) => c !== col);
 
 	const candidates = intersectOtherFilters(index, otherValueFilters);
 
@@ -119,6 +132,14 @@ export const computeCrossFilteredValues = (
 	}
 	if (otherDateFilters.length > 0) {
 		candidateRows = candidateRows.filter(makeDatePredicate(otherDateFilters));
+	}
+	if (otherEmptyFilters.length > 0) {
+		candidateRows = candidateRows.filter((row) =>
+			otherEmptyFilters.every(([c, mode]) => {
+				const val = row[c] ?? '';
+				return mode === 'empty' ? !val : !!val;
+			})
+		);
 	}
 
 	const seen = new Set<string>();

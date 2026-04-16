@@ -4,6 +4,7 @@
 	import { Checkbox } from '$lib/components/ui/checkbox';
 	import { Button } from '$lib/components/ui/button';
 	import { Combobox } from '$lib/components/ui/combobox';
+	import { Tabs, TabsList, TabsTrigger } from '$lib/components/ui/tabs';
 	import Label from '$lib/components/ui/label/label.svelte';
 	import DateRangeFilter from './DateRangeFilter.svelte';
 	import { useCsvStudio } from './csv-studio.svelte';
@@ -46,7 +47,8 @@
 								'cursor-pointer',
 								studio.colFilters[col]?.length > 0 ||
 								studio.colDateFilters[col]?.from !== '' ||
-								studio.colDateFilters[col]?.to !== ''
+								studio.colDateFilters[col]?.to !== '' ||
+								studio.colEmptyFilters[col] !== null
 									? 'text-primary hover:text-primary/60'
 									: 'text-muted-foreground'
 							]}
@@ -63,21 +65,42 @@
 
 		<!-- Filter section -->
 		{#if studio.colFiltersOpen[col]}
-			{#if studio.dateColumns.has(col)}
-				<DateRangeFilter
-					bind:from={studio.colDateFilters[col].from}
-					bind:to={studio.colDateFilters[col].to}
-				/>
-			{:else}
-				<div class="px-2 pb-2">
-					<Combobox
-						options={studio.colAvailableValues[col] ?? []}
-						bind:value={studio.colFilters[col]}
-						placeholder="Filter values…"
-						searchPlaceholder="Search values…"
+			<div class="gap-1 px-2 py-1">
+				<Tabs
+					value={studio.colEmptyFilters[col] ?? 'all'}
+					onValueChange={(v) => {
+						const mode = v === 'all' ? null : (v as 'empty' | 'nonempty');
+						studio.colEmptyFilters[col] = mode;
+						if (mode !== null) {
+							studio.colFilters[col] = [];
+							studio.colDateFilters[col] = { from: '', to: '' };
+						}
+					}}
+				>
+					<TabsList class="w-full">
+						<TabsTrigger value="all" class="flex-1">All</TabsTrigger>
+						<TabsTrigger value="empty" class="flex-1">Empty</TabsTrigger>
+						<TabsTrigger value="nonempty" class="flex-1">Non-empty</TabsTrigger>
+					</TabsList>
+				</Tabs>
+			</div>
+			<div class={studio.colEmptyFilters[col] !== null ? 'pointer-events-none opacity-40' : ''}>
+				{#if studio.dateColumns.has(col)}
+					<DateRangeFilter
+						bind:from={studio.colDateFilters[col].from}
+						bind:to={studio.colDateFilters[col].to}
 					/>
-				</div>
-			{/if}
+				{:else}
+					<div class="px-2 pb-2">
+						<Combobox
+							options={studio.colAvailableValues[col] ?? []}
+							bind:value={studio.colFilters[col]}
+							placeholder="Filter values…"
+							searchPlaceholder="Search values…"
+						/>
+					</div>
+				{/if}
+			</div>
 		{/if}
 	{/each}
 

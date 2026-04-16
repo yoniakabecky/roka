@@ -20,6 +20,7 @@ const createCsvStudio = () => {
 	let colFiltersOpen = $state<Record<string, boolean>>({});
 	let colFilters = $state<Record<string, string[]>>({});
 	let colDateFilters = $state<Record<string, { from: string; to: string }>>({});
+	let colEmptyFilters = $state<Record<string, 'empty' | 'nonempty' | null>>({});
 	let colRename = $state<Record<string, string>>({});
 	let loading = $state(false);
 	let filename = $state('');
@@ -36,6 +37,13 @@ const createCsvStudio = () => {
 		Object.entries(colDateFilters).filter(([, { from, to }]) => from !== '' || to !== '')
 	);
 
+	const activeEmptyFilters = $derived(
+		Object.entries(colEmptyFilters).filter(([, v]) => v !== null) as [
+			string,
+			'empty' | 'nonempty'
+		][]
+	);
+
 	const dateColumns = $derived(
 		new Set(columns.filter((c) => isLikelyDate([...(columnIndex.get(c)?.keys() ?? [])])))
 	);
@@ -46,7 +54,7 @@ const createCsvStudio = () => {
 				.filter((c) => colFiltersOpen[c])
 				.map((c) => [
 					c,
-					computeCrossFilteredValues(c, rows, columnIndex, activeFilters, activeDateFilters)
+					computeCrossFilteredValues(c, rows, columnIndex, activeFilters, activeDateFilters, activeEmptyFilters)
 				])
 		)
 	);
@@ -73,6 +81,17 @@ const createCsvStudio = () => {
 	});
 
 	$effect.root(() => {
+		// When a value or date filter is applied, auto-reset the empty/nonempty tab to "All"
+		$effect(() => {
+			for (const col of columns) {
+				const hasValues = (colFilters[col]?.length ?? 0) > 0;
+				const hasDate = colDateFilters[col]?.from || colDateFilters[col]?.to;
+				if ((hasValues || hasDate) && colEmptyFilters[col] !== null) {
+					colEmptyFilters[col] = null;
+				}
+			}
+		});
+
 		$effect(() => {
 			// Snapshot reactive values before the setTimeout boundary — Svelte only
 			// tracks reads that happen synchronously within the effect body.
@@ -81,6 +100,9 @@ const createCsvStudio = () => {
 			);
 			const activeDateFiltersCopy = activeDateFilters.map(
 				([col, range]) => [col, { ...range }] as [string, { from: string; to: string }]
+			);
+			const activeEmptyFiltersCopy = activeEmptyFilters.map(
+				([col, mode]) => [col, mode] as [string, 'empty' | 'nonempty']
 			);
 			const currentRows = rows;
 			const currentIndex = columnIndex;
@@ -91,7 +113,8 @@ const createCsvStudio = () => {
 					currentRows,
 					currentIndex,
 					activeValueFilters,
-					activeDateFiltersCopy
+					activeDateFiltersCopy,
+					activeEmptyFiltersCopy
 				);
 				filtering = false;
 			}, 0);
@@ -109,6 +132,7 @@ const createCsvStudio = () => {
 		colFiltersOpen = {};
 		colFilters = {};
 		colDateFilters = {};
+		colEmptyFilters = {};
 		colRename = {};
 		filename = '';
 		filteredRows = [];
@@ -129,6 +153,7 @@ const createCsvStudio = () => {
 				colFiltersOpen = {};
 				colFilters = Object.fromEntries(columns.map((c) => [c, []]));
 				colDateFilters = Object.fromEntries(columns.map((c) => [c, { from: '', to: '' }]));
+				colEmptyFilters = Object.fromEntries(columns.map((c) => [c, null]));
 				colRename = Object.fromEntries(columns.map((c) => [c, c]));
 				rows = result.data;
 				columnIndex = buildColumnIndex(result.data, columns);
@@ -192,6 +217,9 @@ const createCsvStudio = () => {
 		},
 		get colDateFilters() {
 			return colDateFilters;
+		},
+		get colEmptyFilters() {
+			return colEmptyFilters;
 		},
 		get colRename() {
 			return colRename;
