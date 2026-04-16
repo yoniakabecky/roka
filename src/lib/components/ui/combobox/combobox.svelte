@@ -38,7 +38,7 @@
 				{...props}
 				variant="outline"
 				size="sm"
-				class={cn('w-full justify-between font-normal', value.length > 0 && 'text-foreground')}
+				class={cn('w-full justify-between font-normal', value.length > 0 && 'border-secondary! text-foreground')}
 			>
 				<span class="truncate">{label}</span>
 				<ChevronsUpDownIcon class="shrink-0 opacity-50" />

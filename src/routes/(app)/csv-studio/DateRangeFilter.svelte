@@ -16,11 +16,11 @@
 	<div class="grid grid-cols-2 gap-1">
 		<div class="flex flex-col">
 			<span class="shrink-0 text-xs text-muted-foreground">From</span>
-			<DatePicker bind:value={from} placeholder="Start date" />
+			<DatePicker bind:value={from} placeholder="Start date" valueClass="border-secondary" />
 		</div>
 		<div class="flex flex-col">
 			<span class="shrink-0 text-[0.625rem] text-muted-foreground">To</span>
-			<DatePicker bind:value={to} placeholder="End date" />
+			<DatePicker bind:value={to} placeholder="End date" valueClass="border-secondary" />
 		</div>
 	</div>
 	{#if hasValue}

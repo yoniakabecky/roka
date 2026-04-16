@@ -236,3 +236,12 @@ msgstr "Non-empty"
 #: src/routes/(app)/csv-studio/CsvTable.svelte
 msgid "No data to display"
 msgstr "No data to display"
+
+#: src/routes/(app)/csv-studio/CsvTable.svelte
+msgid "Enter"
+msgstr "Enter"
+
+#. 0: col
+#: src/routes/(app)/csv-studio/CsvSidebar.svelte
+msgid "Rename {0}"
+msgstr "Rename {0}"

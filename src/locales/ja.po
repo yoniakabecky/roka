@@ -236,3 +236,12 @@ msgstr "空白以外"
 #: src/routes/(app)/csv-studio/CsvTable.svelte
 msgid "No data to display"
 msgstr "該当するデータがありません"
+
+#: src/routes/(app)/csv-studio/CsvTable.svelte
+msgid "Enter"
+msgstr ""
+
+#. 0: col
+#: src/routes/(app)/csv-studio/CsvSidebar.svelte
+msgid "Rename {0}"
+msgstr ""

@@ -14,11 +14,13 @@
 	let {
 		value = $bindable(''),
 		placeholder = 'Pick a date',
-		size = 'sm' as ButtonSize
+		size = 'sm' as ButtonSize,
+		valueClass
 	}: {
 		value?: string;
 		placeholder?: string;
 		size?: ButtonSize;
+		valueClass?: string;
 	} = $props();
 
 	const isIconSize = $derived(
@@ -42,13 +44,14 @@
 	<PopoverTrigger>
 		{#snippet child({ props })}
 			<Button
+				{...props}
 				variant="outline"
 				{size}
 				class={cn(
 					!isIconSize && 'w-full justify-start text-left font-normal',
-					!value && 'text-muted-foreground'
+					!value && 'text-muted-foreground',
+					value && valueClass
 				)}
-				{...props}
 			>
 				<CalendarIcon class={cn('shrink-0', !isIconSize && 'mr-1 size-3')} />
 				{#if !isIconSize}
