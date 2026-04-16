@@ -232,3 +232,7 @@ msgstr "Empty"
 #: src/routes/(app)/csv-studio/CsvSidebar.svelte
 msgid "Non-empty"
 msgstr "Non-empty"
+
+#: src/routes/(app)/csv-studio/CsvTable.svelte
+msgid "No data to display"
+msgstr "No data to display"

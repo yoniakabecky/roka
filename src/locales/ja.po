@@ -232,3 +232,7 @@ msgstr "空白セル"
 #: src/routes/(app)/csv-studio/CsvSidebar.svelte
 msgid "Non-empty"
 msgstr "空白以外"
+
+#: src/routes/(app)/csv-studio/CsvTable.svelte
+msgid "No data to display"
+msgstr "該当するデータがありません"

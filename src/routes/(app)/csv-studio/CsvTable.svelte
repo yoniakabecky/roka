@@ -58,6 +58,16 @@
 			</TableRow>
 		</TableHeader>
 		<TableBody>
+			{#if displayRows.length === 0}
+				<TableRow class="hover:bg-transparent">
+					<TableCell
+						class="py-4 text-center text-xs text-muted-foreground"
+						colspan={columns.length}
+					>
+						No data to display
+					</TableCell>
+				</TableRow>
+			{/if}
 			{#each displayRows as row, i (i)}
 				<TableRow>
 					{#each columns as col (col)}
