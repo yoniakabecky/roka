@@ -1,0 +1,189 @@
+{
+  "meta": {
+    "project": "Roka",
+    "version": "1.0.0",
+    "colorSpace": "oklch (CSS custom properties) with hex approximations for reference",
+    "stack": "SvelteKit 5 + Tailwind CSS v4 + shadcn-svelte + bits-ui"
+  },
+
+  "colors": {
+    "light": {
+      "background":          { "oklch": "oklch(1 0 0)",               "hex": "#ffffff", "role": "Page background" },
+      "foreground":          { "oklch": "oklch(0.141 0.005 285.823)", "hex": "#1c1c24", "role": "Primary text" },
+      "card":                { "oklch": "oklch(1 0 0)",               "hex": "#ffffff", "role": "Card surface" },
+      "cardForeground":      { "oklch": "oklch(0.141 0.005 285.823)", "hex": "#1c1c24", "role": "Text on cards" },
+      "popover":             { "oklch": "oklch(1 0 0)",               "hex": "#ffffff", "role": "Popover surface" },
+      "popoverForeground":   { "oklch": "oklch(0.141 0.005 285.823)", "hex": "#1c1c24", "role": "Text in popovers" },
+      "primary":             { "oklch": "oklch(0.553 0.195 38.402)",  "hex": "#c45d1f", "role": "Primary actions, active states" },
+      "primaryForeground":   { "oklch": "oklch(0.98 0.016 73.684)",   "hex": "#faf8f0", "role": "Text on primary" },
+      "secondary":           { "oklch": "oklch(0.6 0.12 210)",        "hex": "#3d8bc0", "role": "Secondary actions, data highlights" },
+      "secondaryForeground": { "oklch": "oklch(0.985 0 0)",           "hex": "#fafafa", "role": "Text on secondary" },
+      "muted":               { "oklch": "oklch(0.967 0.001 286.375)", "hex": "#f4f4f8", "role": "Subtle backgrounds, sidebar" },
+      "mutedForeground":     { "oklch": "oklch(0.552 0.016 285.938)", "hex": "#72728a", "role": "Placeholder text, metadata" },
+      "accent":              { "oklch": "oklch(0.553 0.195 38.402)",  "hex": "#c45d1f", "role": "Same as primary (accent state)" },
+      "accentForeground":    { "oklch": "oklch(0.98 0.016 73.684)",   "hex": "#faf8f0", "role": "Text on accent" },
+      "destructive":         { "oklch": "oklch(0.577 0.245 27.325)",  "hex": "#e0361a", "role": "Errors, delete actions" },
+      "border":              { "oklch": "oklch(0.92 0.004 286.32)",   "hex": "#e6e6ec", "role": "Dividers, input outlines" },
+      "input":               { "oklch": "oklch(0.92 0.004 286.32)",   "hex": "#e6e6ec", "role": "Input field border" },
+      "ring":                { "oklch": "oklch(0.705 0.015 286.067)", "hex": "#a8a8b8", "role": "Focus ring" },
+      "sidebar":             { "oklch": "oklch(0.985 0 0)",           "hex": "#fafafa", "role": "Sidebar background" },
+      "sidebarForeground":   { "oklch": "oklch(0.141 0.005 285.823)", "hex": "#1c1c24", "role": "Sidebar text" },
+      "sidebarPrimary":      { "oklch": "oklch(0.646 0.222 41.116)",  "hex": "#d46520", "role": "Sidebar active item" },
+      "sidebarAccent":       { "oklch": "oklch(0.967 0.001 286.375)", "hex": "#f4f4f8", "role": "Sidebar hover" },
+      "sidebarBorder":       { "oklch": "oklch(0.92 0.004 286.32)",   "hex": "#e6e6ec", "role": "Sidebar divider" }
+    },
+    "dark": {
+      "background":          { "oklch": "oklch(0.141 0.005 285.823)", "hex": "#1c1c24", "role": "Page background" },
+      "foreground":          { "oklch": "oklch(0.985 0 0)",           "hex": "#fafafa", "role": "Primary text" },
+      "card":                { "oklch": "oklch(0.21 0.006 285.885)",  "hex": "#2d2d38", "role": "Card surface" },
+      "cardForeground":      { "oklch": "oklch(0.985 0 0)",           "hex": "#fafafa", "role": "Text on cards" },
+      "primary":             { "oklch": "oklch(0.47 0.157 37.304)",   "hex": "#a84d18", "role": "Primary actions (dark)" },
+      "primaryForeground":   { "oklch": "oklch(0.98 0.016 73.684)",   "hex": "#faf8f0", "role": "Text on primary" },
+      "secondary":           { "oklch": "oklch(0.5 0.12 210)",        "hex": "#2d78ae", "role": "Secondary actions (dark)" },
+      "muted":               { "oklch": "oklch(0.274 0.006 286.033)", "hex": "#3d3d4a", "role": "Subtle backgrounds (dark)" },
+      "mutedForeground":     { "oklch": "oklch(0.705 0.015 286.067)", "hex": "#a8a8b8", "role": "Placeholder text (dark)" },
+      "destructive":         { "oklch": "oklch(0.704 0.191 22.216)",  "hex": "#f05a3a", "role": "Errors (dark)" },
+      "border":              { "oklch": "oklch(1 0 0 / 10%)",         "hex": "#ffffff1a", "role": "Dividers (dark)" },
+      "input":               { "oklch": "oklch(1 0 0 / 15%)",         "hex": "#ffffff26", "role": "Input borders (dark)" },
+      "sidebar":             { "oklch": "oklch(0.21 0.006 285.885)",  "hex": "#2d2d38", "role": "Sidebar (dark)" },
+      "sidebarPrimary":      { "oklch": "oklch(0.705 0.213 47.604)",  "hex": "#e07828", "role": "Sidebar active (dark)" }
+    },
+    "charts": {
+      "chart1": { "oklch": "oklch(0.871 0.006 286.286)", "hex": "#d8d8e4", "role": "Lightest chart step" },
+      "chart2": { "oklch": "oklch(0.552 0.016 285.938)", "hex": "#72728a", "role": "Mid-light chart step" },
+      "chart3": { "oklch": "oklch(0.442 0.017 285.786)", "hex": "#5d5d70", "role": "Mid chart step" },
+      "chart4": { "oklch": "oklch(0.37 0.013 285.805)",  "hex": "#4d4d5e", "role": "Mid-dark chart step" },
+      "chart5": { "oklch": "oklch(0.274 0.006 286.033)", "hex": "#3d3d4a", "role": "Darkest chart step" }
+    }
+  },
+
+  "typography": {
+    "fonts": {
+      "sans":    "Oxanium Variable, sans-serif",
+      "heading": "Oxanium Variable, sans-serif",
+      "mono":    "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace"
+    },
+    "notes": "Oxanium is a geometric variable font with a technical, angular character — ideal for data-dense tool UIs. Noto Sans JP is available for Japanese locale support.",
+    "scale": {
+      "xs":   { "size": "0.75rem",  "lineHeight": "1rem",    "tailwind": "text-xs",   "usage": "Labels, metadata, table cells, button text" },
+      "sm":   { "size": "0.875rem", "lineHeight": "1.25rem", "tailwind": "text-sm",   "usage": "Body text, input text, descriptions" },
+      "base": { "size": "1rem",     "lineHeight": "1.5rem",  "tailwind": "text-base", "usage": "Standard reading text" },
+      "lg":   { "size": "1.125rem", "lineHeight": "1.75rem", "tailwind": "text-lg",   "usage": "Section headings" },
+      "xl":   { "size": "1.25rem",  "lineHeight": "1.75rem", "tailwind": "text-xl",   "usage": "Page sub-headings" },
+      "2xl":  { "size": "1.5rem",   "lineHeight": "2rem",    "tailwind": "text-2xl",  "usage": "Page titles, brand wordmark" }
+    },
+    "weights": {
+      "normal":   400,
+      "medium":   500,
+      "semibold": 600,
+      "bold":     700
+    },
+    "patterns": {
+      "sectionLabel": "text-xs font-semibold tracking-wider uppercase text-muted-foreground",
+      "bodySmall":    "text-xs text-foreground",
+      "metadata":     "text-sm text-muted-foreground",
+      "pageTitle":    "text-2xl font-bold text-foreground",
+      "dropZoneTitle":"text-2xl font-bold text-foreground"
+    }
+  },
+
+  "spacing": {
+    "scale": "4px base grid",
+    "tokens": {
+      "0":    "0px",
+      "0.5":  "2px",
+      "1":    "4px",
+      "1.5":  "6px",
+      "2":    "8px",
+      "2.5":  "10px",
+      "3":    "12px",
+      "4":    "16px",
+      "5":    "20px",
+      "6":    "24px",
+      "8":    "32px",
+      "10":   "40px",
+      "12":   "48px"
+    },
+    "commonPatterns": {
+      "headerHeight":    "h-14 (56px)",
+      "sidebarWidth":    "w-64 (256px)",
+      "pagePadding":     "px-6 (24px horizontal)",
+      "cardPadding":     "p-12 (48px for drop zone)",
+      "compactPadding":  "px-3 py-1 (12px / 4px) — standard row padding",
+      "sectionPadding":  "px-4 py-2 (16px / 8px) — toolbar, stats row",
+      "gutterXs":        "gap-1 (4px)",
+      "gutterSm":        "gap-2 (8px)",
+      "gutterMd":        "gap-3 (12px)"
+    }
+  },
+
+  "borderRadius": {
+    "base": "0.45rem",
+    "sm":   "0.27rem  (base × 0.6)",
+    "md":   "0.36rem  (base × 0.8)",
+    "lg":   "0.45rem  (base × 1.0)",
+    "xl":   "0.63rem  (base × 1.4)",
+    "2xl":  "0.81rem  (base × 1.8)",
+    "3xl":  "0.99rem  (base × 2.2)",
+    "4xl":  "1.17rem  (base × 2.6)",
+    "full": "9999px"
+  },
+
+  "shadows": {
+    "note": "Shadows are minimal — this is a tool UI, not a marketing page. Elevation is conveyed through border and background contrast rather than box-shadow.",
+    "sm":  "0 1px 2px 0 oklch(0 0 0 / 0.05)",
+    "md":  "0 4px 6px -1px oklch(0 0 0 / 0.08), 0 2px 4px -2px oklch(0 0 0 / 0.05)",
+    "lg":  "0 10px 15px -3px oklch(0 0 0 / 0.08), 0 4px 6px -4px oklch(0 0 0 / 0.05)"
+  },
+
+  "breakpoints": {
+    "sm":  "640px",
+    "md":  "768px",
+    "lg":  "1024px",
+    "xl":  "1280px",
+    "2xl": "1536px"
+  },
+
+  "animation": {
+    "durationFast":   "100ms",
+    "durationNormal": "150ms",
+    "durationSlow":   "250ms",
+    "easing":         "cubic-bezier(0.4, 0, 0.2, 1)",
+    "note": "Animations are subtle and purposeful. Transitions exist on interactive elements (buttons, hover states). No scroll animations. tw-animate-css provides utility classes."
+  },
+
+  "components": {
+    "button": {
+      "variants": ["default", "outline", "secondary", "ghost", "destructive", "link"],
+      "sizes": {
+        "icon-xs": "size-5  (20px) — inline icon-only controls",
+        "icon-sm": "size-6  (24px) — small icon buttons",
+        "xs":      "h-5     (20px) — very compact action buttons",
+        "sm":      "h-6     (24px) — compact secondary buttons",
+        "default": "h-7     (28px) — standard button (smaller than most design systems)",
+        "lg":      "h-8     (32px) — primary calls to action",
+        "icon":    "size-7  (28px) — standard icon button",
+        "icon-lg": "size-8  (32px) — large icon button"
+      },
+      "note": "Button heights skew compact — the default h-7 (28px) vs the typical 36-40px in most systems. This is intentional for dense data-tool UIs."
+    },
+    "header": {
+      "height":     "h-14 (56px)",
+      "padding":    "px-6",
+      "background": "bg-background",
+      "border":     "border-b border-border"
+    },
+    "sidebar": {
+      "width":      "w-64 (256px)",
+      "background": "bg-muted/50",
+      "border":     "border-r border-border",
+      "stickyHeader": "bg-muted with border-b"
+    },
+    "dropzone": {
+      "border":     "border-2 border-dashed border-border",
+      "radius":     "rounded-xl",
+      "activeState":"border-primary bg-primary/5",
+      "icon":       "FolderOpen at size 48"
+    }
+  }
+}

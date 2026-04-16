@@ -1,11 +1,13 @@
 <script lang="ts">
 	import FilterIcon from '@lucide/svelte/icons/filter';
+	import { slide } from 'svelte/transition';
 	import { Tooltip, TooltipTrigger, TooltipContent } from '$lib/components/ui/tooltip';
 	import { Checkbox } from '$lib/components/ui/checkbox';
 	import { Button } from '$lib/components/ui/button';
 	import { Combobox } from '$lib/components/ui/combobox';
 	import { Tabs, TabsList, TabsTrigger } from '$lib/components/ui/tabs';
 	import Label from '$lib/components/ui/label/label.svelte';
+	import Input from '$lib/components/ui/input/input.svelte';
 	import DateRangeFilter from './DateRangeFilter.svelte';
 	import { useCsvStudio } from './csv-studio.svelte';
 
@@ -65,7 +67,7 @@
 
 		<!-- Filter section -->
 		{#if studio.colFiltersOpen[col]}
-			<div class="gap-1 px-2 py-1">
+			<div class="gap-1 px-2 py-1" transition:slide={{ duration: 150 }}>
 				<Tabs
 					value={studio.colEmptyFilters[col] ?? 'all'}
 					onValueChange={(v) => {
@@ -118,11 +120,12 @@
 			<div class="grid grid-cols-[1fr_auto_1fr] items-center gap-1 px-3 py-1">
 				<span class="truncate text-xs text-muted-foreground" title={col}>{col}</span>
 				<span class="text-xs text-muted-foreground">→</span>
-				<input
-					class="w-full rounded border border-border bg-muted px-1.5 py-0.5 text-xs text-foreground outline-none focus:border-primary"
+				<Input
+					class="h-5 rounded-sm px-1.5 py-0 text-xs"
 					type="text"
 					value={studio.colRename[col] ?? col}
 					placeholder={col}
+					aria-label="Rename {col}"
 					oninput={(e) =>
 						(studio.colRename[col] = (e.currentTarget as HTMLInputElement).value || col)}
 				/>

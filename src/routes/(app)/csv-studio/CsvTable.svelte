@@ -33,7 +33,7 @@
 <div class="flex flex-1 flex-col overflow-auto">
 	{#if truncated}
 		<div
-			class="shrink-0 border-b border-amber-900/50 bg-amber-950/40 px-6 py-2 text-xs text-amber-400"
+			class="shrink-0 border-b border-destructive/30 bg-destructive/10 px-6 py-2 text-xs text-destructive"
 		>
 			Showing first {MAX_ROWS} of {rows.length} rows
 		</div>
@@ -48,7 +48,11 @@
 						col
 							? 'text-primary hover:text-primary'
 							: 'text-muted-foreground hover:text-foreground'}"
+						role="columnheader"
+						tabindex={0}
+						aria-sort={sortCol === col ? (sortDir === 'asc' ? 'ascending' : 'descending') : 'none'}
 						onclick={() => handleSort(col)}
+						onkeydown={(e) => (e.key === 'Enter' || e.key === ' ') && handleSort(col)}
 					>
 						{colRename[col] ?? col}{#if sortCol === col}<span class="ml-1"
 								>{sortDir === 'asc' ? '↑' : '↓'}</span

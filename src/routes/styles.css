@@ -123,6 +123,7 @@
 	}
 	body {
 		@apply bg-background text-foreground;
+		min-width: 768px; /* desktop-only tool — prevents silent layout collapse on narrow viewports */
 	}
 	html {
 		@apply font-sans;
