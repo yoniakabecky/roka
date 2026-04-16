@@ -1,4 +1,6 @@
 <script lang="ts">
+	import UpIcon from '@lucide/svelte/icons/arrow-up';
+	import DownIcon from '@lucide/svelte/icons/arrow-down';
 	import {
 		Table,
 		TableHeader,
@@ -44,19 +46,30 @@
 			<TableRow class="border-b-2 hover:bg-transparent">
 				{#each columns as col (col)}
 					<TableHead
-						class="cursor-pointer border-r border-border text-xs font-semibold tracking-wider whitespace-nowrap uppercase transition-colors select-none last:border-r-0 {sortCol ===
-						col
-							? 'text-primary hover:text-primary'
-							: 'text-muted-foreground hover:text-foreground'}"
+						class={[
+							'cursor-pointer border-r border-border text-xs font-semibold tracking-wider whitespace-nowrap uppercase transition-colors select-none last:border-r-0',
+							sortCol === col
+								? 'text-primary hover:text-primary'
+								: 'text-muted-foreground hover:text-foreground'
+						]}
 						role="columnheader"
 						tabindex={0}
 						aria-sort={sortCol === col ? (sortDir === 'asc' ? 'ascending' : 'descending') : 'none'}
 						onclick={() => handleSort(col)}
 						onkeydown={(e) => (e.key === 'Enter' || e.key === ' ') && handleSort(col)}
 					>
-						{colRename[col] ?? col}{#if sortCol === col}<span class="ml-1"
-								>{sortDir === 'asc' ? '↑' : '↓'}</span
-							>{/if}
+						<span class="inline-flex">
+							{colRename[col] ?? col}
+							{#if sortCol === col}
+								<span class="ml-1">
+									{#if sortDir === 'asc'}
+										<UpIcon size={12} />
+									{:else}
+										<DownIcon size={12} />
+									{/if}
+								</span>
+							{/if}
+						</span>
 					</TableHead>
 				{/each}
 			</TableRow>
