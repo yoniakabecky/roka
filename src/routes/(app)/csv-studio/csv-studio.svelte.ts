@@ -10,6 +10,8 @@ import {
 	type FullIndex
 } from '$lib/csv-studio/detect-columns';
 
+const LOCALE_SORT_OPTS: Intl.CollatorOptions = { numeric: true, sensitivity: 'base' };
+
 const createCsvStudio = () => {
 	let columns = $state<string[]>([]);
 	let rows = $state<Record<string, string>[]>([]);
@@ -23,6 +25,8 @@ const createCsvStudio = () => {
 	let filename = $state('');
 	let filteredRows = $state<Record<string, string>[]>([]);
 	let filtering = $state(false);
+	let sortCol = $state<string | null>(null);
+	let sortDir = $state<'asc' | 'desc'>('asc');
 
 	const visibleColumns = $derived(columns.filter((c) => colVisible[c]));
 
@@ -48,6 +52,25 @@ const createCsvStudio = () => {
 	);
 
 	const exportStem = $derived((filename.replace(/\.[^.]+$/, '') || 'export') + '_roka');
+
+	const sortedRows = $derived.by(() => {
+		const col = sortCol;
+		if (!col) return filteredRows;
+		return [...filteredRows].sort((a, b) => {
+			const av = a[col] ?? '';
+			const bv = b[col] ?? '';
+			const an = Number(av);
+			const bn = Number(bv);
+			// CSV values are always strings. Use numeric comparison when both parse as
+			// numbers ("2" < "10" < "100"), otherwise fall back to localeCompare.
+			// The Number() fast-path avoids the cost of localeCompare on numeric columns.
+			const cmp =
+				!isNaN(an) && !isNaN(bn)
+					? an - bn
+					: av.localeCompare(bv, undefined, LOCALE_SORT_OPTS);
+			return sortDir === 'asc' ? cmp : -cmp;
+		});
+	});
 
 	$effect.root(() => {
 		$effect(() => {
@@ -124,9 +147,18 @@ const createCsvStudio = () => {
 		colRename = Object.fromEntries(columns.map((c) => [c, c]));
 	};
 
+	const handleSort = (col: string) => {
+		if (sortCol === col) {
+			sortDir = sortDir === 'asc' ? 'desc' : 'asc';
+		} else {
+			sortCol = col;
+			sortDir = 'asc';
+		}
+	};
+
 	const doExportCsv = async () => {
 		try {
-			await exportCsv(filteredRows, visibleColumns, colRename, exportStem);
+			await exportCsv(sortedRows, visibleColumns, colRename, exportStem);
 			toast.success(`Exported ${exportStem}.csv`);
 		} catch {
 			toast.error(`Failed to export ${exportStem}.csv`);
@@ -135,7 +167,7 @@ const createCsvStudio = () => {
 
 	const doExportPdf = async () => {
 		try {
-			await exportPdf(filteredRows, visibleColumns, colRename, exportStem);
+			await exportPdf(sortedRows, visibleColumns, colRename, exportStem);
 			toast.success(`Exported ${exportStem}.pdf`);
 		} catch {
 			toast.error(`Failed to export ${exportStem}.pdf`);
@@ -188,9 +220,19 @@ const createCsvStudio = () => {
 		get filtering() {
 			return filtering;
 		},
+		get sortCol() {
+			return sortCol;
+		},
+		get sortDir() {
+			return sortDir;
+		},
+		get sortedRows() {
+			return sortedRows;
+		},
 		clearData,
 		handleFile,
 		resetColRename,
+		handleSort,
 		doExportCsv,
 		doExportPdf
 	};

@@ -57,9 +57,12 @@
 					</div>
 				{/if}
 				<CsvTable
-					rows={studio.filteredRows}
+					rows={studio.sortedRows}
 					columns={studio.visibleColumns}
 					colRename={studio.colRename}
+					sortCol={studio.sortCol}
+					sortDir={studio.sortDir}
+					handleSort={studio.handleSort}
 				/>
 			</div>
 		</div>

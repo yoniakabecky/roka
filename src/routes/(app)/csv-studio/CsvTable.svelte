@@ -11,41 +11,23 @@
 	let {
 		rows,
 		columns,
-		colRename = {}
+		colRename = {},
+		sortCol,
+		sortDir,
+		handleSort
 	}: {
 		rows: Record<string, string>[];
 		columns: string[];
 		colRename?: Record<string, string>;
+		sortCol: string | null;
+		sortDir: 'asc' | 'desc';
+		handleSort: (col: string) => void;
 	} = $props();
-
-	let sortCol = $state<string | null>(null);
-	let sortDir = $state<'asc' | 'desc'>('asc');
 
 	const MAX_ROWS = 5000;
 
-	const sortedRows = $derived.by(() => {
-		if (!sortCol) return rows;
-		return [...rows].sort((a, b) => {
-			const av = a[sortCol!] ?? '',
-				bv = b[sortCol!] ?? '';
-			const an = parseFloat(av),
-				bn = parseFloat(bv);
-			const cmp = !isNaN(an) && !isNaN(bn) ? an - bn : av.localeCompare(bv);
-			return sortDir === 'asc' ? cmp : -cmp;
-		});
-	});
-
-	const displayRows = $derived(sortedRows.slice(0, MAX_ROWS));
-	const truncated = $derived(sortedRows.length > MAX_ROWS);
-
-	const handleSort = (col: string) => {
-		if (sortCol === col) {
-			sortDir = sortDir === 'asc' ? 'desc' : 'asc';
-		} else {
-			sortCol = col;
-			sortDir = 'asc';
-		}
-	};
+	const displayRows = $derived(rows.slice(0, MAX_ROWS));
+	const truncated = $derived(rows.length > MAX_ROWS);
 </script>
 
 <div class="flex flex-1 flex-col overflow-auto">
@@ -53,7 +35,7 @@
 		<div
 			class="shrink-0 border-b border-amber-900/50 bg-amber-950/40 px-6 py-2 text-xs text-amber-400"
 		>
-			Showing first {MAX_ROWS} of {sortedRows.length} rows
+			Showing first {MAX_ROWS} of {rows.length} rows
 		</div>
 	{/if}
 

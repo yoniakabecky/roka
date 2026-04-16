@@ -44,7 +44,7 @@ msgid "Or click Import CSV to browse"
 msgstr "Or click Import CSV to browse"
 
 #. 0: MAX_ROWS; 1: sortedRows.length
-#. 0: MAX_ROWS; 1: sortedRows.length
+#. 0: MAX_ROWS; 1: rows.length
 #: src/lib/components/csv-studio/CsvTable.svelte
 #: src/routes/(app)/csv-studio/CsvTable.svelte
 msgid "Showing first {0} of {1} rows"
