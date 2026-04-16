@@ -77,10 +77,10 @@
 						}
 					}}
 				>
-					<TabsList class="w-full">
+					<TabsList class="w-full" size="sm">
 						<TabsTrigger value="all" class="flex-1">All</TabsTrigger>
-						<TabsTrigger value="empty" class="flex-1">Empty</TabsTrigger>
-						<TabsTrigger value="nonempty" class="flex-1">Non-empty</TabsTrigger>
+						<TabsTrigger value="empty" class="flex-1" color="secondary">Empty</TabsTrigger>
+						<TabsTrigger value="nonempty" class="flex-1" color="secondary">Non-empty</TabsTrigger>
 					</TabsList>
 				</Tabs>
 			</div>
