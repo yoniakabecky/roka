@@ -147,6 +147,76 @@ describe('computeFilteredRows', () => {
 		const result = computeFilteredRows(rows, index, [['missing', ['anything']]], []);
 		expect(result).toHaveLength(5);
 	});
+
+	it('date predicate skips rows where the date cell is empty', () => {
+		const mixed = [
+			{ city: 'A', joined: '' },
+			{ city: 'B', joined: '2024-06-01' }
+		];
+		const idx = buildColumnIndex(mixed, ['city', 'joined']);
+		const result = computeFilteredRows(mixed, idx, [], [['joined', { from: '2024-01-01', to: '' }]]);
+		expect(result).toHaveLength(1);
+		expect(result[0].city).toBe('B');
+	});
+
+	it('date predicate skips rows where the date column key is absent', () => {
+		// row[col] is undefined → ?? '' fallback → treated as empty
+		const mixed = [
+			{ city: 'A' } as Record<string, string>, // 'joined' key entirely absent
+			{ city: 'B', joined: '2024-06-01' }
+		];
+		const idx = buildColumnIndex(mixed, ['city', 'joined']);
+		const result = computeFilteredRows(mixed, idx, [], [['joined', { from: '2024-01-01', to: '' }]]);
+		expect(result).toHaveLength(1);
+		expect(result[0].city).toBe('B');
+	});
+
+	it('date predicate skips rows where the date cell is an invalid date', () => {
+		const mixed = [
+			{ city: 'A', joined: 'not-a-date' },
+			{ city: 'B', joined: '2024-06-01' }
+		];
+		const idx = buildColumnIndex(mixed, ['city', 'joined']);
+		const result = computeFilteredRows(mixed, idx, [], [['joined', { from: '2024-01-01', to: '' }]]);
+		expect(result).toHaveLength(1);
+		expect(result[0].city).toBe('B');
+	});
+
+	it('empty filter treats a missing column key as empty', () => {
+		// row[col] is undefined → ?? '' gives '', which is falsy → matches 'empty' mode
+		const sparseRows = [
+			{ city: 'A' } as Record<string, string>, // note key entirely absent
+			{ city: 'B', note: 'hi' }
+		];
+		const idx = buildColumnIndex(sparseRows, ['city', 'note']);
+		const result = computeFilteredRows(sparseRows, idx, [], [], [['note', 'empty']]);
+		expect(result).toHaveLength(1);
+		expect(result[0].city).toBe('A');
+	});
+
+	it('filters to only empty-value rows for a column', () => {
+		const sparseRows = [
+			{ city: 'Tokyo', note: '' },
+			{ city: 'Osaka', note: 'hello' },
+			{ city: 'Kyoto', note: '' }
+		];
+		const idx = buildColumnIndex(sparseRows, ['city', 'note']);
+		const result = computeFilteredRows(sparseRows, idx, [], [], [['note', 'empty']]);
+		expect(result).toHaveLength(2);
+		expect(result.every((r) => r.note === '')).toBe(true);
+	});
+
+	it('filters to only nonempty-value rows for a column', () => {
+		const sparseRows = [
+			{ city: 'Tokyo', note: '' },
+			{ city: 'Osaka', note: 'hello' },
+			{ city: 'Kyoto', note: '' }
+		];
+		const idx = buildColumnIndex(sparseRows, ['city', 'note']);
+		const result = computeFilteredRows(sparseRows, idx, [], [], [['note', 'nonempty']]);
+		expect(result).toHaveLength(1);
+		expect(result[0].city).toBe('Osaka');
+	});
 });
 
 describe('computeCrossFilteredValues', () => {
@@ -212,6 +282,67 @@ describe('computeCrossFilteredValues', () => {
 		]);
 		// All 5 joined dates should be available
 		expect(values).toHaveLength(5);
+	});
+
+	it('restricts values based on an empty filter on another column', () => {
+		const sparseRows = [
+			{ city: 'Tokyo', note: '' },
+			{ city: 'Osaka', note: 'hello' },
+			{ city: 'Kyoto', note: '' }
+		];
+		const idx = buildColumnIndex(sparseRows, ['city', 'note']);
+		// Only rows where note is empty → cities Tokyo and Kyoto
+		const values = computeCrossFilteredValues('city', sparseRows, idx, [], [], [
+			['note', 'empty']
+		]);
+		expect(values.sort()).toEqual(['Kyoto', 'Tokyo']);
+	});
+
+	it('empty filter on another column treats a missing key as empty', () => {
+		// row[c] is undefined → ?? '' gives '' → falsy → matches 'empty' mode
+		const sparseRows = [
+			{ city: 'A' } as Record<string, string>, // note key entirely absent
+			{ city: 'B', note: 'hi' }
+		];
+		const idx = buildColumnIndex(sparseRows, ['city', 'note']);
+		const values = computeCrossFilteredValues('city', sparseRows, idx, [], [], [['note', 'empty']]);
+		expect(values).toEqual(['A']);
+	});
+
+	it('nonempty filter on another column restricts values correctly', () => {
+		// exercises the !!val branch of the empty/nonempty ternary
+		const sparseRows = [
+			{ city: 'A', note: '' },
+			{ city: 'B', note: 'hi' }
+		];
+		const idx = buildColumnIndex(sparseRows, ['city', 'note']);
+		const values = computeCrossFilteredValues('city', sparseRows, idx, [], [], [['note', 'nonempty']]);
+		expect(values).toEqual(['B']);
+	});
+
+	it('target column key absent in a candidate row is excluded from results', () => {
+		// row[col] is undefined → ?? '' fallback in the seen loop → empty → excluded
+		const sparseRows = [
+			{ note: 'x' } as Record<string, string>, // 'city' key absent
+			{ city: 'B', note: 'y' }
+		];
+		const idx = buildColumnIndex(sparseRows, ['city', 'note']);
+		const values = computeCrossFilteredValues('city', sparseRows, idx, [], []);
+		expect(values).toEqual(['B']);
+	});
+
+	it('ignores an empty filter on the target column itself', () => {
+		const sparseRows = [
+			{ city: 'Tokyo', note: '' },
+			{ city: 'Osaka', note: 'hello' },
+			{ city: 'Kyoto', note: '' }
+		];
+		const idx = buildColumnIndex(sparseRows, ['city', 'note']);
+		// Empty filter on 'city' itself should not reduce city's own available values
+		const values = computeCrossFilteredValues('city', sparseRows, idx, [], [], [
+			['city', 'nonempty']
+		]);
+		expect(values.sort()).toEqual(['Kyoto', 'Osaka', 'Tokyo']);
 	});
 });
 
