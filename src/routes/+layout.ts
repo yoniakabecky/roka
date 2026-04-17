@@ -5,6 +5,8 @@ import { loadLocale } from 'wuchale/load-utils';
 import '../locales/main.loader.svelte.js';
 import '../locales/js.loader.js';
 
+export const ssr = false;
+
 /** @type {import('./$types').LayoutLoad} */
 export const load = async () => {
 	const locale = (() => {
