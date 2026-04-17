@@ -125,9 +125,12 @@ describe('computeFilteredRows', () => {
 
 	it('applies a date filter only', () => {
 		// joined >= 2024-06-01
-		const result = computeFilteredRows(rows, index, [], [
-			['joined', { from: '2024-06-01', to: '' }]
-		]);
+		const result = computeFilteredRows(
+			rows,
+			index,
+			[],
+			[['joined', { from: '2024-06-01', to: '' }]]
+		);
 		expect(result.map((r) => r.city).sort()).toEqual(['Chicago', 'Vancouver']);
 	});
 
@@ -154,7 +157,12 @@ describe('computeFilteredRows', () => {
 			{ city: 'B', joined: '2024-06-01' }
 		];
 		const idx = buildColumnIndex(mixed, ['city', 'joined']);
-		const result = computeFilteredRows(mixed, idx, [], [['joined', { from: '2024-01-01', to: '' }]]);
+		const result = computeFilteredRows(
+			mixed,
+			idx,
+			[],
+			[['joined', { from: '2024-01-01', to: '' }]]
+		);
 		expect(result).toHaveLength(1);
 		expect(result[0].city).toBe('B');
 	});
@@ -166,7 +174,12 @@ describe('computeFilteredRows', () => {
 			{ city: 'B', joined: '2024-06-01' }
 		];
 		const idx = buildColumnIndex(mixed, ['city', 'joined']);
-		const result = computeFilteredRows(mixed, idx, [], [['joined', { from: '2024-01-01', to: '' }]]);
+		const result = computeFilteredRows(
+			mixed,
+			idx,
+			[],
+			[['joined', { from: '2024-01-01', to: '' }]]
+		);
 		expect(result).toHaveLength(1);
 		expect(result[0].city).toBe('B');
 	});
@@ -177,7 +190,12 @@ describe('computeFilteredRows', () => {
 			{ city: 'B', joined: '2024-06-01' }
 		];
 		const idx = buildColumnIndex(mixed, ['city', 'joined']);
-		const result = computeFilteredRows(mixed, idx, [], [['joined', { from: '2024-01-01', to: '' }]]);
+		const result = computeFilteredRows(
+			mixed,
+			idx,
+			[],
+			[['joined', { from: '2024-01-01', to: '' }]]
+		);
 		expect(result).toHaveLength(1);
 		expect(result[0].city).toBe('B');
 	});
@@ -260,7 +278,10 @@ describe('computeCrossFilteredValues', () => {
 	});
 
 	it('excludes empty string values from results', () => {
-		const sparseRows = [{ tag: 'A', cat: '' }, { tag: 'B', cat: 'X' }];
+		const sparseRows = [
+			{ tag: 'A', cat: '' },
+			{ tag: 'B', cat: 'X' }
+		];
 		const idx = buildColumnIndex(sparseRows, ['tag', 'cat']);
 		const values = computeCrossFilteredValues('cat', sparseRows, idx, [], []);
 		expect(values).toEqual(['X']); // empty string excluded
@@ -269,17 +290,25 @@ describe('computeCrossFilteredValues', () => {
 	it('restricts values based on a date filter on another column', () => {
 		// joined >= 2024-06-01 → country options should only include rows from that period
 		// Chicago (US, 2024-06-01) and Vancouver (CA, 2024-08-15)
-		const values = computeCrossFilteredValues('country', rows, index, [], [
-			['joined', { from: '2024-06-01', to: '' }]
-		]);
+		const values = computeCrossFilteredValues(
+			'country',
+			rows,
+			index,
+			[],
+			[['joined', { from: '2024-06-01', to: '' }]]
+		);
 		expect(values.sort()).toEqual(['CA', 'US']);
 	});
 
 	it('ignores a date filter on the target column itself', () => {
 		// date filter on 'joined' should not reduce joined's own available values
-		const values = computeCrossFilteredValues('joined', rows, index, [], [
-			['joined', { from: '2024-06-01', to: '' }]
-		]);
+		const values = computeCrossFilteredValues(
+			'joined',
+			rows,
+			index,
+			[],
+			[['joined', { from: '2024-06-01', to: '' }]]
+		);
 		// All 5 joined dates should be available
 		expect(values).toHaveLength(5);
 	});
@@ -292,9 +321,7 @@ describe('computeCrossFilteredValues', () => {
 		];
 		const idx = buildColumnIndex(sparseRows, ['city', 'note']);
 		// Only rows where note is empty → cities Tokyo and Kyoto
-		const values = computeCrossFilteredValues('city', sparseRows, idx, [], [], [
-			['note', 'empty']
-		]);
+		const values = computeCrossFilteredValues('city', sparseRows, idx, [], [], [['note', 'empty']]);
 		expect(values.sort()).toEqual(['Kyoto', 'Tokyo']);
 	});
 
@@ -316,7 +343,14 @@ describe('computeCrossFilteredValues', () => {
 			{ city: 'B', note: 'hi' }
 		];
 		const idx = buildColumnIndex(sparseRows, ['city', 'note']);
-		const values = computeCrossFilteredValues('city', sparseRows, idx, [], [], [['note', 'nonempty']]);
+		const values = computeCrossFilteredValues(
+			'city',
+			sparseRows,
+			idx,
+			[],
+			[],
+			[['note', 'nonempty']]
+		);
 		expect(values).toEqual(['B']);
 	});
 
@@ -339,9 +373,14 @@ describe('computeCrossFilteredValues', () => {
 		];
 		const idx = buildColumnIndex(sparseRows, ['city', 'note']);
 		// Empty filter on 'city' itself should not reduce city's own available values
-		const values = computeCrossFilteredValues('city', sparseRows, idx, [], [], [
-			['city', 'nonempty']
-		]);
+		const values = computeCrossFilteredValues(
+			'city',
+			sparseRows,
+			idx,
+			[],
+			[],
+			[['city', 'nonempty']]
+		);
 		expect(values.sort()).toEqual(['Kyoto', 'Osaka', 'Tokyo']);
 	});
 });

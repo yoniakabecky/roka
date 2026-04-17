@@ -78,7 +78,12 @@ export const computeFilteredRows = (
 	activeDateFilters: [string, { from: string; to: string }][],
 	activeEmptyFilters: [string, 'empty' | 'nonempty'][] = []
 ): Record<string, string>[] => {
-	if (activeValueFilters.length === 0 && activeDateFilters.length === 0 && activeEmptyFilters.length === 0) return rows;
+	if (
+		activeValueFilters.length === 0 &&
+		activeDateFilters.length === 0 &&
+		activeEmptyFilters.length === 0
+	)
+		return rows;
 
 	const candidates = intersectOtherFilters(index, activeValueFilters);
 	let result: Record<string, string>[];

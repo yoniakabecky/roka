@@ -23,9 +23,7 @@ const buildWoff = (
 	tables: { tag: number; data: Uint8Array; compress?: boolean }[]
 ): ArrayBuffer => {
 	const processed = tables.map(({ tag, data, compress = false }) => {
-		const compData = compress
-			? new Uint8Array(deflateSync(Buffer.from(data)))
-			: data;
+		const compData = compress ? new Uint8Array(deflateSync(Buffer.from(data))) : data;
 		return { tag, compData, origLen: data.length, compLen: compData.length };
 	});
 

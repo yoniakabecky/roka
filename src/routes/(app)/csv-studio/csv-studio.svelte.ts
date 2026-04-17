@@ -54,7 +54,14 @@ const createCsvStudio = () => {
 				.filter((c) => colFiltersOpen[c])
 				.map((c) => [
 					c,
-					computeCrossFilteredValues(c, rows, columnIndex, activeFilters, activeDateFilters, activeEmptyFilters)
+					computeCrossFilteredValues(
+						c,
+						rows,
+						columnIndex,
+						activeFilters,
+						activeDateFilters,
+						activeEmptyFilters
+					)
 				])
 		)
 	);
@@ -73,9 +80,7 @@ const createCsvStudio = () => {
 			// numbers ("2" < "10" < "100"), otherwise fall back to localeCompare.
 			// The Number() fast-path avoids the cost of localeCompare on numeric columns.
 			const cmp =
-				!isNaN(an) && !isNaN(bn)
-					? an - bn
-					: av.localeCompare(bv, undefined, LOCALE_SORT_OPTS);
+				!isNaN(an) && !isNaN(bn) ? an - bn : av.localeCompare(bv, undefined, LOCALE_SORT_OPTS);
 			return sortDir === 'asc' ? cmp : -cmp;
 		});
 	});

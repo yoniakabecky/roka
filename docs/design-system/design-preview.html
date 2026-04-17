@@ -1,1139 +1,1514 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en" class="light">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Roka Design System Preview</title>
-<style>
-  /* ─── Oxanium font via @import ─────────────────────────────────────── */
-  @import url('https://fonts.googleapis.com/css2?family=Oxanium:wght@300..800&display=swap');
-
-  /* ─── Design tokens ─────────────────────────────────────────────────── */
-  :root {
-    --background:          oklch(1 0 0);
-    --foreground:          oklch(0.141 0.005 285.823);
-    --card:                oklch(1 0 0);
-    --card-foreground:     oklch(0.141 0.005 285.823);
-    --primary:             oklch(0.553 0.195 38.402);
-    --primary-fg:          oklch(0.98 0.016 73.684);
-    --secondary:           oklch(0.6 0.12 210);
-    --secondary-fg:        oklch(0.985 0 0);
-    --muted:               oklch(0.967 0.001 286.375);
-    --muted-fg:            oklch(0.552 0.016 285.938);
-    --accent:              oklch(0.553 0.195 38.402);
-    --destructive:         oklch(0.577 0.245 27.325);
-    --border:              oklch(0.92 0.004 286.32);
-    --input:               oklch(0.92 0.004 286.32);
-    --ring:                oklch(0.705 0.015 286.067);
-    --radius:              0.45rem;
-    --font-sans:           'Oxanium', sans-serif;
-    --chart-1:             oklch(0.871 0.006 286.286);
-    --chart-2:             oklch(0.552 0.016 285.938);
-    --chart-3:             oklch(0.442 0.017 285.786);
-    --chart-4:             oklch(0.37 0.013 285.805);
-    --chart-5:             oklch(0.274 0.006 286.033);
-  }
-
-  .dark {
-    --background:          oklch(0.141 0.005 285.823);
-    --foreground:          oklch(0.985 0 0);
-    --card:                oklch(0.21 0.006 285.885);
-    --card-foreground:     oklch(0.985 0 0);
-    --primary:             oklch(0.47 0.157 37.304);
-    --primary-fg:          oklch(0.98 0.016 73.684);
-    --secondary:           oklch(0.5 0.12 210);
-    --secondary-fg:        oklch(0.985 0 0);
-    --muted:               oklch(0.274 0.006 286.033);
-    --muted-fg:            oklch(0.705 0.015 286.067);
-    --accent:              oklch(0.47 0.157 37.304);
-    --destructive:         oklch(0.704 0.191 22.216);
-    --border:              oklch(1 0 0 / 10%);
-    --input:               oklch(1 0 0 / 15%);
-    --ring:                oklch(0.552 0.016 285.938);
-  }
-
-  /* ─── Reset & base ──────────────────────────────────────────────────── */
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-  html {
-    font-family: var(--font-sans);
-    background: var(--background);
-    color: var(--foreground);
-    transition: background 0.2s, color 0.2s;
-  }
-
-  body { min-height: 100vh; }
-
-  /* ─── Layout ────────────────────────────────────────────────────────── */
-  .app-header {
-    height: 56px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 24px;
-    border-bottom: 1px solid var(--border);
-    background: var(--background);
-    position: sticky;
-    top: 0;
-    z-index: 10;
-  }
-
-  .logo { font-size: 1.5rem; font-weight: 700; color: var(--foreground); text-decoration: none; }
-
-  .theme-toggle {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 0.75rem;
-    color: var(--muted-fg);
-  }
-
-  .toggle-btn {
-    background: var(--muted);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 4px 10px;
-    font-family: var(--font-sans);
-    font-size: 0.75rem;
-    color: var(--foreground);
-    cursor: pointer;
-    transition: background 0.15s;
-  }
-  .toggle-btn:hover { background: var(--border); }
-
-  main {
-    max-width: 960px;
-    margin: 0 auto;
-    padding: 48px 24px 80px;
-    display: flex;
-    flex-direction: column;
-    gap: 64px;
-  }
-
-  /* ─── Section headers ───────────────────────────────────────────────── */
-  .section-label {
-    font-size: 0.75rem;
-    font-weight: 600;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--muted-fg);
-    margin-bottom: 20px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-  .section-label::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: var(--border);
-  }
-
-  .section-title {
-    font-size: 1.5rem;
-    font-weight: 700;
-    margin-bottom: 8px;
-  }
-
-  .section-desc {
-    font-size: 0.875rem;
-    color: var(--muted-fg);
-    margin-bottom: 24px;
-    line-height: 1.6;
-  }
-
-  /* ─── Color swatches ────────────────────────────────────────────────── */
-  .swatch-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-    gap: 12px;
-  }
-
-  .swatch {
-    border-radius: var(--radius);
-    overflow: hidden;
-    border: 1px solid var(--border);
-  }
-
-  .swatch-color {
-    height: 64px;
-  }
-
-  .swatch-info {
-    padding: 8px 10px;
-    background: var(--card);
-  }
-
-  .swatch-name {
-    font-size: 0.625rem;
-    font-weight: 600;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    color: var(--muted-fg);
-  }
-
-  .swatch-value {
-    font-size: 0.625rem;
-    color: var(--muted-fg);
-    font-family: ui-monospace, monospace;
-    margin-top: 2px;
-    word-break: break-all;
-  }
-
-  /* ─── Buttons ───────────────────────────────────────────────────────── */
-  .btn-showcase {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    align-items: center;
-    margin-bottom: 16px;
-  }
-
-  .btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 4px;
-    border: 1px solid transparent;
-    border-radius: calc(var(--radius) * 0.8);
-    font-family: var(--font-sans);
-    font-size: 0.75rem;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.15s;
-    white-space: nowrap;
-    outline: none;
-    text-decoration: none;
-    line-height: 1;
-  }
-
-  /* sizes */
-  .btn-xs  { height: 20px; padding: 0 8px; font-size: 0.625rem; border-radius: calc(var(--radius) * 0.6); }
-  .btn-sm  { height: 24px; padding: 0 8px; font-size: 0.75rem; }
-  .btn-default { height: 28px; padding: 0 8px; }
-  .btn-lg  { height: 32px; padding: 0 10px; }
-  .btn-icon { height: 28px; width: 28px; padding: 0; }
-
-  /* variants */
-  .btn-primary     { background: var(--primary); color: var(--primary-fg); }
-  .btn-primary:hover { background: oklch(from var(--primary) calc(l - 0.05) c h); }
-
-  .btn-secondary   { background: var(--secondary); color: var(--secondary-fg); }
-  .btn-secondary:hover { opacity: 0.85; }
-
-  .btn-outline {
-    border-color: var(--border);
-    background: transparent;
-    color: var(--foreground);
-  }
-  .btn-outline:hover { background: var(--muted); }
-
-  .btn-ghost {
-    background: transparent;
-    color: var(--foreground);
-  }
-  .btn-ghost:hover { background: var(--muted); }
-
-  .btn-destructive {
-    background: color-mix(in oklch, var(--destructive) 15%, transparent);
-    color: var(--destructive);
-    border-color: transparent;
-  }
-  .btn-destructive:hover {
-    background: color-mix(in oklch, var(--destructive) 25%, transparent);
-  }
-
-  .btn-link {
-    background: transparent;
-    color: var(--primary);
-    text-decoration: underline;
-    text-underline-offset: 4px;
-  }
-
-  /* ─── Typography samples ────────────────────────────────────────────── */
-  .type-sample {
-    padding: 16px 20px;
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    background: var(--card);
-    margin-bottom: 8px;
-    display: flex;
-    align-items: baseline;
-    gap: 16px;
-  }
-
-  .type-meta {
-    font-size: 0.625rem;
-    color: var(--muted-fg);
-    font-family: ui-monospace, monospace;
-    min-width: 120px;
-    flex-shrink: 0;
-  }
-
-  /* ─── Spacing scale ─────────────────────────────────────────────────── */
-  .spacing-row {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 6px;
-  }
-
-  .spacing-bar {
-    background: var(--primary);
-    height: 20px;
-    border-radius: 3px;
-    opacity: 0.7;
-  }
-
-  .spacing-label {
-    font-size: 0.625rem;
-    font-family: ui-monospace, monospace;
-    color: var(--muted-fg);
-    min-width: 120px;
-  }
-
-  /* ─── Radius samples ────────────────────────────────────────────────── */
-  .radius-grid {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 16px;
-  }
-
-  .radius-sample {
-    width: 80px;
-    height: 80px;
-    background: var(--muted);
-    border: 2px solid var(--border);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 4px;
-  }
-
-  .radius-sample-label {
-    font-size: 0.5rem;
-    font-family: ui-monospace, monospace;
-    color: var(--muted-fg);
-    text-align: center;
-  }
-
-  /* ─── Component samples ─────────────────────────────────────────────── */
-  .component-card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 24px;
-    margin-bottom: 16px;
-  }
-
-  .component-card h3 {
-    font-size: 0.75rem;
-    font-weight: 600;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    color: var(--muted-fg);
-    margin-bottom: 16px;
-  }
-
-  /* Input */
-  .input-demo {
-    width: 100%;
-    max-width: 320px;
-    height: 28px;
-    padding: 0 8px;
-    font-family: var(--font-sans);
-    font-size: 0.75rem;
-    border: 1px solid var(--border);
-    border-radius: calc(var(--radius) * 0.8);
-    background: var(--background);
-    color: var(--foreground);
-    outline: none;
-    transition: border-color 0.15s;
-  }
-  .input-demo:focus { border-color: var(--ring); }
-
-  /* Checkbox */
-  .checkbox-demo {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 0.75rem;
-  }
-  .checkbox-demo input[type="checkbox"] {
-    width: 14px;
-    height: 14px;
-    accent-color: var(--primary);
-    cursor: pointer;
-  }
-
-  /* Badge */
-  .badge {
-    display: inline-flex;
-    align-items: center;
-    padding: 2px 8px;
-    border-radius: calc(var(--radius) * 0.6);
-    font-size: 0.625rem;
-    font-weight: 600;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-  }
-  .badge-muted { background: var(--muted); color: var(--muted-fg); }
-  .badge-primary { background: color-mix(in oklch, var(--primary) 15%, transparent); color: var(--primary); }
-  .badge-secondary { background: color-mix(in oklch, var(--secondary) 15%, transparent); color: var(--secondary); }
-
-  /* Tab simulation */
-  .tabs-demo {
-    display: inline-flex;
-    background: var(--muted);
-    border-radius: calc(var(--radius) * 0.8);
-    padding: 2px;
-    gap: 1px;
-  }
-  .tab {
-    padding: 3px 10px;
-    border-radius: calc(var(--radius) * 0.6);
-    font-size: 0.75rem;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.15s;
-    border: none;
-    background: transparent;
-    color: var(--muted-fg);
-    font-family: var(--font-sans);
-  }
-  .tab.active {
-    background: var(--background);
-    color: var(--foreground);
-    box-shadow: 0 1px 3px oklch(0 0 0 / 0.1);
-  }
-
-  /* Drop zone simulation */
-  .dropzone-demo {
-    border: 2px dashed var(--border);
-    border-radius: calc(var(--radius) * 2);
-    padding: 40px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 12px;
-    cursor: pointer;
-    transition: all 0.15s;
-    background: var(--card);
-  }
-  .dropzone-demo:hover {
-    border-color: var(--primary);
-    background: color-mix(in oklch, var(--primary) 5%, var(--card));
-  }
-  .dropzone-icon {
-    width: 48px;
-    height: 48px;
-    color: var(--muted-fg);
-  }
-  .dropzone-title { font-size: 1.5rem; font-weight: 700; }
-  .dropzone-sub { font-size: 0.875rem; color: var(--muted-fg); }
-
-  /* Stats row simulation */
-  .stats-row {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    padding: 8px 16px;
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    font-size: 0.75rem;
-    background: var(--background);
-  }
-  .stats-row strong { color: var(--secondary); }
-
-  /* Chart swatches */
-  .chart-swatch-row {
-    display: flex;
-    gap: 8px;
-    margin-top: 8px;
-  }
-  .chart-swatch {
-    height: 32px;
-    flex: 1;
-    border-radius: calc(var(--radius) * 0.6);
-  }
-
-  /* ─── Icon legend ───────────────────────────────────────────────────── */
-  .icon-row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-    align-items: center;
-  }
-
-  .icon-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 4px;
-  }
-
-  .icon-box {
-    width: 32px;
-    height: 32px;
-    border: 1px solid var(--border);
-    border-radius: calc(var(--radius) * 0.6);
-    background: var(--muted);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--muted-fg);
-  }
-
-  .icon-meta {
-    font-size: 0.5rem;
-    font-family: ui-monospace, monospace;
-    color: var(--muted-fg);
-    text-align: center;
-  }
-
-  /* ─── App shell mockup ──────────────────────────────────────────────── */
-  .app-shell-mockup {
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    overflow: hidden;
-    font-size: 0.625rem;
-  }
-
-  .mock-header {
-    height: 36px;
-    background: var(--background);
-    border-bottom: 1px solid var(--border);
-    display: flex;
-    align-items: center;
-    padding: 0 16px;
-    justify-content: space-between;
-  }
-
-  .mock-logo { font-weight: 700; font-size: 0.875rem; }
-
-  .mock-body {
-    display: flex;
-    height: 260px;
-  }
-
-  .mock-sidebar {
-    width: 140px;
-    background: var(--muted);
-    border-right: 1px solid var(--border);
-    padding: 8px 0;
-    flex-shrink: 0;
-  }
-
-  .mock-sidebar-header {
-    padding: 4px 12px 8px;
-    font-size: 0.5rem;
-    font-weight: 600;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--muted-fg);
-    border-bottom: 1px solid var(--border);
-    margin-bottom: 4px;
-  }
-
-  .mock-col-row {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    padding: 3px 12px;
-    font-size: 0.5rem;
-    color: var(--foreground);
-  }
-
-  .mock-col-row:hover { background: var(--muted); }
-
-  .mock-cb {
-    width: 8px;
-    height: 8px;
-    border: 1px solid var(--border);
-    border-radius: 2px;
-    background: var(--primary);
-    flex-shrink: 0;
-  }
-  .mock-cb.unchecked { background: transparent; }
-
-  .mock-content {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-  }
-
-  .mock-toolbar {
-    padding: 6px 12px;
-    border-bottom: 1px solid var(--border);
-    display: flex;
-    gap: 6px;
-    align-items: center;
-  }
-
-  .mock-btn {
-    height: 16px;
-    padding: 0 6px;
-    border-radius: 3px;
-    font-size: 0.5rem;
-    display: inline-flex;
-    align-items: center;
-    gap: 2px;
-    border: none;
-    cursor: pointer;
-    font-family: var(--font-sans);
-  }
-
-  .mock-btn-primary { background: var(--primary); color: var(--primary-fg); }
-  .mock-btn-secondary { background: var(--secondary); color: var(--secondary-fg); }
-  .mock-btn-destructive {
-    background: color-mix(in oklch, var(--destructive) 15%, transparent);
-    color: var(--destructive);
-  }
-
-  .mock-stats {
-    padding: 4px 12px;
-    border-bottom: 1px solid var(--border);
-    display: flex;
-    gap: 12px;
-    font-size: 0.5rem;
-    color: var(--foreground);
-  }
-  .mock-stats strong { color: var(--secondary); }
-
-  .mock-table-header {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    padding: 4px 12px;
-    border-bottom: 1px solid var(--border);
-    background: var(--muted);
-    font-size: 0.5rem;
-    font-weight: 600;
-    color: var(--muted-fg);
-    gap: 8px;
-  }
-
-  .mock-table-row {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    padding: 3px 12px;
-    border-bottom: 1px solid var(--border);
-    font-size: 0.5rem;
-    gap: 8px;
-    color: var(--foreground);
-  }
-  .mock-table-row:nth-child(even) { background: color-mix(in oklch, var(--muted) 30%, transparent); }
-
-  .mock-cell { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-
-  /* ─── Footer ────────────────────────────────────────────────────────── */
-  footer {
-    border-top: 1px solid var(--border);
-    padding: 20px 24px;
-    text-align: center;
-    font-size: 0.625rem;
-    color: var(--muted-fg);
-  }
-
-  /* ─── Utility ───────────────────────────────────────────────────────── */
-  .row { display: flex; flex-wrap: wrap; gap: 16px; }
-  .col { flex: 1; min-width: 240px; }
-  code {
-    font-family: ui-monospace, monospace;
-    font-size: 0.75em;
-    background: var(--muted);
-    padding: 1px 4px;
-    border-radius: 3px;
-    color: var(--foreground);
-  }
-</style>
-</head>
-<body>
-
-<!-- ─── App Header ───────────────────────────────────────────────────────── -->
-<header class="app-header">
-  <span class="logo">Roka</span>
-  <div class="theme-toggle">
-    <span id="theme-label">Light mode</span>
-    <button class="toggle-btn" onclick="toggleTheme()">Toggle Dark</button>
-  </div>
-</header>
-
-<main>
-
-  <!-- ─── Title ─────────────────────────────────────────────────────────── -->
-  <section>
-    <div class="section-label">Design System</div>
-    <h1 class="section-title">Roka</h1>
-    <p class="section-desc">
-      A dense, warm, precision data-tool UI. Built on SvelteKit 5 + Tailwind CSS v4 + shadcn-svelte.
-      Primary typeface: <strong>Oxanium Variable</strong>. Color space: <strong>oklch</strong>.
-      Toggle dark mode above to preview both themes.
-    </p>
-  </section>
-
-  <!-- ─── Colors ────────────────────────────────────────────────────────── -->
-  <section>
-    <div class="section-label">Color Palette</div>
-
-    <h2 style="font-size:1rem;font-weight:700;margin-bottom:6px">Core Semantic Tokens</h2>
-    <p class="section-desc">All colors are defined in oklch for perceptual uniformity. Hex values are approximations for reference.</p>
-
-    <div class="swatch-grid">
-      <div class="swatch">
-        <div class="swatch-color" style="background:var(--background);border-bottom:1px solid var(--border)"></div>
-        <div class="swatch-info">
-          <div class="swatch-name">Background</div>
-          <div class="swatch-value">oklch(1 0 0)</div>
-        </div>
-      </div>
-      <div class="swatch">
-        <div class="swatch-color" style="background:var(--foreground)"></div>
-        <div class="swatch-info">
-          <div class="swatch-name">Foreground</div>
-          <div class="swatch-value">oklch(0.141 0.005 285)</div>
-        </div>
-      </div>
-      <div class="swatch">
-        <div class="swatch-color" style="background:var(--primary)"></div>
-        <div class="swatch-info">
-          <div class="swatch-name">Primary</div>
-          <div class="swatch-value">oklch(0.553 0.195 38) ≈ #c45d1f</div>
-        </div>
-      </div>
-      <div class="swatch">
-        <div class="swatch-color" style="background:var(--primary-fg)"></div>
-        <div class="swatch-info">
-          <div class="swatch-name">Primary Foreground</div>
-          <div class="swatch-value">oklch(0.98 0.016 73) ≈ #faf8f0</div>
-        </div>
-      </div>
-      <div class="swatch">
-        <div class="swatch-color" style="background:var(--secondary)"></div>
-        <div class="swatch-info">
-          <div class="swatch-name">Secondary</div>
-          <div class="swatch-value">oklch(0.6 0.12 210) ≈ #3d8bc0</div>
-        </div>
-      </div>
-      <div class="swatch">
-        <div class="swatch-color" style="background:var(--muted)"></div>
-        <div class="swatch-info">
-          <div class="swatch-name">Muted</div>
-          <div class="swatch-value">oklch(0.967 0.001 286) ≈ #f4f4f8</div>
-        </div>
-      </div>
-      <div class="swatch">
-        <div class="swatch-color" style="background:var(--muted-fg)"></div>
-        <div class="swatch-info">
-          <div class="swatch-name">Muted Foreground</div>
-          <div class="swatch-value">oklch(0.552 0.016 285) ≈ #72728a</div>
-        </div>
-      </div>
-      <div class="swatch">
-        <div class="swatch-color" style="background:var(--destructive)"></div>
-        <div class="swatch-info">
-          <div class="swatch-name">Destructive</div>
-          <div class="swatch-value">oklch(0.577 0.245 27) ≈ #e0361a</div>
-        </div>
-      </div>
-      <div class="swatch">
-        <div class="swatch-color" style="background:var(--border)"></div>
-        <div class="swatch-info">
-          <div class="swatch-name">Border</div>
-          <div class="swatch-value">oklch(0.92 0.004 286) ≈ #e6e6ec</div>
-        </div>
-      </div>
-      <div class="swatch">
-        <div class="swatch-color" style="background:var(--ring)"></div>
-        <div class="swatch-info">
-          <div class="swatch-name">Ring (focus)</div>
-          <div class="swatch-value">oklch(0.705 0.015 286) ≈ #a8a8b8</div>
-        </div>
-      </div>
-    </div>
-
-    <h2 style="font-size:0.875rem;font-weight:600;margin-top:32px;margin-bottom:12px">Chart Ramp (cool gray)</h2>
-    <p class="section-desc" style="margin-bottom:12px">Five-step desaturated ramp for data visualization backgrounds.</p>
-    <div class="chart-swatch-row">
-      <div class="chart-swatch" style="background:var(--chart-1)" title="chart-1 (lightest)"></div>
-      <div class="chart-swatch" style="background:var(--chart-2)" title="chart-2"></div>
-      <div class="chart-swatch" style="background:var(--chart-3)" title="chart-3"></div>
-      <div class="chart-swatch" style="background:var(--chart-4)" title="chart-4"></div>
-      <div class="chart-swatch" style="background:var(--chart-5)" title="chart-5 (darkest)"></div>
-    </div>
-    <p style="font-size:0.625rem;color:var(--muted-fg);margin-top:6px;font-family:monospace">chart-1 (L 0.871) → chart-5 (L 0.274)</p>
-  </section>
-
-  <!-- ─── Typography ─────────────────────────────────────────────────────── -->
-  <section>
-    <div class="section-label">Typography</div>
-    <p class="section-desc">Oxanium Variable — geometric, angular, technical. A single typeface for both headings and body text.</p>
-
-    <div class="type-sample">
-      <div class="type-meta">2xl · 1.5rem · bold</div>
-      <span style="font-size:1.5rem;font-weight:700">Roka CSV Studio</span>
-    </div>
-    <div class="type-sample">
-      <div class="type-meta">xl · 1.25rem · semibold</div>
-      <span style="font-size:1.25rem;font-weight:600">Section Heading</span>
-    </div>
-    <div class="type-sample">
-      <div class="type-meta">lg · 1.125rem · semibold</div>
-      <span style="font-size:1.125rem;font-weight:600">Sub-section Title</span>
-    </div>
-    <div class="type-sample">
-      <div class="type-meta">sm · 0.875rem · normal</div>
-      <span style="font-size:0.875rem">Body text for descriptions and longer-form content. Rarely used in the main app UI.</span>
-    </div>
-    <div class="type-sample">
-      <div class="type-meta">xs · 0.75rem · normal</div>
-      <span style="font-size:0.75rem">Default UI text — table cells, buttons, labels, input fields. Dense tool UIs live here.</span>
-    </div>
-    <div class="type-sample">
-      <div class="type-meta">xs · tracking-wider · uppercase</div>
-      <span style="font-size:0.75rem;letter-spacing:0.1em;text-transform:uppercase;font-weight:600;color:var(--muted-fg)">Section Label Pattern</span>
-    </div>
-
-    <div style="margin-top:20px">
-      <h3 style="font-size:0.75rem;font-weight:600;margin-bottom:8px">Weight Scale (300–800 variable)</h3>
-      <div style="display:flex;flex-direction:column;gap:6px">
-        <div style="font-weight:300;font-size:1rem">Light 300 — Oxanium</div>
-        <div style="font-weight:400;font-size:1rem">Regular 400 — Oxanium</div>
-        <div style="font-weight:500;font-size:1rem">Medium 500 — Oxanium</div>
-        <div style="font-weight:600;font-size:1rem">Semibold 600 — Oxanium</div>
-        <div style="font-weight:700;font-size:1rem">Bold 700 — Oxanium</div>
-        <div style="font-weight:800;font-size:1rem">Extrabold 800 — Oxanium</div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ─── Buttons ────────────────────────────────────────────────────────── -->
-  <section>
-    <div class="section-label">Buttons</div>
-    <p class="section-desc">Six variants × eight sizes. Default height is 28px — deliberately compact for data-tool toolbars.</p>
-
-    <h3 style="font-size:0.75rem;font-weight:600;margin-bottom:10px;color:var(--muted-fg)">VARIANTS (default size)</h3>
-    <div class="btn-showcase">
-      <button class="btn btn-default btn-primary">Primary</button>
-      <button class="btn btn-default btn-secondary">Secondary</button>
-      <button class="btn btn-default btn-outline">Outline</button>
-      <button class="btn btn-default btn-ghost">Ghost</button>
-      <button class="btn btn-default btn-destructive">Destructive</button>
-      <a href="#" class="btn btn-default btn-link">Link</a>
-    </div>
-
-    <h3 style="font-size:0.75rem;font-weight:600;margin:20px 0 10px;color:var(--muted-fg)">SIZES (primary variant)</h3>
-    <div class="btn-showcase" style="align-items:flex-end">
-      <div style="text-align:center">
-        <button class="btn btn-xs btn-primary">xs</button>
-        <div style="font-size:0.5rem;color:var(--muted-fg);margin-top:4px;font-family:monospace">h-5 · 20px</div>
-      </div>
-      <div style="text-align:center">
-        <button class="btn btn-sm btn-primary">sm</button>
-        <div style="font-size:0.5rem;color:var(--muted-fg);margin-top:4px;font-family:monospace">h-6 · 24px</div>
-      </div>
-      <div style="text-align:center">
-        <button class="btn btn-default btn-primary">default</button>
-        <div style="font-size:0.5rem;color:var(--muted-fg);margin-top:4px;font-family:monospace">h-7 · 28px</div>
-      </div>
-      <div style="text-align:center">
-        <button class="btn btn-lg btn-primary">lg</button>
-        <div style="font-size:0.5rem;color:var(--muted-fg);margin-top:4px;font-family:monospace">h-8 · 32px</div>
-      </div>
-      <div style="text-align:center">
-        <button class="btn btn-icon btn-outline" title="icon">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-        </button>
-        <div style="font-size:0.5rem;color:var(--muted-fg);margin-top:4px;font-family:monospace">icon · 28px</div>
-      </div>
-    </div>
-
-    <h3 style="font-size:0.75rem;font-weight:600;margin:20px 0 10px;color:var(--muted-fg)">TOOLBAR EXAMPLE</h3>
-    <div style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:var(--background);border:1px solid var(--border);border-radius:var(--radius)">
-      <button class="btn btn-default btn-primary">
-        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-        Import New CSV
-      </button>
-      <button class="btn btn-default btn-destructive">
-        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>
-        Clear
-      </button>
-      <div style="flex:1"></div>
-      <button class="btn btn-default btn-secondary">
-        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-        Export CSV
-      </button>
-      <button class="btn btn-default btn-secondary">
-        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-        Export PDF
-      </button>
-    </div>
-  </section>
-
-  <!-- ─── Components ──────────────────────────────────────────────────────── -->
-  <section>
-    <div class="section-label">Components</div>
-
-    <div class="row">
-      <div class="col">
-        <div class="component-card">
-          <h3>Tabs</h3>
-          <div style="display:flex;flex-direction:column;gap:12px">
-            <div>
-              <div style="font-size:0.5rem;color:var(--muted-fg);margin-bottom:4px">Default (locale switcher)</div>
-              <div class="tabs-demo">
-                <button class="tab active" onclick="setTab(this,'tabs1')">EN</button>
-                <button class="tab" onclick="setTab(this,'tabs1')">JA</button>
-              </div>
-            </div>
-            <div>
-              <div style="font-size:0.5rem;color:var(--muted-fg);margin-bottom:4px">Filter tabs (sm size)</div>
-              <div class="tabs-demo" style="width:100%">
-                <button class="tab active" onclick="setTab(this,'tabs2')" style="flex:1">All</button>
-                <button class="tab" onclick="setTab(this,'tabs2')" style="flex:1">Empty</button>
-                <button class="tab" onclick="setTab(this,'tabs2')" style="flex:1">Non-empty</button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="component-card">
-          <h3>Input</h3>
-          <div style="display:flex;flex-direction:column;gap:8px">
-            <input class="input-demo" type="text" placeholder="Filter values…" />
-            <input class="input-demo" type="text" value="existing-column-name" />
-          </div>
-        </div>
-
-        <div class="component-card">
-          <h3>Badges</h3>
-          <div style="display:flex;gap:8px;flex-wrap:wrap">
-            <span class="badge badge-muted">filename.csv</span>
-            <span class="badge badge-primary">Active filter</span>
-            <span class="badge badge-secondary">Columns: 12</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="col">
-        <div class="component-card">
-          <h3>Checkbox (column list row)</h3>
-          <div style="display:flex;flex-direction:column;gap:4px">
-            <div class="checkbox-demo" style="padding:4px 0">
-              <input type="checkbox" id="cb1" checked />
-              <label for="cb1" style="font-size:0.75rem;cursor:pointer">customer_id</label>
-            </div>
-            <div class="checkbox-demo" style="padding:4px 0">
-              <input type="checkbox" id="cb2" checked />
-              <label for="cb2" style="font-size:0.75rem;cursor:pointer">first_name</label>
-            </div>
-            <div class="checkbox-demo" style="padding:4px 0">
-              <input type="checkbox" id="cb3" />
-              <label for="cb3" style="font-size:0.75rem;cursor:pointer;color:var(--muted-fg)">internal_notes</label>
-            </div>
-          </div>
-        </div>
-
-        <div class="component-card">
-          <h3>Stats Row</h3>
-          <div class="stats-row">
-            <span>Rows: <strong>1,204</strong></span>
-            <span>Filtered: <strong>87</strong></span>
-            <span>Columns: <strong>8</strong></span>
-            <div style="flex:1"></div>
-            <span class="badge badge-muted">export_Q4.csv</span>
-          </div>
-        </div>
-
-        <div class="component-card">
-          <h3>Dropzone</h3>
-          <div class="dropzone-demo">
-            <svg class="dropzone-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-              <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/>
-            </svg>
-            <div class="dropzone-title">Drop any CSV here</div>
-            <div class="dropzone-sub">Or click here to browse files</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ─── Spacing ────────────────────────────────────────────────────────── -->
-  <section>
-    <div class="section-label">Spacing Scale</div>
-    <p class="section-desc">4px base grid. Values shown are most-used in the app.</p>
-
-    <div>
-      <div class="spacing-row">
-        <div class="spacing-label">1 · 4px · gap-1</div>
-        <div class="spacing-bar" style="width:4px"></div>
-      </div>
-      <div class="spacing-row">
-        <div class="spacing-label">2 · 8px · gap-2</div>
-        <div class="spacing-bar" style="width:8px"></div>
-      </div>
-      <div class="spacing-row">
-        <div class="spacing-label">3 · 12px · gap-3</div>
-        <div class="spacing-bar" style="width:12px"></div>
-      </div>
-      <div class="spacing-row">
-        <div class="spacing-label">4 · 16px · px-4 / gap-4</div>
-        <div class="spacing-bar" style="width:16px"></div>
-      </div>
-      <div class="spacing-row">
-        <div class="spacing-label">6 · 24px · px-6 (header)</div>
-        <div class="spacing-bar" style="width:24px"></div>
-      </div>
-      <div class="spacing-row">
-        <div class="spacing-label">14 · 56px · h-14 (header height)</div>
-        <div class="spacing-bar" style="width:56px"></div>
-      </div>
-      <div class="spacing-row">
-        <div class="spacing-label">64 · 256px · w-64 (sidebar)</div>
-        <div class="spacing-bar" style="width:120px;opacity:0.4"></div>
-        <span style="font-size:0.5rem;color:var(--muted-fg);font-family:monospace">(scaled ÷ 2)</span>
-      </div>
-    </div>
-  </section>
-
-  <!-- ─── Border Radius ──────────────────────────────────────────────────── -->
-  <section>
-    <div class="section-label">Border Radius</div>
-    <p class="section-desc">Base: 0.45rem (~7px). Low by design — professional, tool-like.</p>
-
-    <div class="radius-grid">
-      <div>
-        <div class="radius-sample" style="border-radius:0.27rem">
-          <div class="radius-sample-label">sm<br/>0.27rem</div>
-        </div>
-        <div style="font-size:0.5rem;color:var(--muted-fg);text-align:center;margin-top:4px">badges, xs btns</div>
-      </div>
-      <div>
-        <div class="radius-sample" style="border-radius:0.36rem">
-          <div class="radius-sample-label">md<br/>0.36rem</div>
-        </div>
-        <div style="font-size:0.5rem;color:var(--muted-fg);text-align:center;margin-top:4px">inputs, buttons</div>
-      </div>
-      <div>
-        <div class="radius-sample" style="border-radius:0.45rem">
-          <div class="radius-sample-label">lg<br/>0.45rem</div>
-        </div>
-        <div style="font-size:0.5rem;color:var(--muted-fg);text-align:center;margin-top:4px">cards, panels</div>
-      </div>
-      <div>
-        <div class="radius-sample" style="border-radius:0.63rem">
-          <div class="radius-sample-label">xl<br/>0.63rem</div>
-        </div>
-        <div style="font-size:0.5rem;color:var(--muted-fg);text-align:center;margin-top:4px">large containers</div>
-      </div>
-      <div>
-        <div class="radius-sample" style="border-radius:0.81rem">
-          <div class="radius-sample-label">2xl<br/>0.81rem</div>
-        </div>
-        <div style="font-size:0.5rem;color:var(--muted-fg);text-align:center;margin-top:4px">drop zone</div>
-      </div>
-      <div>
-        <div class="radius-sample" style="border-radius:9999px">
-          <div class="radius-sample-label">full<br/>9999px</div>
-        </div>
-        <div style="font-size:0.5rem;color:var(--muted-fg);text-align:center;margin-top:4px">pills, toggles</div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ─── App Shell Mockup ───────────────────────────────────────────────── -->
-  <section>
-    <div class="section-label">App Shell Mockup</div>
-    <p class="section-desc">The CSV Studio layout — header + sidebar + toolbar + stats + table — all in one view.</p>
-
-    <div class="app-shell-mockup">
-      <!-- Mock header -->
-      <div class="mock-header">
-        <span class="mock-logo">Roka</span>
-        <div style="display:flex;gap:6px;align-items:center">
-          <span style="font-size:0.5rem;color:var(--muted-fg)">user@example.com</span>
-          <div class="tabs-demo" style="padding:1px;gap:1px">
-            <button class="tab active" style="padding:2px 6px;font-size:0.5rem">EN</button>
-            <button class="tab" style="padding:2px 6px;font-size:0.5rem">JA</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- Mock body -->
-      <div class="mock-body">
-        <!-- Sidebar -->
-        <div class="mock-sidebar">
-          <div class="mock-sidebar-header">Columns</div>
-          <div class="mock-col-row"><div class="mock-cb"></div><span>customer_id</span></div>
-          <div class="mock-col-row"><div class="mock-cb"></div><span>first_name</span></div>
-          <div class="mock-col-row"><div class="mock-cb"></div><span>last_name</span></div>
-          <div class="mock-col-row"><div class="mock-cb unchecked"></div><span style="color:var(--muted-fg)">notes</span></div>
-          <div class="mock-col-row"><div class="mock-cb"></div><span>created_at</span></div>
-          <div class="mock-col-row"><div class="mock-cb"></div><span>amount</span></div>
-          <div class="mock-col-row"><div class="mock-cb unchecked"></div><span style="color:var(--muted-fg)">internal_id</span></div>
-        </div>
-
-        <!-- Content -->
-        <div class="mock-content">
-          <!-- Toolbar -->
-          <div class="mock-toolbar">
-            <button class="mock-btn mock-btn-primary">↑ Import New CSV</button>
-            <button class="mock-btn mock-btn-destructive">✕ Clear</button>
-            <div style="flex:1"></div>
-            <button class="mock-btn mock-btn-secondary">↓ Export CSV</button>
-            <button class="mock-btn mock-btn-secondary">⎙ Export PDF</button>
-          </div>
-
-          <!-- Stats -->
-          <div class="mock-stats">
-            <span>Rows: <strong>1,204</strong></span>
-            <span>Filtered: <strong>87</strong></span>
-            <span>Columns: <strong>6</strong></span>
-            <div style="flex:1"></div>
-            <span style="background:var(--muted);padding:1px 6px;border-radius:3px;color:var(--muted-fg)">export_Q4.csv</span>
-          </div>
-
-          <!-- Table header -->
-          <div class="mock-table-header">
-            <div class="mock-cell">customer_id ↕</div>
-            <div class="mock-cell">first_name ↑</div>
-            <div class="mock-cell">last_name</div>
-            <div class="mock-cell">amount</div>
-          </div>
-
-          <!-- Table rows -->
-          <div class="mock-table-row"><div class="mock-cell">C-00142</div><div class="mock-cell">Alice</div><div class="mock-cell">Martínez</div><div class="mock-cell" style="color:var(--secondary)">$1,200.00</div></div>
-          <div class="mock-table-row"><div class="mock-cell">C-00208</div><div class="mock-cell">Bob</div><div class="mock-cell">Yamamoto</div><div class="mock-cell" style="color:var(--secondary)">$340.50</div></div>
-          <div class="mock-table-row"><div class="mock-cell">C-00315</div><div class="mock-cell">Clara</div><div class="mock-cell">Osei</div><div class="mock-cell" style="color:var(--secondary)">$892.00</div></div>
-          <div class="mock-table-row"><div class="mock-cell">C-00421</div><div class="mock-cell">David</div><div class="mock-cell">Petrov</div><div class="mock-cell" style="color:var(--secondary)">$55.25</div></div>
-          <div class="mock-table-row"><div class="mock-cell">C-00509</div><div class="mock-cell">Eva</div><div class="mock-cell">Lindström</div><div class="mock-cell" style="color:var(--secondary)">$2,100.75</div></div>
-          <div class="mock-table-row"><div class="mock-cell">C-00617</div><div class="mock-cell">Frank</div><div class="mock-cell">Okonkwo</div><div class="mock-cell" style="color:var(--secondary)">$480.00</div></div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-</main>
-
-<footer>
-  Roka Design System · Generated 2026-04-16 · Tailwind CSS v4 + oklch color space
-</footer>
-
-<script>
-  const toggleTheme = () => {
-    const html = document.documentElement;
-    const isLight = html.classList.contains('light');
-    html.classList.toggle('light', !isLight);
-    html.classList.toggle('dark', isLight);
-    document.getElementById('theme-label').textContent = isLight ? 'Dark mode' : 'Light mode';
-  };
-
-  const setTab = (el, group) => {
-    el.closest('.tabs-demo').querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-    el.classList.add('active');
-  };
-</script>
-</body>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Roka Design System Preview</title>
+		<style>
+			/* ─── Oxanium font via @import ─────────────────────────────────────── */
+			@import url('https://fonts.googleapis.com/css2?family=Oxanium:wght@300..800&display=swap');
+
+			/* ─── Design tokens ─────────────────────────────────────────────────── */
+			:root {
+				--background: oklch(1 0 0);
+				--foreground: oklch(0.141 0.005 285.823);
+				--card: oklch(1 0 0);
+				--card-foreground: oklch(0.141 0.005 285.823);
+				--primary: oklch(0.553 0.195 38.402);
+				--primary-fg: oklch(0.98 0.016 73.684);
+				--secondary: oklch(0.6 0.12 210);
+				--secondary-fg: oklch(0.985 0 0);
+				--muted: oklch(0.967 0.001 286.375);
+				--muted-fg: oklch(0.552 0.016 285.938);
+				--accent: oklch(0.553 0.195 38.402);
+				--destructive: oklch(0.577 0.245 27.325);
+				--border: oklch(0.92 0.004 286.32);
+				--input: oklch(0.92 0.004 286.32);
+				--ring: oklch(0.705 0.015 286.067);
+				--radius: 0.45rem;
+				--font-sans: 'Oxanium', sans-serif;
+				--chart-1: oklch(0.871 0.006 286.286);
+				--chart-2: oklch(0.552 0.016 285.938);
+				--chart-3: oklch(0.442 0.017 285.786);
+				--chart-4: oklch(0.37 0.013 285.805);
+				--chart-5: oklch(0.274 0.006 286.033);
+			}
+
+			.dark {
+				--background: oklch(0.141 0.005 285.823);
+				--foreground: oklch(0.985 0 0);
+				--card: oklch(0.21 0.006 285.885);
+				--card-foreground: oklch(0.985 0 0);
+				--primary: oklch(0.47 0.157 37.304);
+				--primary-fg: oklch(0.98 0.016 73.684);
+				--secondary: oklch(0.5 0.12 210);
+				--secondary-fg: oklch(0.985 0 0);
+				--muted: oklch(0.274 0.006 286.033);
+				--muted-fg: oklch(0.705 0.015 286.067);
+				--accent: oklch(0.47 0.157 37.304);
+				--destructive: oklch(0.704 0.191 22.216);
+				--border: oklch(1 0 0 / 10%);
+				--input: oklch(1 0 0 / 15%);
+				--ring: oklch(0.552 0.016 285.938);
+			}
+
+			/* ─── Reset & base ──────────────────────────────────────────────────── */
+			*,
+			*::before,
+			*::after {
+				box-sizing: border-box;
+				margin: 0;
+				padding: 0;
+			}
+
+			html {
+				font-family: var(--font-sans);
+				background: var(--background);
+				color: var(--foreground);
+				transition:
+					background 0.2s,
+					color 0.2s;
+			}
+
+			body {
+				min-height: 100vh;
+			}
+
+			/* ─── Layout ────────────────────────────────────────────────────────── */
+			.app-header {
+				height: 56px;
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				padding: 0 24px;
+				border-bottom: 1px solid var(--border);
+				background: var(--background);
+				position: sticky;
+				top: 0;
+				z-index: 10;
+			}
+
+			.logo {
+				font-size: 1.5rem;
+				font-weight: 700;
+				color: var(--foreground);
+				text-decoration: none;
+			}
+
+			.theme-toggle {
+				display: flex;
+				align-items: center;
+				gap: 8px;
+				font-size: 0.75rem;
+				color: var(--muted-fg);
+			}
+
+			.toggle-btn {
+				background: var(--muted);
+				border: 1px solid var(--border);
+				border-radius: var(--radius);
+				padding: 4px 10px;
+				font-family: var(--font-sans);
+				font-size: 0.75rem;
+				color: var(--foreground);
+				cursor: pointer;
+				transition: background 0.15s;
+			}
+			.toggle-btn:hover {
+				background: var(--border);
+			}
+
+			main {
+				max-width: 960px;
+				margin: 0 auto;
+				padding: 48px 24px 80px;
+				display: flex;
+				flex-direction: column;
+				gap: 64px;
+			}
+
+			/* ─── Section headers ───────────────────────────────────────────────── */
+			.section-label {
+				font-size: 0.75rem;
+				font-weight: 600;
+				letter-spacing: 0.1em;
+				text-transform: uppercase;
+				color: var(--muted-fg);
+				margin-bottom: 20px;
+				display: flex;
+				align-items: center;
+				gap: 12px;
+			}
+			.section-label::after {
+				content: '';
+				flex: 1;
+				height: 1px;
+				background: var(--border);
+			}
+
+			.section-title {
+				font-size: 1.5rem;
+				font-weight: 700;
+				margin-bottom: 8px;
+			}
+
+			.section-desc {
+				font-size: 0.875rem;
+				color: var(--muted-fg);
+				margin-bottom: 24px;
+				line-height: 1.6;
+			}
+
+			/* ─── Color swatches ────────────────────────────────────────────────── */
+			.swatch-grid {
+				display: grid;
+				grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+				gap: 12px;
+			}
+
+			.swatch {
+				border-radius: var(--radius);
+				overflow: hidden;
+				border: 1px solid var(--border);
+			}
+
+			.swatch-color {
+				height: 64px;
+			}
+
+			.swatch-info {
+				padding: 8px 10px;
+				background: var(--card);
+			}
+
+			.swatch-name {
+				font-size: 0.625rem;
+				font-weight: 600;
+				letter-spacing: 0.05em;
+				text-transform: uppercase;
+				color: var(--muted-fg);
+			}
+
+			.swatch-value {
+				font-size: 0.625rem;
+				color: var(--muted-fg);
+				font-family: ui-monospace, monospace;
+				margin-top: 2px;
+				word-break: break-all;
+			}
+
+			/* ─── Buttons ───────────────────────────────────────────────────────── */
+			.btn-showcase {
+				display: flex;
+				flex-wrap: wrap;
+				gap: 8px;
+				align-items: center;
+				margin-bottom: 16px;
+			}
+
+			.btn {
+				display: inline-flex;
+				align-items: center;
+				justify-content: center;
+				gap: 4px;
+				border: 1px solid transparent;
+				border-radius: calc(var(--radius) * 0.8);
+				font-family: var(--font-sans);
+				font-size: 0.75rem;
+				font-weight: 500;
+				cursor: pointer;
+				transition: all 0.15s;
+				white-space: nowrap;
+				outline: none;
+				text-decoration: none;
+				line-height: 1;
+			}
+
+			/* sizes */
+			.btn-xs {
+				height: 20px;
+				padding: 0 8px;
+				font-size: 0.625rem;
+				border-radius: calc(var(--radius) * 0.6);
+			}
+			.btn-sm {
+				height: 24px;
+				padding: 0 8px;
+				font-size: 0.75rem;
+			}
+			.btn-default {
+				height: 28px;
+				padding: 0 8px;
+			}
+			.btn-lg {
+				height: 32px;
+				padding: 0 10px;
+			}
+			.btn-icon {
+				height: 28px;
+				width: 28px;
+				padding: 0;
+			}
+
+			/* variants */
+			.btn-primary {
+				background: var(--primary);
+				color: var(--primary-fg);
+			}
+			.btn-primary:hover {
+				background: oklch(from var(--primary) calc(l - 0.05) c h);
+			}
+
+			.btn-secondary {
+				background: var(--secondary);
+				color: var(--secondary-fg);
+			}
+			.btn-secondary:hover {
+				opacity: 0.85;
+			}
+
+			.btn-outline {
+				border-color: var(--border);
+				background: transparent;
+				color: var(--foreground);
+			}
+			.btn-outline:hover {
+				background: var(--muted);
+			}
+
+			.btn-ghost {
+				background: transparent;
+				color: var(--foreground);
+			}
+			.btn-ghost:hover {
+				background: var(--muted);
+			}
+
+			.btn-destructive {
+				background: color-mix(in oklch, var(--destructive) 15%, transparent);
+				color: var(--destructive);
+				border-color: transparent;
+			}
+			.btn-destructive:hover {
+				background: color-mix(in oklch, var(--destructive) 25%, transparent);
+			}
+
+			.btn-link {
+				background: transparent;
+				color: var(--primary);
+				text-decoration: underline;
+				text-underline-offset: 4px;
+			}
+
+			/* ─── Typography samples ────────────────────────────────────────────── */
+			.type-sample {
+				padding: 16px 20px;
+				border: 1px solid var(--border);
+				border-radius: var(--radius);
+				background: var(--card);
+				margin-bottom: 8px;
+				display: flex;
+				align-items: baseline;
+				gap: 16px;
+			}
+
+			.type-meta {
+				font-size: 0.625rem;
+				color: var(--muted-fg);
+				font-family: ui-monospace, monospace;
+				min-width: 120px;
+				flex-shrink: 0;
+			}
+
+			/* ─── Spacing scale ─────────────────────────────────────────────────── */
+			.spacing-row {
+				display: flex;
+				align-items: center;
+				gap: 12px;
+				margin-bottom: 6px;
+			}
+
+			.spacing-bar {
+				background: var(--primary);
+				height: 20px;
+				border-radius: 3px;
+				opacity: 0.7;
+			}
+
+			.spacing-label {
+				font-size: 0.625rem;
+				font-family: ui-monospace, monospace;
+				color: var(--muted-fg);
+				min-width: 120px;
+			}
+
+			/* ─── Radius samples ────────────────────────────────────────────────── */
+			.radius-grid {
+				display: flex;
+				flex-wrap: wrap;
+				gap: 16px;
+			}
+
+			.radius-sample {
+				width: 80px;
+				height: 80px;
+				background: var(--muted);
+				border: 2px solid var(--border);
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				justify-content: center;
+				gap: 4px;
+			}
+
+			.radius-sample-label {
+				font-size: 0.5rem;
+				font-family: ui-monospace, monospace;
+				color: var(--muted-fg);
+				text-align: center;
+			}
+
+			/* ─── Component samples ─────────────────────────────────────────────── */
+			.component-card {
+				background: var(--card);
+				border: 1px solid var(--border);
+				border-radius: var(--radius);
+				padding: 24px;
+				margin-bottom: 16px;
+			}
+
+			.component-card h3 {
+				font-size: 0.75rem;
+				font-weight: 600;
+				letter-spacing: 0.05em;
+				text-transform: uppercase;
+				color: var(--muted-fg);
+				margin-bottom: 16px;
+			}
+
+			/* Input */
+			.input-demo {
+				width: 100%;
+				max-width: 320px;
+				height: 28px;
+				padding: 0 8px;
+				font-family: var(--font-sans);
+				font-size: 0.75rem;
+				border: 1px solid var(--border);
+				border-radius: calc(var(--radius) * 0.8);
+				background: var(--background);
+				color: var(--foreground);
+				outline: none;
+				transition: border-color 0.15s;
+			}
+			.input-demo:focus {
+				border-color: var(--ring);
+			}
+
+			/* Checkbox */
+			.checkbox-demo {
+				display: flex;
+				align-items: center;
+				gap: 8px;
+				font-size: 0.75rem;
+			}
+			.checkbox-demo input[type='checkbox'] {
+				width: 14px;
+				height: 14px;
+				accent-color: var(--primary);
+				cursor: pointer;
+			}
+
+			/* Badge */
+			.badge {
+				display: inline-flex;
+				align-items: center;
+				padding: 2px 8px;
+				border-radius: calc(var(--radius) * 0.6);
+				font-size: 0.625rem;
+				font-weight: 600;
+				letter-spacing: 0.05em;
+				text-transform: uppercase;
+			}
+			.badge-muted {
+				background: var(--muted);
+				color: var(--muted-fg);
+			}
+			.badge-primary {
+				background: color-mix(in oklch, var(--primary) 15%, transparent);
+				color: var(--primary);
+			}
+			.badge-secondary {
+				background: color-mix(in oklch, var(--secondary) 15%, transparent);
+				color: var(--secondary);
+			}
+
+			/* Tab simulation */
+			.tabs-demo {
+				display: inline-flex;
+				background: var(--muted);
+				border-radius: calc(var(--radius) * 0.8);
+				padding: 2px;
+				gap: 1px;
+			}
+			.tab {
+				padding: 3px 10px;
+				border-radius: calc(var(--radius) * 0.6);
+				font-size: 0.75rem;
+				font-weight: 500;
+				cursor: pointer;
+				transition: all 0.15s;
+				border: none;
+				background: transparent;
+				color: var(--muted-fg);
+				font-family: var(--font-sans);
+			}
+			.tab.active {
+				background: var(--background);
+				color: var(--foreground);
+				box-shadow: 0 1px 3px oklch(0 0 0 / 0.1);
+			}
+
+			/* Drop zone simulation */
+			.dropzone-demo {
+				border: 2px dashed var(--border);
+				border-radius: calc(var(--radius) * 2);
+				padding: 40px;
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				gap: 12px;
+				cursor: pointer;
+				transition: all 0.15s;
+				background: var(--card);
+			}
+			.dropzone-demo:hover {
+				border-color: var(--primary);
+				background: color-mix(in oklch, var(--primary) 5%, var(--card));
+			}
+			.dropzone-icon {
+				width: 48px;
+				height: 48px;
+				color: var(--muted-fg);
+			}
+			.dropzone-title {
+				font-size: 1.5rem;
+				font-weight: 700;
+			}
+			.dropzone-sub {
+				font-size: 0.875rem;
+				color: var(--muted-fg);
+			}
+
+			/* Stats row simulation */
+			.stats-row {
+				display: flex;
+				align-items: center;
+				gap: 20px;
+				padding: 8px 16px;
+				border: 1px solid var(--border);
+				border-radius: var(--radius);
+				font-size: 0.75rem;
+				background: var(--background);
+			}
+			.stats-row strong {
+				color: var(--secondary);
+			}
+
+			/* Chart swatches */
+			.chart-swatch-row {
+				display: flex;
+				gap: 8px;
+				margin-top: 8px;
+			}
+			.chart-swatch {
+				height: 32px;
+				flex: 1;
+				border-radius: calc(var(--radius) * 0.6);
+			}
+
+			/* ─── Icon legend ───────────────────────────────────────────────────── */
+			.icon-row {
+				display: flex;
+				flex-wrap: wrap;
+				gap: 12px;
+				align-items: center;
+			}
+
+			.icon-item {
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				gap: 4px;
+			}
+
+			.icon-box {
+				width: 32px;
+				height: 32px;
+				border: 1px solid var(--border);
+				border-radius: calc(var(--radius) * 0.6);
+				background: var(--muted);
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				color: var(--muted-fg);
+			}
+
+			.icon-meta {
+				font-size: 0.5rem;
+				font-family: ui-monospace, monospace;
+				color: var(--muted-fg);
+				text-align: center;
+			}
+
+			/* ─── App shell mockup ──────────────────────────────────────────────── */
+			.app-shell-mockup {
+				border: 1px solid var(--border);
+				border-radius: var(--radius);
+				overflow: hidden;
+				font-size: 0.625rem;
+			}
+
+			.mock-header {
+				height: 36px;
+				background: var(--background);
+				border-bottom: 1px solid var(--border);
+				display: flex;
+				align-items: center;
+				padding: 0 16px;
+				justify-content: space-between;
+			}
+
+			.mock-logo {
+				font-weight: 700;
+				font-size: 0.875rem;
+			}
+
+			.mock-body {
+				display: flex;
+				height: 260px;
+			}
+
+			.mock-sidebar {
+				width: 140px;
+				background: var(--muted);
+				border-right: 1px solid var(--border);
+				padding: 8px 0;
+				flex-shrink: 0;
+			}
+
+			.mock-sidebar-header {
+				padding: 4px 12px 8px;
+				font-size: 0.5rem;
+				font-weight: 600;
+				letter-spacing: 0.1em;
+				text-transform: uppercase;
+				color: var(--muted-fg);
+				border-bottom: 1px solid var(--border);
+				margin-bottom: 4px;
+			}
+
+			.mock-col-row {
+				display: flex;
+				align-items: center;
+				gap: 6px;
+				padding: 3px 12px;
+				font-size: 0.5rem;
+				color: var(--foreground);
+			}
+
+			.mock-col-row:hover {
+				background: var(--muted);
+			}
+
+			.mock-cb {
+				width: 8px;
+				height: 8px;
+				border: 1px solid var(--border);
+				border-radius: 2px;
+				background: var(--primary);
+				flex-shrink: 0;
+			}
+			.mock-cb.unchecked {
+				background: transparent;
+			}
+
+			.mock-content {
+				flex: 1;
+				display: flex;
+				flex-direction: column;
+				overflow: hidden;
+			}
+
+			.mock-toolbar {
+				padding: 6px 12px;
+				border-bottom: 1px solid var(--border);
+				display: flex;
+				gap: 6px;
+				align-items: center;
+			}
+
+			.mock-btn {
+				height: 16px;
+				padding: 0 6px;
+				border-radius: 3px;
+				font-size: 0.5rem;
+				display: inline-flex;
+				align-items: center;
+				gap: 2px;
+				border: none;
+				cursor: pointer;
+				font-family: var(--font-sans);
+			}
+
+			.mock-btn-primary {
+				background: var(--primary);
+				color: var(--primary-fg);
+			}
+			.mock-btn-secondary {
+				background: var(--secondary);
+				color: var(--secondary-fg);
+			}
+			.mock-btn-destructive {
+				background: color-mix(in oklch, var(--destructive) 15%, transparent);
+				color: var(--destructive);
+			}
+
+			.mock-stats {
+				padding: 4px 12px;
+				border-bottom: 1px solid var(--border);
+				display: flex;
+				gap: 12px;
+				font-size: 0.5rem;
+				color: var(--foreground);
+			}
+			.mock-stats strong {
+				color: var(--secondary);
+			}
+
+			.mock-table-header {
+				display: grid;
+				grid-template-columns: repeat(4, 1fr);
+				padding: 4px 12px;
+				border-bottom: 1px solid var(--border);
+				background: var(--muted);
+				font-size: 0.5rem;
+				font-weight: 600;
+				color: var(--muted-fg);
+				gap: 8px;
+			}
+
+			.mock-table-row {
+				display: grid;
+				grid-template-columns: repeat(4, 1fr);
+				padding: 3px 12px;
+				border-bottom: 1px solid var(--border);
+				font-size: 0.5rem;
+				gap: 8px;
+				color: var(--foreground);
+			}
+			.mock-table-row:nth-child(even) {
+				background: color-mix(in oklch, var(--muted) 30%, transparent);
+			}
+
+			.mock-cell {
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+			}
+
+			/* ─── Footer ────────────────────────────────────────────────────────── */
+			footer {
+				border-top: 1px solid var(--border);
+				padding: 20px 24px;
+				text-align: center;
+				font-size: 0.625rem;
+				color: var(--muted-fg);
+			}
+
+			/* ─── Utility ───────────────────────────────────────────────────────── */
+			.row {
+				display: flex;
+				flex-wrap: wrap;
+				gap: 16px;
+			}
+			.col {
+				flex: 1;
+				min-width: 240px;
+			}
+			code {
+				font-family: ui-monospace, monospace;
+				font-size: 0.75em;
+				background: var(--muted);
+				padding: 1px 4px;
+				border-radius: 3px;
+				color: var(--foreground);
+			}
+		</style>
+	</head>
+	<body>
+		<!-- ─── App Header ───────────────────────────────────────────────────────── -->
+		<header class="app-header">
+			<span class="logo">Roka</span>
+			<div class="theme-toggle">
+				<span id="theme-label">Light mode</span>
+				<button class="toggle-btn" onclick="toggleTheme()">Toggle Dark</button>
+			</div>
+		</header>
+
+		<main>
+			<!-- ─── Title ─────────────────────────────────────────────────────────── -->
+			<section>
+				<div class="section-label">Design System</div>
+				<h1 class="section-title">Roka</h1>
+				<p class="section-desc">
+					A dense, warm, precision data-tool UI. Built on SvelteKit 5 + Tailwind CSS v4 +
+					shadcn-svelte. Primary typeface: <strong>Oxanium Variable</strong>. Color space:
+					<strong>oklch</strong>. Toggle dark mode above to preview both themes.
+				</p>
+			</section>
+
+			<!-- ─── Colors ────────────────────────────────────────────────────────── -->
+			<section>
+				<div class="section-label">Color Palette</div>
+
+				<h2 style="font-size: 1rem; font-weight: 700; margin-bottom: 6px">Core Semantic Tokens</h2>
+				<p class="section-desc">
+					All colors are defined in oklch for perceptual uniformity. Hex values are approximations
+					for reference.
+				</p>
+
+				<div class="swatch-grid">
+					<div class="swatch">
+						<div
+							class="swatch-color"
+							style="background: var(--background); border-bottom: 1px solid var(--border)"
+						></div>
+						<div class="swatch-info">
+							<div class="swatch-name">Background</div>
+							<div class="swatch-value">oklch(1 0 0)</div>
+						</div>
+					</div>
+					<div class="swatch">
+						<div class="swatch-color" style="background: var(--foreground)"></div>
+						<div class="swatch-info">
+							<div class="swatch-name">Foreground</div>
+							<div class="swatch-value">oklch(0.141 0.005 285)</div>
+						</div>
+					</div>
+					<div class="swatch">
+						<div class="swatch-color" style="background: var(--primary)"></div>
+						<div class="swatch-info">
+							<div class="swatch-name">Primary</div>
+							<div class="swatch-value">oklch(0.553 0.195 38) ≈ #c45d1f</div>
+						</div>
+					</div>
+					<div class="swatch">
+						<div class="swatch-color" style="background: var(--primary-fg)"></div>
+						<div class="swatch-info">
+							<div class="swatch-name">Primary Foreground</div>
+							<div class="swatch-value">oklch(0.98 0.016 73) ≈ #faf8f0</div>
+						</div>
+					</div>
+					<div class="swatch">
+						<div class="swatch-color" style="background: var(--secondary)"></div>
+						<div class="swatch-info">
+							<div class="swatch-name">Secondary</div>
+							<div class="swatch-value">oklch(0.6 0.12 210) ≈ #3d8bc0</div>
+						</div>
+					</div>
+					<div class="swatch">
+						<div class="swatch-color" style="background: var(--muted)"></div>
+						<div class="swatch-info">
+							<div class="swatch-name">Muted</div>
+							<div class="swatch-value">oklch(0.967 0.001 286) ≈ #f4f4f8</div>
+						</div>
+					</div>
+					<div class="swatch">
+						<div class="swatch-color" style="background: var(--muted-fg)"></div>
+						<div class="swatch-info">
+							<div class="swatch-name">Muted Foreground</div>
+							<div class="swatch-value">oklch(0.552 0.016 285) ≈ #72728a</div>
+						</div>
+					</div>
+					<div class="swatch">
+						<div class="swatch-color" style="background: var(--destructive)"></div>
+						<div class="swatch-info">
+							<div class="swatch-name">Destructive</div>
+							<div class="swatch-value">oklch(0.577 0.245 27) ≈ #e0361a</div>
+						</div>
+					</div>
+					<div class="swatch">
+						<div class="swatch-color" style="background: var(--border)"></div>
+						<div class="swatch-info">
+							<div class="swatch-name">Border</div>
+							<div class="swatch-value">oklch(0.92 0.004 286) ≈ #e6e6ec</div>
+						</div>
+					</div>
+					<div class="swatch">
+						<div class="swatch-color" style="background: var(--ring)"></div>
+						<div class="swatch-info">
+							<div class="swatch-name">Ring (focus)</div>
+							<div class="swatch-value">oklch(0.705 0.015 286) ≈ #a8a8b8</div>
+						</div>
+					</div>
+				</div>
+
+				<h2 style="font-size: 0.875rem; font-weight: 600; margin-top: 32px; margin-bottom: 12px">
+					Chart Ramp (cool gray)
+				</h2>
+				<p class="section-desc" style="margin-bottom: 12px">
+					Five-step desaturated ramp for data visualization backgrounds.
+				</p>
+				<div class="chart-swatch-row">
+					<div
+						class="chart-swatch"
+						style="background: var(--chart-1)"
+						title="chart-1 (lightest)"
+					></div>
+					<div class="chart-swatch" style="background: var(--chart-2)" title="chart-2"></div>
+					<div class="chart-swatch" style="background: var(--chart-3)" title="chart-3"></div>
+					<div class="chart-swatch" style="background: var(--chart-4)" title="chart-4"></div>
+					<div
+						class="chart-swatch"
+						style="background: var(--chart-5)"
+						title="chart-5 (darkest)"
+					></div>
+				</div>
+				<p
+					style="
+						font-size: 0.625rem;
+						color: var(--muted-fg);
+						margin-top: 6px;
+						font-family: monospace;
+					"
+				>
+					chart-1 (L 0.871) → chart-5 (L 0.274)
+				</p>
+			</section>
+
+			<!-- ─── Typography ─────────────────────────────────────────────────────── -->
+			<section>
+				<div class="section-label">Typography</div>
+				<p class="section-desc">
+					Oxanium Variable — geometric, angular, technical. A single typeface for both headings and
+					body text.
+				</p>
+
+				<div class="type-sample">
+					<div class="type-meta">2xl · 1.5rem · bold</div>
+					<span style="font-size: 1.5rem; font-weight: 700">Roka CSV Studio</span>
+				</div>
+				<div class="type-sample">
+					<div class="type-meta">xl · 1.25rem · semibold</div>
+					<span style="font-size: 1.25rem; font-weight: 600">Section Heading</span>
+				</div>
+				<div class="type-sample">
+					<div class="type-meta">lg · 1.125rem · semibold</div>
+					<span style="font-size: 1.125rem; font-weight: 600">Sub-section Title</span>
+				</div>
+				<div class="type-sample">
+					<div class="type-meta">sm · 0.875rem · normal</div>
+					<span style="font-size: 0.875rem"
+						>Body text for descriptions and longer-form content. Rarely used in the main app
+						UI.</span
+					>
+				</div>
+				<div class="type-sample">
+					<div class="type-meta">xs · 0.75rem · normal</div>
+					<span style="font-size: 0.75rem"
+						>Default UI text — table cells, buttons, labels, input fields. Dense tool UIs live
+						here.</span
+					>
+				</div>
+				<div class="type-sample">
+					<div class="type-meta">xs · tracking-wider · uppercase</div>
+					<span
+						style="
+							font-size: 0.75rem;
+							letter-spacing: 0.1em;
+							text-transform: uppercase;
+							font-weight: 600;
+							color: var(--muted-fg);
+						"
+						>Section Label Pattern</span
+					>
+				</div>
+
+				<div style="margin-top: 20px">
+					<h3 style="font-size: 0.75rem; font-weight: 600; margin-bottom: 8px">
+						Weight Scale (300–800 variable)
+					</h3>
+					<div style="display: flex; flex-direction: column; gap: 6px">
+						<div style="font-weight: 300; font-size: 1rem">Light 300 — Oxanium</div>
+						<div style="font-weight: 400; font-size: 1rem">Regular 400 — Oxanium</div>
+						<div style="font-weight: 500; font-size: 1rem">Medium 500 — Oxanium</div>
+						<div style="font-weight: 600; font-size: 1rem">Semibold 600 — Oxanium</div>
+						<div style="font-weight: 700; font-size: 1rem">Bold 700 — Oxanium</div>
+						<div style="font-weight: 800; font-size: 1rem">Extrabold 800 — Oxanium</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- ─── Buttons ────────────────────────────────────────────────────────── -->
+			<section>
+				<div class="section-label">Buttons</div>
+				<p class="section-desc">
+					Six variants × eight sizes. Default height is 28px — deliberately compact for data-tool
+					toolbars.
+				</p>
+
+				<h3
+					style="font-size: 0.75rem; font-weight: 600; margin-bottom: 10px; color: var(--muted-fg)"
+				>
+					VARIANTS (default size)
+				</h3>
+				<div class="btn-showcase">
+					<button class="btn btn-default btn-primary">Primary</button>
+					<button class="btn btn-default btn-secondary">Secondary</button>
+					<button class="btn btn-default btn-outline">Outline</button>
+					<button class="btn btn-default btn-ghost">Ghost</button>
+					<button class="btn btn-default btn-destructive">Destructive</button>
+					<a href="#" class="btn btn-default btn-link">Link</a>
+				</div>
+
+				<h3
+					style="font-size: 0.75rem; font-weight: 600; margin: 20px 0 10px; color: var(--muted-fg)"
+				>
+					SIZES (primary variant)
+				</h3>
+				<div class="btn-showcase" style="align-items: flex-end">
+					<div style="text-align: center">
+						<button class="btn btn-xs btn-primary">xs</button>
+						<div
+							style="
+								font-size: 0.5rem;
+								color: var(--muted-fg);
+								margin-top: 4px;
+								font-family: monospace;
+							"
+						>
+							h-5 · 20px
+						</div>
+					</div>
+					<div style="text-align: center">
+						<button class="btn btn-sm btn-primary">sm</button>
+						<div
+							style="
+								font-size: 0.5rem;
+								color: var(--muted-fg);
+								margin-top: 4px;
+								font-family: monospace;
+							"
+						>
+							h-6 · 24px
+						</div>
+					</div>
+					<div style="text-align: center">
+						<button class="btn btn-default btn-primary">default</button>
+						<div
+							style="
+								font-size: 0.5rem;
+								color: var(--muted-fg);
+								margin-top: 4px;
+								font-family: monospace;
+							"
+						>
+							h-7 · 28px
+						</div>
+					</div>
+					<div style="text-align: center">
+						<button class="btn btn-lg btn-primary">lg</button>
+						<div
+							style="
+								font-size: 0.5rem;
+								color: var(--muted-fg);
+								margin-top: 4px;
+								font-family: monospace;
+							"
+						>
+							h-8 · 32px
+						</div>
+					</div>
+					<div style="text-align: center">
+						<button class="btn btn-icon btn-outline" title="icon">
+							<svg
+								width="12"
+								height="12"
+								viewBox="0 0 24 24"
+								fill="none"
+								stroke="currentColor"
+								stroke-width="2"
+							>
+								<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+								<polyline points="7 10 12 15 17 10" />
+								<line x1="12" y1="15" x2="12" y2="3" />
+							</svg>
+						</button>
+						<div
+							style="
+								font-size: 0.5rem;
+								color: var(--muted-fg);
+								margin-top: 4px;
+								font-family: monospace;
+							"
+						>
+							icon · 28px
+						</div>
+					</div>
+				</div>
+
+				<h3
+					style="font-size: 0.75rem; font-weight: 600; margin: 20px 0 10px; color: var(--muted-fg)"
+				>
+					TOOLBAR EXAMPLE
+				</h3>
+				<div
+					style="
+						display: flex;
+						align-items: center;
+						gap: 8px;
+						padding: 8px 12px;
+						background: var(--background);
+						border: 1px solid var(--border);
+						border-radius: var(--radius);
+					"
+				>
+					<button class="btn btn-default btn-primary">
+						<svg
+							width="10"
+							height="10"
+							viewBox="0 0 24 24"
+							fill="none"
+							stroke="currentColor"
+							stroke-width="2"
+						>
+							<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+							<polyline points="17 8 12 3 7 8" />
+							<line x1="12" y1="3" x2="12" y2="15" />
+						</svg>
+						Import New CSV
+					</button>
+					<button class="btn btn-default btn-destructive">
+						<svg
+							width="10"
+							height="10"
+							viewBox="0 0 24 24"
+							fill="none"
+							stroke="currentColor"
+							stroke-width="2"
+						>
+							<polyline points="3 6 5 6 21 6" />
+							<path
+								d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"
+							/>
+						</svg>
+						Clear
+					</button>
+					<div style="flex: 1"></div>
+					<button class="btn btn-default btn-secondary">
+						<svg
+							width="10"
+							height="10"
+							viewBox="0 0 24 24"
+							fill="none"
+							stroke="currentColor"
+							stroke-width="2"
+						>
+							<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+							<polyline points="7 10 12 15 17 10" />
+							<line x1="12" y1="15" x2="12" y2="3" />
+						</svg>
+						Export CSV
+					</button>
+					<button class="btn btn-default btn-secondary">
+						<svg
+							width="10"
+							height="10"
+							viewBox="0 0 24 24"
+							fill="none"
+							stroke="currentColor"
+							stroke-width="2"
+						>
+							<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+							<polyline points="14 2 14 8 20 8" />
+						</svg>
+						Export PDF
+					</button>
+				</div>
+			</section>
+
+			<!-- ─── Components ──────────────────────────────────────────────────────── -->
+			<section>
+				<div class="section-label">Components</div>
+
+				<div class="row">
+					<div class="col">
+						<div class="component-card">
+							<h3>Tabs</h3>
+							<div style="display: flex; flex-direction: column; gap: 12px">
+								<div>
+									<div style="font-size: 0.5rem; color: var(--muted-fg); margin-bottom: 4px">
+										Default (locale switcher)
+									</div>
+									<div class="tabs-demo">
+										<button class="tab active" onclick="setTab(this, 'tabs1')">EN</button>
+										<button class="tab" onclick="setTab(this, 'tabs1')">JA</button>
+									</div>
+								</div>
+								<div>
+									<div style="font-size: 0.5rem; color: var(--muted-fg); margin-bottom: 4px">
+										Filter tabs (sm size)
+									</div>
+									<div class="tabs-demo" style="width: 100%">
+										<button class="tab active" onclick="setTab(this, 'tabs2')" style="flex: 1">
+											All
+										</button>
+										<button class="tab" onclick="setTab(this, 'tabs2')" style="flex: 1">
+											Empty
+										</button>
+										<button class="tab" onclick="setTab(this, 'tabs2')" style="flex: 1">
+											Non-empty
+										</button>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="component-card">
+							<h3>Input</h3>
+							<div style="display: flex; flex-direction: column; gap: 8px">
+								<input class="input-demo" type="text" placeholder="Filter values…" />
+								<input class="input-demo" type="text" value="existing-column-name" />
+							</div>
+						</div>
+
+						<div class="component-card">
+							<h3>Badges</h3>
+							<div style="display: flex; gap: 8px; flex-wrap: wrap">
+								<span class="badge badge-muted">filename.csv</span>
+								<span class="badge badge-primary">Active filter</span>
+								<span class="badge badge-secondary">Columns: 12</span>
+							</div>
+						</div>
+					</div>
+
+					<div class="col">
+						<div class="component-card">
+							<h3>Checkbox (column list row)</h3>
+							<div style="display: flex; flex-direction: column; gap: 4px">
+								<div class="checkbox-demo" style="padding: 4px 0">
+									<input type="checkbox" id="cb1" checked />
+									<label for="cb1" style="font-size: 0.75rem; cursor: pointer">customer_id</label>
+								</div>
+								<div class="checkbox-demo" style="padding: 4px 0">
+									<input type="checkbox" id="cb2" checked />
+									<label for="cb2" style="font-size: 0.75rem; cursor: pointer">first_name</label>
+								</div>
+								<div class="checkbox-demo" style="padding: 4px 0">
+									<input type="checkbox" id="cb3" />
+									<label
+										for="cb3"
+										style="font-size: 0.75rem; cursor: pointer; color: var(--muted-fg)"
+										>internal_notes</label
+									>
+								</div>
+							</div>
+						</div>
+
+						<div class="component-card">
+							<h3>Stats Row</h3>
+							<div class="stats-row">
+								<span>Rows: <strong>1,204</strong></span>
+								<span>Filtered: <strong>87</strong></span>
+								<span>Columns: <strong>8</strong></span>
+								<div style="flex: 1"></div>
+								<span class="badge badge-muted">export_Q4.csv</span>
+							</div>
+						</div>
+
+						<div class="component-card">
+							<h3>Dropzone</h3>
+							<div class="dropzone-demo">
+								<svg
+									class="dropzone-icon"
+									viewBox="0 0 24 24"
+									fill="none"
+									stroke="currentColor"
+									stroke-width="1.5"
+								>
+									<path
+										d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"
+									/>
+								</svg>
+								<div class="dropzone-title">Drop any CSV here</div>
+								<div class="dropzone-sub">Or click here to browse files</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- ─── Spacing ────────────────────────────────────────────────────────── -->
+			<section>
+				<div class="section-label">Spacing Scale</div>
+				<p class="section-desc">4px base grid. Values shown are most-used in the app.</p>
+
+				<div>
+					<div class="spacing-row">
+						<div class="spacing-label">1 · 4px · gap-1</div>
+						<div class="spacing-bar" style="width: 4px"></div>
+					</div>
+					<div class="spacing-row">
+						<div class="spacing-label">2 · 8px · gap-2</div>
+						<div class="spacing-bar" style="width: 8px"></div>
+					</div>
+					<div class="spacing-row">
+						<div class="spacing-label">3 · 12px · gap-3</div>
+						<div class="spacing-bar" style="width: 12px"></div>
+					</div>
+					<div class="spacing-row">
+						<div class="spacing-label">4 · 16px · px-4 / gap-4</div>
+						<div class="spacing-bar" style="width: 16px"></div>
+					</div>
+					<div class="spacing-row">
+						<div class="spacing-label">6 · 24px · px-6 (header)</div>
+						<div class="spacing-bar" style="width: 24px"></div>
+					</div>
+					<div class="spacing-row">
+						<div class="spacing-label">14 · 56px · h-14 (header height)</div>
+						<div class="spacing-bar" style="width: 56px"></div>
+					</div>
+					<div class="spacing-row">
+						<div class="spacing-label">64 · 256px · w-64 (sidebar)</div>
+						<div class="spacing-bar" style="width: 120px; opacity: 0.4"></div>
+						<span style="font-size: 0.5rem; color: var(--muted-fg); font-family: monospace"
+							>(scaled ÷ 2)</span
+						>
+					</div>
+				</div>
+			</section>
+
+			<!-- ─── Border Radius ──────────────────────────────────────────────────── -->
+			<section>
+				<div class="section-label">Border Radius</div>
+				<p class="section-desc">Base: 0.45rem (~7px). Low by design — professional, tool-like.</p>
+
+				<div class="radius-grid">
+					<div>
+						<div class="radius-sample" style="border-radius: 0.27rem">
+							<div class="radius-sample-label">sm<br />0.27rem</div>
+						</div>
+						<div
+							style="font-size: 0.5rem; color: var(--muted-fg); text-align: center; margin-top: 4px"
+						>
+							badges, xs btns
+						</div>
+					</div>
+					<div>
+						<div class="radius-sample" style="border-radius: 0.36rem">
+							<div class="radius-sample-label">md<br />0.36rem</div>
+						</div>
+						<div
+							style="font-size: 0.5rem; color: var(--muted-fg); text-align: center; margin-top: 4px"
+						>
+							inputs, buttons
+						</div>
+					</div>
+					<div>
+						<div class="radius-sample" style="border-radius: 0.45rem">
+							<div class="radius-sample-label">lg<br />0.45rem</div>
+						</div>
+						<div
+							style="font-size: 0.5rem; color: var(--muted-fg); text-align: center; margin-top: 4px"
+						>
+							cards, panels
+						</div>
+					</div>
+					<div>
+						<div class="radius-sample" style="border-radius: 0.63rem">
+							<div class="radius-sample-label">xl<br />0.63rem</div>
+						</div>
+						<div
+							style="font-size: 0.5rem; color: var(--muted-fg); text-align: center; margin-top: 4px"
+						>
+							large containers
+						</div>
+					</div>
+					<div>
+						<div class="radius-sample" style="border-radius: 0.81rem">
+							<div class="radius-sample-label">2xl<br />0.81rem</div>
+						</div>
+						<div
+							style="font-size: 0.5rem; color: var(--muted-fg); text-align: center; margin-top: 4px"
+						>
+							drop zone
+						</div>
+					</div>
+					<div>
+						<div class="radius-sample" style="border-radius: 9999px">
+							<div class="radius-sample-label">full<br />9999px</div>
+						</div>
+						<div
+							style="font-size: 0.5rem; color: var(--muted-fg); text-align: center; margin-top: 4px"
+						>
+							pills, toggles
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- ─── App Shell Mockup ───────────────────────────────────────────────── -->
+			<section>
+				<div class="section-label">App Shell Mockup</div>
+				<p class="section-desc">
+					The CSV Studio layout — header + sidebar + toolbar + stats + table — all in one view.
+				</p>
+
+				<div class="app-shell-mockup">
+					<!-- Mock header -->
+					<div class="mock-header">
+						<span class="mock-logo">Roka</span>
+						<div style="display: flex; gap: 6px; align-items: center">
+							<span style="font-size: 0.5rem; color: var(--muted-fg)">user@example.com</span>
+							<div class="tabs-demo" style="padding: 1px; gap: 1px">
+								<button class="tab active" style="padding: 2px 6px; font-size: 0.5rem">EN</button>
+								<button class="tab" style="padding: 2px 6px; font-size: 0.5rem">JA</button>
+							</div>
+						</div>
+					</div>
+
+					<!-- Mock body -->
+					<div class="mock-body">
+						<!-- Sidebar -->
+						<div class="mock-sidebar">
+							<div class="mock-sidebar-header">Columns</div>
+							<div class="mock-col-row">
+								<div class="mock-cb"></div>
+								<span>customer_id</span>
+							</div>
+							<div class="mock-col-row">
+								<div class="mock-cb"></div>
+								<span>first_name</span>
+							</div>
+							<div class="mock-col-row">
+								<div class="mock-cb"></div>
+								<span>last_name</span>
+							</div>
+							<div class="mock-col-row">
+								<div class="mock-cb unchecked"></div>
+								<span style="color: var(--muted-fg)">notes</span>
+							</div>
+							<div class="mock-col-row">
+								<div class="mock-cb"></div>
+								<span>created_at</span>
+							</div>
+							<div class="mock-col-row">
+								<div class="mock-cb"></div>
+								<span>amount</span>
+							</div>
+							<div class="mock-col-row">
+								<div class="mock-cb unchecked"></div>
+								<span style="color: var(--muted-fg)">internal_id</span>
+							</div>
+						</div>
+
+						<!-- Content -->
+						<div class="mock-content">
+							<!-- Toolbar -->
+							<div class="mock-toolbar">
+								<button class="mock-btn mock-btn-primary">↑ Import New CSV</button>
+								<button class="mock-btn mock-btn-destructive">✕ Clear</button>
+								<div style="flex: 1"></div>
+								<button class="mock-btn mock-btn-secondary">↓ Export CSV</button>
+								<button class="mock-btn mock-btn-secondary">⎙ Export PDF</button>
+							</div>
+
+							<!-- Stats -->
+							<div class="mock-stats">
+								<span>Rows: <strong>1,204</strong></span>
+								<span>Filtered: <strong>87</strong></span>
+								<span>Columns: <strong>6</strong></span>
+								<div style="flex: 1"></div>
+								<span
+									style="
+										background: var(--muted);
+										padding: 1px 6px;
+										border-radius: 3px;
+										color: var(--muted-fg);
+									"
+									>export_Q4.csv</span
+								>
+							</div>
+
+							<!-- Table header -->
+							<div class="mock-table-header">
+								<div class="mock-cell">customer_id ↕</div>
+								<div class="mock-cell">first_name ↑</div>
+								<div class="mock-cell">last_name</div>
+								<div class="mock-cell">amount</div>
+							</div>
+
+							<!-- Table rows -->
+							<div class="mock-table-row">
+								<div class="mock-cell">C-00142</div>
+								<div class="mock-cell">Alice</div>
+								<div class="mock-cell">Martínez</div>
+								<div class="mock-cell" style="color: var(--secondary)">$1,200.00</div>
+							</div>
+							<div class="mock-table-row">
+								<div class="mock-cell">C-00208</div>
+								<div class="mock-cell">Bob</div>
+								<div class="mock-cell">Yamamoto</div>
+								<div class="mock-cell" style="color: var(--secondary)">$340.50</div>
+							</div>
+							<div class="mock-table-row">
+								<div class="mock-cell">C-00315</div>
+								<div class="mock-cell">Clara</div>
+								<div class="mock-cell">Osei</div>
+								<div class="mock-cell" style="color: var(--secondary)">$892.00</div>
+							</div>
+							<div class="mock-table-row">
+								<div class="mock-cell">C-00421</div>
+								<div class="mock-cell">David</div>
+								<div class="mock-cell">Petrov</div>
+								<div class="mock-cell" style="color: var(--secondary)">$55.25</div>
+							</div>
+							<div class="mock-table-row">
+								<div class="mock-cell">C-00509</div>
+								<div class="mock-cell">Eva</div>
+								<div class="mock-cell">Lindström</div>
+								<div class="mock-cell" style="color: var(--secondary)">$2,100.75</div>
+							</div>
+							<div class="mock-table-row">
+								<div class="mock-cell">C-00617</div>
+								<div class="mock-cell">Frank</div>
+								<div class="mock-cell">Okonkwo</div>
+								<div class="mock-cell" style="color: var(--secondary)">$480.00</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+		</main>
+
+		<footer>Roka Design System · Generated 2026-04-16 · Tailwind CSS v4 + oklch color space</footer>
+
+		<script>
+			const toggleTheme = () => {
+				const html = document.documentElement;
+				const isLight = html.classList.contains('light');
+				html.classList.toggle('light', !isLight);
+				html.classList.toggle('dark', isLight);
+				document.getElementById('theme-label').textContent = isLight ? 'Dark mode' : 'Light mode';
+			};
+
+			const setTab = (el, group) => {
+				el.closest('.tabs-demo')
+					.querySelectorAll('.tab')
+					.forEach((t) => t.classList.remove('active'));
+				el.classList.add('active');
+			};
+		</script>
+	</body>
 </html>

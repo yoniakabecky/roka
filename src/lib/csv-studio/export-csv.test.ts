@@ -12,7 +12,12 @@ const identityRename = Object.fromEntries(allColumns.map((c) => [c, c]));
 
 // Capture the last blob passed to URL.createObjectURL so tests can inspect it
 let lastBlob: Blob | null = null;
-let lastAnchor: { href: string; download: string; clicked: boolean; click: ReturnType<typeof vi.fn> } | null = null;
+let lastAnchor: {
+	href: string;
+	download: string;
+	clicked: boolean;
+	click: ReturnType<typeof vi.fn>;
+} | null = null;
 
 beforeEach(() => {
 	lastBlob = null;
@@ -46,9 +51,9 @@ beforeEach(() => {
 const parseCsv = (csv: string) => {
 	const lines = csv.trim().split(/\r?\n/);
 	const fields = lines[0].split(',');
-	const data = lines.slice(1).map((line) =>
-		Object.fromEntries(line.split(',').map((v, i) => [fields[i], v]))
-	);
+	const data = lines
+		.slice(1)
+		.map((line) => Object.fromEntries(line.split(',').map((v, i) => [fields[i], v])));
 	return { fields, data };
 };
 
@@ -214,8 +219,6 @@ describe('exportCsv — File System Access API path', () => {
 
 		await exportCsv(rows, allColumns, identityRename, 'my-file');
 
-		expect(picker).toHaveBeenCalledWith(
-			expect.objectContaining({ suggestedName: 'my-file.csv' })
-		);
+		expect(picker).toHaveBeenCalledWith(expect.objectContaining({ suggestedName: 'my-file.csv' }));
 	});
 });
