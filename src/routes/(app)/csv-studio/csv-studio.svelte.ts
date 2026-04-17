@@ -151,7 +151,6 @@ const createCsvStudio = () => {
 			header: true,
 			skipEmptyLines: true,
 			dynamicTyping: false,
-			worker: true,
 			complete: (result) => {
 				columns = result.meta.fields ?? [];
 				colVisible = Object.fromEntries(columns.map((c) => [c, true]));
@@ -160,9 +159,9 @@ const createCsvStudio = () => {
 				colDateFilters = Object.fromEntries(columns.map((c) => [c, { from: '', to: '' }]));
 				colEmptyFilters = Object.fromEntries(columns.map((c) => [c, null]));
 				colRename = Object.fromEntries(columns.map((c) => [c, c]));
-				rows = result.data;
-				columnIndex = buildColumnIndex(result.data, columns);
-				filteredRows = result.data;
+				rows = result.data.filter((r) => r != null);
+				columnIndex = buildColumnIndex(rows, columns);
+				filteredRows = rows;
 				loading = false;
 				toast.success(`Imported ${filename}`);
 			},

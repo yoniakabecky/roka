@@ -8,6 +8,7 @@ export const buildColumnIndex = (rows: Record<string, string>[], columns: string
 	for (const col of columns) {
 		const colIdx: ColIndex = new Map();
 		for (let i = 0; i < rows.length; i++) {
+			if (!rows[i]) continue;
 			const val = rows[i][col] ?? '';
 			if (!val) continue;
 			let set = colIdx.get(val);
