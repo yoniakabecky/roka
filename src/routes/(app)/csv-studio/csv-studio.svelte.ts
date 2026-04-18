@@ -37,9 +37,7 @@ const createCsvStudio = () => {
 	let filtering = $state(false);
 	let sortCol = $state<string | null>(null);
 	let sortDir = $state<'asc' | 'desc'>('asc');
-	let savedFilters = $state<SavedFilter[]>(
-		JSON.parse(localStorage.getItem(STORAGE_KEY) ?? '[]')
-	);
+	let savedFilters = $state<SavedFilter[]>(JSON.parse(localStorage.getItem(STORAGE_KEY) ?? '[]'));
 
 	type AppliedSnapshot = {
 		name: string;
@@ -164,20 +162,24 @@ const createCsvStudio = () => {
 		});
 	});
 
+	const resetFilters = () => {
+		colFilters = {};
+		colDateFilters = {};
+		colEmptyFilters = {};
+		colFiltersOpen = {};
+		appliedSnapshot = null;
+	};
+
 	const clearData = () => {
 		columns = [];
 		rows = [];
 		columnIndex = new Map();
 		colVisible = {};
-		colFiltersOpen = {};
-		colFilters = {};
-		colDateFilters = {};
-		colEmptyFilters = {};
 		colRename = {};
 		filename = '';
 		filteredRows = [];
 		filtering = false;
-		appliedSnapshot = null;
+		resetFilters();
 	};
 
 	const handleFile = (file: File) => {
@@ -251,9 +253,7 @@ const createCsvStudio = () => {
 
 	const loadSavedFilter = (filter: SavedFilter): { noMatch: boolean } => {
 		const newColFilters = Object.fromEntries(columns.map((c) => [c, [] as string[]]));
-		const newColDateFilters = Object.fromEntries(
-			columns.map((c) => [c, { from: '', to: '' }])
-		);
+		const newColDateFilters = Object.fromEntries(columns.map((c) => [c, { from: '', to: '' }]));
 		let anyMatch = false;
 
 		for (const [col, vals] of Object.entries(filter.colFilters)) {
@@ -384,6 +384,7 @@ const createCsvStudio = () => {
 			return activeDateFilters;
 		},
 		clearData,
+		resetFilters,
 		handleFile,
 		resetColRename,
 		handleSort,

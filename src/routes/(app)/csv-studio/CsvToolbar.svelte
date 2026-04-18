@@ -1,6 +1,7 @@
 <script lang="ts">
 	import DownloadIcon from '@lucide/svelte/icons/download';
 	import FileTextIcon from '@lucide/svelte/icons/file-text';
+	import RotateCcwIcon from '@lucide/svelte/icons/rotate-ccw';
 	import Trash2Icon from '@lucide/svelte/icons/trash-2';
 	import UploadIcon from '@lucide/svelte/icons/upload';
 	import { toast } from 'svelte-sonner';
@@ -61,6 +62,15 @@
 		onSelect={onSelectPreset}
 		onDelete={studio.deleteSavedFilter}
 	/>
+
+	<Button
+		variant="outline"
+		disabled={!hasActiveFilters && !studio.appliedPresetName}
+		onclick={studio.resetFilters}
+	>
+		<RotateCcwIcon class="size-3" />
+		Reset
+	</Button>
 
 	<div class="flex-1"></div>
 
