@@ -11,6 +11,15 @@ import {
 } from '$lib/csv-studio/detect-columns';
 
 const LOCALE_SORT_OPTS: Intl.CollatorOptions = { numeric: true, sensitivity: 'base' };
+const MAX_SAVED_FILTERS = 10;
+const STORAGE_KEY = 'csv-studio-saved-filters';
+
+export type SavedFilter = {
+	name: string;
+	colFilters: Record<string, string[]>;
+	colDateFilters: Record<string, { from: string; to: string }>;
+	colVisible: Record<string, boolean>;
+};
 
 const createCsvStudio = () => {
 	let columns = $state<string[]>([]);
@@ -28,6 +37,32 @@ const createCsvStudio = () => {
 	let filtering = $state(false);
 	let sortCol = $state<string | null>(null);
 	let sortDir = $state<'asc' | 'desc'>('asc');
+	let savedFilters = $state<SavedFilter[]>(
+		JSON.parse(localStorage.getItem(STORAGE_KEY) ?? '[]')
+	);
+
+	type AppliedSnapshot = {
+		name: string;
+		colFilters: Record<string, string[]>;
+		colDateFilters: Record<string, { from: string; to: string }>;
+		colVisible: Record<string, boolean>;
+	};
+
+	let appliedSnapshot = $state<AppliedSnapshot | null>(null);
+
+	const isPresetModified = $derived.by(() => {
+		if (!appliedSnapshot) return false;
+		for (const col of columns) {
+			const saved = [...(appliedSnapshot.colFilters[col] ?? [])].sort();
+			const current = [...(colFilters[col] ?? [])].sort();
+			if (saved.length !== current.length || saved.some((v, i) => v !== current[i])) return true;
+			const savedDate = appliedSnapshot.colDateFilters[col] ?? { from: '', to: '' };
+			const currentDate = colDateFilters[col] ?? { from: '', to: '' };
+			if (savedDate.from !== currentDate.from || savedDate.to !== currentDate.to) return true;
+			if ((appliedSnapshot.colVisible[col] ?? true) !== (colVisible[col] ?? true)) return true;
+		}
+		return false;
+	});
 
 	const visibleColumns = $derived(columns.filter((c) => colVisible[c]));
 
@@ -142,6 +177,7 @@ const createCsvStudio = () => {
 		filename = '';
 		filteredRows = [];
 		filtering = false;
+		appliedSnapshot = null;
 	};
 
 	const handleFile = (file: File) => {
@@ -162,6 +198,7 @@ const createCsvStudio = () => {
 				rows = result.data.filter((r) => r != null);
 				columnIndex = buildColumnIndex(rows, columns);
 				filteredRows = rows;
+				appliedSnapshot = null;
 				loading = false;
 				toast.success(`Imported ${filename}`);
 			},
@@ -192,6 +229,76 @@ const createCsvStudio = () => {
 		} catch {
 			toast.error(`Failed to export ${exportStem}.csv`);
 		}
+	};
+
+	const saveCurrentFilter = (name: string): { error?: string } => {
+		const isOverwrite = savedFilters.some((f) => f.name === name);
+		if (!isOverwrite && savedFilters.length >= MAX_SAVED_FILTERS) {
+			return { error: 'Limit reached (10). Delete a preset to save a new one.' };
+		}
+		const filter: SavedFilter = {
+			name,
+			colFilters: Object.fromEntries(Object.entries(colFilters).map(([k, v]) => [k, [...v]])),
+			colDateFilters: Object.fromEntries(
+				Object.entries(colDateFilters).map(([k, v]) => [k, { ...v }])
+			),
+			colVisible: { ...colVisible }
+		};
+		savedFilters = [...savedFilters.filter((f) => f.name !== name), filter];
+		localStorage.setItem(STORAGE_KEY, JSON.stringify(savedFilters));
+		return {};
+	};
+
+	const loadSavedFilter = (filter: SavedFilter): { noMatch: boolean } => {
+		const newColFilters = Object.fromEntries(columns.map((c) => [c, [] as string[]]));
+		const newColDateFilters = Object.fromEntries(
+			columns.map((c) => [c, { from: '', to: '' }])
+		);
+		let anyMatch = false;
+
+		for (const [col, vals] of Object.entries(filter.colFilters)) {
+			if (!(col in newColFilters)) continue;
+			const available = [...(columnIndex.get(col)?.keys() ?? [])];
+			const intersected = vals.filter((v) => available.includes(v));
+			if (intersected.length > 0) {
+				newColFilters[col] = intersected;
+				anyMatch = true;
+			}
+		}
+
+		for (const [col, range] of Object.entries(filter.colDateFilters)) {
+			if ((range.from !== '' || range.to !== '') && col in newColDateFilters) {
+				newColDateFilters[col] = range;
+				anyMatch = true;
+			}
+		}
+
+		// Columns not in the preset (or presets saved before colVisible was added) default to visible
+		const newColVisible = Object.fromEntries(
+			columns.map((c) => [c, (filter.colVisible ?? {})[c] ?? true])
+		);
+
+		colFilters = newColFilters;
+		colDateFilters = newColDateFilters;
+		colVisible = newColVisible;
+
+		if (anyMatch) {
+			appliedSnapshot = {
+				name: filter.name,
+				colFilters: Object.fromEntries(Object.entries(newColFilters).map(([k, v]) => [k, [...v]])),
+				colDateFilters: Object.fromEntries(
+					Object.entries(newColDateFilters).map(([k, v]) => [k, { ...v }])
+				),
+				colVisible: { ...newColVisible }
+			};
+		}
+
+		return { noMatch: !anyMatch };
+	};
+
+	const deleteSavedFilter = (name: string) => {
+		savedFilters = savedFilters.filter((f) => f.name !== name);
+		localStorage.setItem(STORAGE_KEY, JSON.stringify(savedFilters));
 	};
 
 	const doExportPdf = async () => {
@@ -261,12 +368,30 @@ const createCsvStudio = () => {
 		get sortedRows() {
 			return sortedRows;
 		},
+		get savedFilters() {
+			return savedFilters;
+		},
+		get appliedPresetName() {
+			return appliedSnapshot?.name ?? null;
+		},
+		get isPresetModified() {
+			return isPresetModified;
+		},
+		get activeFilters() {
+			return activeFilters;
+		},
+		get activeDateFilters() {
+			return activeDateFilters;
+		},
 		clearData,
 		handleFile,
 		resetColRename,
 		handleSort,
 		doExportCsv,
-		doExportPdf
+		doExportPdf,
+		saveCurrentFilter,
+		loadSavedFilter,
+		deleteSavedFilter
 	};
 };
 

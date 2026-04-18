@@ -1,14 +1,28 @@
 <script lang="ts">
 	import DownloadIcon from '@lucide/svelte/icons/download';
 	import FileTextIcon from '@lucide/svelte/icons/file-text';
-	import UploadIcon from '@lucide/svelte/icons/upload';
 	import Trash2Icon from '@lucide/svelte/icons/trash-2';
+	import UploadIcon from '@lucide/svelte/icons/upload';
+	import { toast } from 'svelte-sonner';
 	import { Button } from '$lib/components/ui/button';
-	import { useCsvStudio } from './csv-studio.svelte';
+	import { useCsvStudio, type SavedFilter } from './csv-studio.svelte';
+	import FilterPresetDropdown from './FilterPresetDropdown.svelte';
+	import SaveFilterButton from './SaveFilterButton.svelte';
 
-	const { handleFile, clearData, doExportCsv, doExportPdf } = useCsvStudio();
+	const studio = useCsvStudio();
 
 	let fileInput = $state<HTMLInputElement | null>(null);
+
+	const hasActiveFilters = $derived(
+		studio.activeFilters.length > 0 || studio.activeDateFilters.length > 0
+	);
+
+	const onSelectPreset = (filter: SavedFilter) => {
+		const { noMatch } = studio.loadSavedFilter(filter);
+		if (noMatch) {
+			toast.warning('No columns from this preset exist in the current file.');
+		}
+	};
 </script>
 
 <div class="flex shrink-0 items-center gap-3 px-4 pt-2">
@@ -19,7 +33,7 @@
 		class="hidden"
 		onchange={(e) => {
 			const file = (e.target as HTMLInputElement).files?.[0];
-			if (file) handleFile(file);
+			if (file) studio.handleFile(file);
 			(e.target as HTMLInputElement).value = '';
 		}}
 	/>
@@ -27,16 +41,36 @@
 		<UploadIcon class="size-3" />
 		Import New CSV
 	</Button>
-	<Button variant="destructive" onclick={clearData}>
+	<Button variant="destructive" onclick={studio.clearData}>
 		<Trash2Icon class="size-3" />
 		Clear
 	</Button>
+
+	<div class="h-5 w-px bg-border"></div>
+
+	<SaveFilterButton
+		disabled={!hasActiveFilters}
+		savedFilters={studio.savedFilters}
+		onSave={studio.saveCurrentFilter}
+	/>
+
+	<FilterPresetDropdown
+		savedFilters={studio.savedFilters}
+		appliedPresetName={studio.appliedPresetName}
+		isPresetModified={studio.isPresetModified}
+		onSelect={onSelectPreset}
+		onDelete={studio.deleteSavedFilter}
+	/>
+
 	<div class="flex-1"></div>
-	<Button variant="secondary" onclick={doExportCsv}>
+
+	<div class="h-5 w-px bg-border"></div>
+
+	<Button variant="secondary" onclick={studio.doExportCsv}>
 		<DownloadIcon class="size-3" />
 		Export CSV
 	</Button>
-	<Button variant="secondary" onclick={doExportPdf}>
+	<Button variant="secondary" onclick={studio.doExportPdf}>
 		<FileTextIcon class="size-3" />
 		Export PDF
 	</Button>

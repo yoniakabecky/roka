@@ -238,6 +238,8 @@ msgid "No data to display"
 msgstr "No data to display"
 
 #: src/routes/(app)/csv-studio/CsvTable.svelte
+#: src/routes/(app)/csv-studio/SaveFilterButton.svelte
+#: src/routes/(app)/csv-studio/SaveFilterDialog.svelte
 msgid "Enter"
 msgstr "Enter"
 
@@ -245,3 +247,61 @@ msgstr "Enter"
 #: src/routes/(app)/csv-studio/CsvSidebar.svelte
 msgid "Rename {0}"
 msgstr "Rename {0}"
+
+#: src/routes/(app)/csv-studio/SaveFilterButton.svelte
+#: src/routes/(app)/csv-studio/SaveFilterDialog.svelte
+msgid "Name cannot be empty."
+msgstr "Name cannot be empty."
+
+#: src/routes/(app)/csv-studio/CsvToolbar.svelte
+msgid "No columns from this preset exist in the current file."
+msgstr "No columns from this preset exist in the current file."
+
+#~ msgid "<0/> Saved Filters <1/>"
+#~ msgstr "<0/> Saved Filters <1/>"
+
+#. 0: filter.name
+#: src/routes/(app)/csv-studio/FilterPresetDropdown.svelte
+msgid "Delete {0}"
+msgstr "Delete {0}"
+
+#: src/routes/(app)/csv-studio/SaveFilterButton.svelte
+msgid "<0/> Save Filter"
+msgstr "<0/> Save Filter"
+
+#: src/routes/(app)/csv-studio/SaveFilterButton.svelte
+#: src/routes/(app)/csv-studio/SaveFilterDialog.svelte
+msgid "Save Filter Preset"
+msgstr "Save Filter Preset"
+
+#: src/routes/(app)/csv-studio/SaveFilterButton.svelte
+#: src/routes/(app)/csv-studio/SaveFilterDialog.svelte
+msgid "Preset name"
+msgstr "Preset name"
+
+#: src/routes/(app)/csv-studio/SaveFilterButton.svelte
+#: src/routes/(app)/csv-studio/SaveFilterDialog.svelte
+msgid "Cancel"
+msgstr "Cancel"
+
+#: src/routes/(app)/csv-studio/SaveFilterButton.svelte
+#: src/routes/(app)/csv-studio/SaveFilterDialog.svelte
+msgid "Overwrite"
+msgstr "Overwrite"
+
+#: src/routes/(app)/csv-studio/SaveFilterButton.svelte
+#: src/routes/(app)/csv-studio/SaveFilterDialog.svelte
+msgid "Save"
+msgstr "Save"
+
+#: src/routes/(app)/csv-studio/csv-studio.svelte.ts
+msgid "Limit reached (10). Delete a preset to save a new one."
+msgstr "Limit reached (10). Delete a preset to save a new one."
+
+#: src/routes/(app)/csv-studio/FilterPresetDropdown.svelte
+msgid "Saved Filters"
+msgstr "Saved Filters"
+
+#: src/routes/(app)/csv-studio/SaveFilterButton.svelte
+msgid "A preset with this name already exists. Saving will overwrite the existing preset."
+msgstr "A preset with this name already exists. Saving will overwrite the existing preset."
