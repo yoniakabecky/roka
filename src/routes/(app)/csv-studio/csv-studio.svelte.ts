@@ -314,6 +314,18 @@ const createCsvStudio = () => {
 		localStorage.setItem(STORAGE_KEY, JSON.stringify(savedFilters));
 	};
 
+	const renameSavedFilter = (oldName: string, newName: string): { error?: string } => {
+		const trimmed = newName.trim();
+		if (!trimmed) return { error: 'Name cannot be empty.' };
+		if (trimmed === oldName) return {};
+		if (savedFilters.some((f) => f.name === trimmed))
+			return { error: 'A preset with that name already exists.' };
+		savedFilters = savedFilters.map((f) => (f.name === oldName ? { ...f, name: trimmed } : f));
+		localStorage.setItem(STORAGE_KEY, JSON.stringify(savedFilters));
+		if (appliedSnapshot?.name === oldName) appliedSnapshot = { ...appliedSnapshot, name: trimmed };
+		return {};
+	};
+
 	const doExportPdf = async () => {
 		try {
 			await exportPdf(sortedRows, visibleColumns, colRename, exportStem);
@@ -411,7 +423,8 @@ const createCsvStudio = () => {
 		doExportPdf,
 		saveCurrentFilter,
 		loadSavedFilter,
-		deleteSavedFilter
+		deleteSavedFilter,
+		renameSavedFilter
 	};
 };
 

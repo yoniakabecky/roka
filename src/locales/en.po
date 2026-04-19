@@ -238,6 +238,7 @@ msgid "No data to display"
 msgstr "No data to display"
 
 #: src/routes/(app)/csv-studio/CsvTable.svelte
+#: src/routes/(app)/csv-studio/FilterPresetDropdown.svelte
 #: src/routes/(app)/csv-studio/SaveFilterButton.svelte
 #: src/routes/(app)/csv-studio/SaveFilterDialog.svelte
 msgid "Enter"
@@ -250,6 +251,7 @@ msgstr "Rename {0}"
 
 #: src/routes/(app)/csv-studio/SaveFilterButton.svelte
 #: src/routes/(app)/csv-studio/SaveFilterDialog.svelte
+#: src/routes/(app)/csv-studio/csv-studio.svelte.ts
 msgid "Name cannot be empty."
 msgstr "Name cannot be empty."
 
@@ -310,3 +312,23 @@ msgstr "Options for {0}"
 #: src/routes/(app)/csv-studio/FilterPresetDropdown.svelte
 msgid "<0/> Delete"
 msgstr "<0/> Delete"
+
+#: src/routes/(app)/csv-studio/csv-studio.svelte.ts
+msgid "A preset with that name already exists."
+msgstr "A preset with that name already exists."
+
+#: src/routes/(app)/csv-studio/FilterPresetDropdown.svelte
+msgid "<0/> Rename"
+msgstr "<0/> Rename"
+
+#: src/routes/(app)/csv-studio/FilterPresetDropdown.svelte
+msgid "Escape"
+msgstr "Escape"
+
+#: src/routes/(app)/csv-studio/FilterPresetDropdown.svelte
+msgid "Confirm rename"
+msgstr "Confirm rename"
+
+#: src/routes/(app)/csv-studio/FilterPresetDropdown.svelte
+msgid "Cancel rename"
+msgstr "Cancel rename"

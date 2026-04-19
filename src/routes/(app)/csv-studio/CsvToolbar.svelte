@@ -63,6 +63,10 @@
 		isPresetModified={studio.isPresetModified}
 		onSelect={onSelectPreset}
 		onDelete={studio.deleteSavedFilter}
+		onRename={(oldName, newName) => {
+			const { error } = studio.renameSavedFilter(oldName, newName);
+			if (error) toast.error(error);
+		}}
 	/>
 
 	<Button
