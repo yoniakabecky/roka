@@ -251,6 +251,14 @@ const createCsvStudio = () => {
 		};
 		savedFilters = [...savedFilters.filter((f) => f.name !== name), filter];
 		localStorage.setItem(STORAGE_KEY, JSON.stringify(savedFilters));
+		appliedSnapshot = {
+			name,
+			colFilters: Object.fromEntries(Object.entries(colFilters).map(([k, v]) => [k, [...v]])),
+			colDateFilters: Object.fromEntries(
+				Object.entries(colDateFilters).map(([k, v]) => [k, { ...v }])
+			),
+			colVisible: { ...colVisible }
+		};
 		return {};
 	};
 
@@ -280,6 +288,8 @@ const createCsvStudio = () => {
 		const newColVisible = Object.fromEntries(
 			columns.map((c) => [c, (filter.colVisible ?? {})[c] ?? true])
 		);
+
+		if (Object.values(newColVisible).some((v) => !v)) anyMatch = true;
 
 		colFilters = newColFilters;
 		colDateFilters = newColDateFilters;

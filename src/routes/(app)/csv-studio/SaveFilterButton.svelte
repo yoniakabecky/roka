@@ -27,12 +27,11 @@
 
 	const nameExists = $derived(savedFilters.some((f) => f.name === filterName.trim()));
 
-	$effect(() => {
-		if (open) {
-			filterName = '';
-			saveError = '';
-		}
-	});
+	const openDialog = () => {
+		filterName = '';
+		saveError = '';
+		open = true;
+	};
 
 	const onConfirm = () => {
 		const name = filterName.trim();
@@ -49,7 +48,7 @@
 	};
 </script>
 
-<Button variant="outline" {disabled} onclick={() => (open = true)}>
+<Button variant="outline" {disabled} onclick={openDialog}>
 	<BookmarkIcon class="size-3" />
 	Save Filter
 </Button>
@@ -63,7 +62,12 @@
 			<Input
 				placeholder="Preset name"
 				bind:value={filterName}
-				onkeydown={(e) => e.key === 'Enter' && onConfirm()}
+				onkeydown={(e) => {
+					if (e.key === 'Enter') {
+						e.preventDefault();
+						onConfirm();
+					}
+				}}
 			/>
 			{#if nameExists}
 				<p class="mt-1.5 text-xs text-destructive">
