@@ -332,3 +332,8 @@ msgstr "Confirm rename"
 #: src/routes/(app)/csv-studio/FilterPresetDropdown.svelte
 msgid "Cancel rename"
 msgstr "Cancel rename"
+
+#. 0: version
+#: src/lib/components/AppHeader.svelte
+msgid "v{0}"
+msgstr "v{0}"
