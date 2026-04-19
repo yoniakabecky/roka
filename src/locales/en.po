@@ -257,11 +257,6 @@ msgstr "Name cannot be empty."
 msgid "No columns from this preset exist in the current file."
 msgstr "No columns from this preset exist in the current file."
 
-#. 0: filter.name
-#: src/routes/(app)/csv-studio/FilterPresetDropdown.svelte
-msgid "Delete {0}"
-msgstr "Delete {0}"
-
 #: src/routes/(app)/csv-studio/SaveFilterButton.svelte
 msgid "<0/> Save Filter"
 msgstr "<0/> Save Filter"
@@ -306,3 +301,12 @@ msgstr "A preset with this name already exists. Saving will overwrite the existi
 #: src/routes/(app)/csv-studio/CsvToolbar.svelte
 msgid "<0/> Reset"
 msgstr "<0/> Reset"
+
+#. 0: filter.name
+#: src/routes/(app)/csv-studio/FilterPresetDropdown.svelte
+msgid "Options for {0}"
+msgstr "Options for {0}"
+
+#: src/routes/(app)/csv-studio/FilterPresetDropdown.svelte
+msgid "<0/> Delete"
+msgstr "<0/> Delete"

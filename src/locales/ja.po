@@ -257,11 +257,6 @@ msgstr "フィルタ名前の入力は必須です。"
 msgid "No columns from this preset exist in the current file."
 msgstr "ファイルの列が、フィルタ条件と一致しません。"
 
-#. 0: filter.name
-#: src/routes/(app)/csv-studio/FilterPresetDropdown.svelte
-msgid "Delete {0}"
-msgstr "{0}を削除"
-
 #: src/routes/(app)/csv-studio/SaveFilterButton.svelte
 msgid "<0/> Save Filter"
 msgstr "<0/> 条件を保存"
@@ -305,4 +300,13 @@ msgstr "同じ名前の条件が存在します。保存すると、既存の条
 
 #: src/routes/(app)/csv-studio/CsvToolbar.svelte
 msgid "<0/> Reset"
-msgstr ""
+msgstr "<0/> リセット"
+
+#. 0: filter.name
+#: src/routes/(app)/csv-studio/FilterPresetDropdown.svelte
+msgid "Options for {0}"
+msgstr "オプション {0}"
+
+#: src/routes/(app)/csv-studio/FilterPresetDropdown.svelte
+msgid "<0/> Delete"
+msgstr "<0/> 削除"
