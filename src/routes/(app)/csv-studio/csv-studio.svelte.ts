@@ -64,6 +64,8 @@ const createCsvStudio = () => {
 
 	const visibleColumns = $derived(columns.filter((c) => colVisible[c]));
 
+	const hasHiddenColumns = $derived(visibleColumns.length < columns.length);
+
 	const activeFilters = $derived(Object.entries(colFilters).filter(([, vals]) => vals.length > 0));
 
 	const activeDateFilters = $derived(
@@ -162,11 +164,16 @@ const createCsvStudio = () => {
 		});
 	});
 
-	const resetFilters = () => {
-		colFilters = {};
-		colDateFilters = {};
-		colEmptyFilters = {};
+	const initColumnState = () => {
+		colFilters = Object.fromEntries(columns.map((c) => [c, []]));
+		colDateFilters = Object.fromEntries(columns.map((c) => [c, { from: '', to: '' }]));
+		colEmptyFilters = Object.fromEntries(columns.map((c) => [c, null]));
 		colFiltersOpen = {};
+		colVisible = Object.fromEntries(columns.map((c) => [c, true]));
+	};
+
+	const resetFilters = () => {
+		initColumnState();
 		appliedSnapshot = null;
 	};
 
@@ -191,11 +198,7 @@ const createCsvStudio = () => {
 			dynamicTyping: false,
 			complete: (result) => {
 				columns = result.meta.fields ?? [];
-				colVisible = Object.fromEntries(columns.map((c) => [c, true]));
-				colFiltersOpen = {};
-				colFilters = Object.fromEntries(columns.map((c) => [c, []]));
-				colDateFilters = Object.fromEntries(columns.map((c) => [c, { from: '', to: '' }]));
-				colEmptyFilters = Object.fromEntries(columns.map((c) => [c, null]));
+				initColumnState();
 				colRename = Object.fromEntries(columns.map((c) => [c, c]));
 				rows = result.data.filter((r) => r != null);
 				columnIndex = buildColumnIndex(rows, columns);
@@ -382,6 +385,12 @@ const createCsvStudio = () => {
 		},
 		get activeDateFilters() {
 			return activeDateFilters;
+		},
+		get activeEmptyFilters() {
+			return activeEmptyFilters;
+		},
+		get hasHiddenColumns() {
+			return hasHiddenColumns;
 		},
 		clearData,
 		resetFilters,

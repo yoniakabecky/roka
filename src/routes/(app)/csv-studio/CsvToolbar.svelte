@@ -15,7 +15,9 @@
 	let fileInput = $state<HTMLInputElement | null>(null);
 
 	const hasActiveFilters = $derived(
-		studio.activeFilters.length > 0 || studio.activeDateFilters.length > 0
+		studio.activeFilters.length > 0 ||
+			studio.activeDateFilters.length > 0 ||
+			studio.activeEmptyFilters.length > 0
 	);
 
 	const onSelectPreset = (filter: SavedFilter) => {
@@ -50,7 +52,7 @@
 	<div class="h-5 w-px bg-border"></div>
 
 	<SaveFilterButton
-		disabled={!hasActiveFilters}
+		disabled={!hasActiveFilters && !studio.appliedPresetName && !studio.hasHiddenColumns}
 		savedFilters={studio.savedFilters}
 		onSave={studio.saveCurrentFilter}
 	/>
@@ -65,7 +67,7 @@
 
 	<Button
 		variant="outline"
-		disabled={!hasActiveFilters && !studio.appliedPresetName}
+		disabled={!hasActiveFilters && !studio.appliedPresetName && !studio.hasHiddenColumns}
 		onclick={studio.resetFilters}
 	>
 		<RotateCcwIcon class="size-3" />
