@@ -207,9 +207,11 @@ msgid "Exported {0}.pdf"
 msgstr "{0}.pdf を作成しました。"
 
 #. 0: filename
+#. 0: filename
+#: src/routes/(app)/csv-studio/csv-studio.svelte.ts
 #: src/routes/(app)/csv-studio/csv-studio.svelte.ts
 msgid "Failed to import {0}"
-msgstr "{0} を保存できませんでした。"
+msgstr "{0} を読み込めませんでした。"
 
 #. 0: exportStem
 #: src/routes/(app)/csv-studio/csv-studio.svelte.ts

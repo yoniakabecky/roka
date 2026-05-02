@@ -207,6 +207,8 @@ msgid "Exported {0}.pdf"
 msgstr "Exported {0}.pdf"
 
 #. 0: filename
+#. 0: filename
+#: src/routes/(app)/csv-studio/csv-studio.svelte.ts
 #: src/routes/(app)/csv-studio/csv-studio.svelte.ts
 msgid "Failed to import {0}"
 msgstr "Failed to import {0}"

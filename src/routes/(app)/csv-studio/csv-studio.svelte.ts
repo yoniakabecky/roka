@@ -189,10 +189,23 @@ const createCsvStudio = () => {
 		resetFilters();
 	};
 
-	const handleFile = (file: File) => {
+	const handleFile = async (file: File) => {
 		filename = file.name;
 		loading = true;
-		Papa.parse<Record<string, string>>(file, {
+		let buffer: ArrayBuffer;
+		try {
+			buffer = await file.arrayBuffer();
+		} catch {
+			loading = false;
+			toast.error(`Failed to import ${filename}`);
+			return;
+		}
+		const utf8 = new TextDecoder('utf-8', { fatal: false }).decode(buffer);
+		// Shift-JIS fallback for Japanese CSVs
+		const text = utf8.slice(0, 4096).includes('�')
+			? new TextDecoder('shift-jis', { fatal: false }).decode(buffer)
+			: utf8;
+		Papa.parse<Record<string, string>>(text, {
 			header: true,
 			skipEmptyLines: true,
 			dynamicTyping: false,
