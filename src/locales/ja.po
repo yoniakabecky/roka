@@ -25,7 +25,6 @@ msgid "Roka"
 msgstr ""
 
 #: src/routes/(app)/csv-studio/+page.svelte
-#: src/routes/+page.svelte
 msgid "CSV Studio"
 msgstr ""
 
@@ -336,6 +335,125 @@ msgid "Cancel rename"
 msgstr "変更しない"
 
 #. 0: version
+#. 0: version
 #: src/lib/components/AppHeader.svelte
+#: src/routes/+page.svelte
 msgid "v{0}"
 msgstr ""
+
+#: src/routes/(app)/ship/+page.svelte
+msgid "Ship It"
+msgstr ""
+
+#~ msgid "Filter, sort, and export CSV files with ease."
+#~ msgstr "必要な情報だけ再出力する君"
+
+#~ msgid "Manage and track your shipments."
+#~ msgstr ""
+
+#: src/routes/(app)/ship/+page.svelte
+msgid "Generate shipping labels from CSV order data."
+msgstr "送り状を作る君"
+
+#: src/routes/(app)/ship/+page.svelte
+msgid "Ship It - Roka"
+msgstr ""
+
+#~ msgid "Generating shipping labels from CSV order data."
+#~ msgstr ""
+
+#~ msgid "Failed to parse {0}"
+#~ msgstr ""
+
+#~ msgid "送り主情報が不完全です。必須項目を入力してください。"
+#~ msgstr ""
+
+#~ msgid "Shift_JIS"
+#~ msgstr ""
+
+#~ msgid "Exported {0}"
+#~ msgstr ""
+
+#~ msgid "Export failed"
+#~ msgstr ""
+
+#~ msgid "Ship - Roka"
+#~ msgstr ""
+
+#~ msgid "Ship"
+#~ msgstr ""
+
+#~ msgid "Required"
+#~ msgstr ""
+
+#~ msgid "<0/> 送り主情報 <1/>"
+#~ msgstr ""
+
+#~ msgid "郵便番号 <0/>"
+#~ msgstr ""
+
+#~ msgid "電話番号 <0/>"
+#~ msgstr ""
+
+#~ msgid "名称 <0/>"
+#~ msgstr ""
+
+#~ msgid "株式会社ロカ"
+#~ msgstr ""
+
+#~ msgid "住所 <0/>"
+#~ msgstr ""
+
+#~ msgid "東京都渋谷区○○1-2-3"
+#~ msgstr ""
+
+#~ msgid "住所２"
+#~ msgstr ""
+
+#~ msgid "建物名・部屋番号など（任意）"
+#~ msgstr ""
+
+#~ msgid "Orders: <0/>"
+#~ msgstr ""
+
+#~ msgid "Exporting…"
+#~ msgstr ""
+
+#~ msgid "Export yu-pack CSV"
+#~ msgstr ""
+
+#~ msgid "Order #"
+#~ msgstr ""
+
+#~ msgid "Date"
+#~ msgstr ""
+
+#~ msgid "Recipient"
+#~ msgstr ""
+
+#~ msgid "Zip"
+#~ msgstr ""
+
+#~ msgid "Address"
+#~ msgstr ""
+
+#~ msgid "Name"
+#~ msgstr ""
+
+#~ msgid "Created at"
+#~ msgstr ""
+
+#~ msgid "Shipping Name"
+#~ msgstr ""
+
+#~ msgid "Shipping Zip"
+#~ msgstr ""
+
+#~ msgid "Shipping Address1"
+#~ msgstr ""
+
+#~ msgid "Ship it"
+#~ msgstr ""
+
+#~ msgid "Generat shipping labels from CSV order data."
+#~ msgstr ""
