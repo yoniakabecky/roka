@@ -1,4 +1,5 @@
 import Papa from 'papaparse';
+import { downloadBlob } from '$lib/download';
 
 type ShowSaveFilePicker = (options: {
 	suggestedName?: string;
@@ -42,10 +43,5 @@ export const exportCsv = async (
 		}
 	}
 
-	const url = URL.createObjectURL(blob);
-	const a = document.createElement('a');
-	a.href = url;
-	a.download = suggestedName;
-	a.click();
-	URL.revokeObjectURL(url);
+	downloadBlob(blob, suggestedName);
 };

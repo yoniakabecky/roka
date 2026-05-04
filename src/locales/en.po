@@ -50,6 +50,7 @@ msgid "Showing first {0} of {1} rows"
 msgstr "Showing first {0} of {1} rows"
 
 #: src/routes/(app)/csv-studio/+page.svelte
+#: src/routes/(app)/ship/+page.svelte
 msgid "Parsing file…"
 msgstr "Parsing file…"
 
@@ -138,6 +139,7 @@ msgid "PDF file"
 msgstr "PDF file"
 
 #: src/routes/(app)/csv-studio/CsvToolbar.svelte
+#: src/routes/(app)/ship/OrdersView.svelte
 msgid "<0/> Clear"
 msgstr "<0/> Clear"
 
@@ -341,15 +343,45 @@ msgstr "Cancel rename"
 msgid "v{0}"
 msgstr "v{0}"
 
+#. 0: file.name
+#. 0: file.name
+#: src/routes/(app)/ship/ship.svelte.ts
+#: src/routes/(app)/ship/ship.svelte.ts
+msgid "Failed to parse {0}"
+msgstr "Failed to parse {0}"
+
+#. 0: dlFilename
+#: src/routes/(app)/ship/ship.svelte.ts
+msgid "Exported {0}"
+msgstr "Exported {0}"
+
+#: src/routes/(app)/ship/ship.svelte.ts
+msgid "Export failed"
+msgstr "Export failed"
+
+#: src/routes/(app)/ship/SenderSection.svelte
+msgid "Required"
+msgstr "Required"
+
+#: src/routes/(app)/ship/OrdersView.svelte
+msgid "Orders: <0/>"
+msgstr "Orders: <0/>"
+
+#: src/routes/(app)/ship/OrdersView.svelte
+msgid "Exporting…"
+msgstr "Exporting…"
+
+#: src/routes/(app)/ship/OrdersView.svelte
+msgid "Order #"
+msgstr "Order #"
+
+#: src/routes/(app)/ship/OrdersView.svelte
+msgid "Address"
+msgstr "Address"
+
 #: src/routes/(app)/ship/+page.svelte
 msgid "Ship It"
 msgstr "Ship It"
-
-#~ msgid "Filter, sort, and export CSV files with ease."
-#~ msgstr "Filter, sort, and export CSV files with ease."
-
-#~ msgid "Manage and track your shipments."
-#~ msgstr "Manage and track your shipments."
 
 #: src/routes/(app)/ship/+page.svelte
 msgid "Generate shipping labels from CSV order data."
@@ -359,101 +391,63 @@ msgstr "Generate shipping labels from CSV order data."
 msgid "Ship It - Roka"
 msgstr "Ship It - Roka"
 
-#~ msgid "Generating shipping labels from CSV order data."
-#~ msgstr "Generating shipping labels from CSV order data."
+#: src/routes/(app)/ship/SenderSection.svelte
+msgid "<0/> Sender Info <1/>"
+msgstr "<0/> Sender Info <1/>"
 
-#~ msgid "Failed to parse {0}"
-#~ msgstr "Failed to parse {0}"
+#: src/routes/(app)/ship/SenderSection.svelte
+msgid "Zip Code <0/>"
+msgstr "Zip Code <0/>"
 
-#~ msgid "送り主情報が不完全です。必須項目を入力してください。"
-#~ msgstr "送り主情報が不完全です。必須項目を入力してください。"
+#: src/routes/(app)/ship/SenderSection.svelte
+msgid "Name <0/>"
+msgstr "Name <0/>"
 
-#~ msgid "Shift_JIS"
-#~ msgstr "Shift_JIS"
+#: src/routes/(app)/ship/SenderSection.svelte
+msgid "Address <0/>"
+msgstr "Address <0/>"
 
-#~ msgid "Exported {0}"
-#~ msgstr "Exported {0}"
+#: src/routes/(app)/ship/OrdersView.svelte
+#: src/routes/(app)/ship/SenderSection.svelte
+msgid "Address 2"
+msgstr "Address 2"
 
-#~ msgid "Export failed"
-#~ msgstr "Export failed"
+#: src/routes/(app)/ship/SenderSection.svelte
+msgid "Apt, suite, etc. (optional)"
+msgstr "Apt, suite, etc. (optional)"
 
-#~ msgid "Ship - Roka"
-#~ msgstr "Ship - Roka"
+#: src/routes/(app)/ship/SenderSection.svelte
+msgid "Roka Corp"
+msgstr "Roka Corp"
 
-#~ msgid "Ship"
-#~ msgstr "Ship"
+#: src/routes/(app)/ship/SenderSection.svelte
+msgid "Phone Number<0/>"
+msgstr "Phone Number<0/>"
 
-#~ msgid "Required"
-#~ msgstr "Required"
+#: src/routes/(app)/ship/SenderSection.svelte
+msgid "Email"
+msgstr "Email"
 
-#~ msgid "<0/> 送り主情報 <1/>"
-#~ msgstr "<0/> 送り主情報 <1/>"
+#: src/routes/(app)/ship/OrdersView.svelte
+msgid "Zip Code"
+msgstr "Zip Code"
 
-#~ msgid "郵便番号 <0/>"
-#~ msgstr "郵便番号 <0/>"
+#: src/routes/(app)/ship/OrdersView.svelte
+msgid "Customer Name"
+msgstr "Customer Name"
 
-#~ msgid "電話番号 <0/>"
-#~ msgstr "電話番号 <0/>"
+#: src/routes/(app)/ship/OrdersView.svelte
+msgid "Phone Number"
+msgstr "Phone Number"
 
-#~ msgid "名称 <0/>"
-#~ msgstr "名称 <0/>"
+#: src/routes/(app)/ship/OrdersView.svelte
+msgid "Order Date"
+msgstr "Order Date"
 
-#~ msgid "株式会社ロカ"
-#~ msgstr "株式会社ロカ"
+#: src/routes/(app)/ship/ship.svelte.ts
+msgid "The sender information is incomplete. Please fill in the required fields."
+msgstr "The sender information is incomplete. Please fill in the required fields."
 
-#~ msgid "住所 <0/>"
-#~ msgstr "住所 <0/>"
-
-#~ msgid "東京都渋谷区○○1-2-3"
-#~ msgstr "東京都渋谷区○○1-2-3"
-
-#~ msgid "住所２"
-#~ msgstr "住所２"
-
-#~ msgid "建物名・部屋番号など（任意）"
-#~ msgstr "建物名・部屋番号など（任意）"
-
-#~ msgid "Orders: <0/>"
-#~ msgstr "Orders: <0/>"
-
-#~ msgid "Exporting…"
-#~ msgstr "Exporting…"
-
-#~ msgid "Export yu-pack CSV"
-#~ msgstr "Export yu-pack CSV"
-
-#~ msgid "Order #"
-#~ msgstr "Order #"
-
-#~ msgid "Date"
-#~ msgstr "Date"
-
-#~ msgid "Recipient"
-#~ msgstr "Recipient"
-
-#~ msgid "Zip"
-#~ msgstr "Zip"
-
-#~ msgid "Address"
-#~ msgstr "Address"
-
-#~ msgid "Name"
-#~ msgstr "Name"
-
-#~ msgid "Created at"
-#~ msgstr "Created at"
-
-#~ msgid "Shipping Name"
-#~ msgstr "Shipping Name"
-
-#~ msgid "Shipping Zip"
-#~ msgstr "Shipping Zip"
-
-#~ msgid "Shipping Address1"
-#~ msgstr "Shipping Address1"
-
-#~ msgid "Ship it"
-#~ msgstr "Ship it"
-
-#~ msgid "Generat shipping labels from CSV order data."
-#~ msgstr "Generat shipping labels from CSV order data."
+#: src/routes/(app)/ship/OrdersView.svelte
+msgid "Export CSV"
+msgstr "Export CSV"
