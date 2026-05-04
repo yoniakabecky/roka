@@ -1,9 +1,9 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
-	import { version } from '../../package.json';
 	import { ArrowRight } from '@lucide/svelte';
 	import * as Card from '$lib/components/ui/card';
-	import { navLinks } from '$lib/nav';
+	import { navLinks, type NavLink } from '$lib/nav';
+	import { version } from '../../package.json';
 
 	const toolMeta = {
 		'/csv-studio': {
@@ -14,7 +14,7 @@
 			description: 'Generate shipping labels from CSV order data.',
 			shadowClass: 'group-hover:shadow-secondary/50'
 		}
-	} satisfies Record<(typeof navLinks)[number]['path'], { description: string; shadowClass: string }>;
+	} satisfies Record<NavLink['path'], { description: string; shadowClass: string }>;
 </script>
 
 <svelte:head>
