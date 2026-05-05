@@ -1,10 +1,13 @@
 import Papa from 'papaparse';
 import Encoding from 'encoding-japanese';
+import { SvelteMap } from 'svelte/reactivity';
 import { toast } from 'svelte-sonner';
 import { loadSender, isSenderComplete, type SenderProfile } from '$lib/ship/sender';
-import { deduplicateOrders } from '$lib/ship/shopify';
-import { mapToYupack, buildYupackCsv } from '$lib/ship/yupack';
+import { deduplicateOrders, SHOPIFY_FIELDS } from '$lib/ship/shopify';
+import { mapToYupack, buildYupackCsv, type AddressOverride } from '$lib/ship/yupack';
 import { downloadBlob } from '$lib/download';
+
+export type { AddressOverride };
 
 const createShip = () => {
 	let sender = $state<SenderProfile>(loadSender());
@@ -12,6 +15,7 @@ const createShip = () => {
 	let filename = $state('');
 	let loading = $state(false);
 	let exporting = $state(false);
+	let addressOverrides = new SvelteMap<string, AddressOverride>();
 
 	const handleFile = (file: File) => {
 		loading = true;
@@ -42,6 +46,14 @@ const createShip = () => {
 		reader.readAsText(file, 'utf-8');
 	};
 
+	const setAddressOverride = (orderName: string, data: AddressOverride | null) => {
+		if (data) {
+			addressOverrides.set(orderName, data);
+		} else {
+			addressOverrides.delete(orderName);
+		}
+	};
+
 	const exportYupack = () => {
 		if (!isSenderComplete(sender)) {
 			toast.warning('The sender information is incomplete. Please fill in the required fields.');
@@ -49,7 +61,9 @@ const createShip = () => {
 		}
 		exporting = true;
 		try {
-			const yupackRows = orders.map((o) => mapToYupack(o, sender));
+			const yupackRows = orders.map((o) =>
+				mapToYupack(o, sender, addressOverrides.get(o[SHOPIFY_FIELDS.NAME]))
+			);
 			const csvStr = buildYupackCsv(yupackRows);
 			const sjisArray = Encoding.convert(Encoding.stringToCode(csvStr), {
 				to: 'SJIS',
@@ -70,6 +84,7 @@ const createShip = () => {
 	const clear = () => {
 		orders = [];
 		filename = '';
+		addressOverrides.clear();
 	};
 
 	return {
@@ -91,8 +106,12 @@ const createShip = () => {
 		get exporting() {
 			return exporting;
 		},
+		get addressOverrides() {
+			return addressOverrides;
+		},
 		handleFile,
 		exportYupack,
+		setAddressOverride,
 		clear
 	};
 };

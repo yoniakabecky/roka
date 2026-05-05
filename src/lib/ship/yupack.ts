@@ -2,6 +2,26 @@ import Papa from 'papaparse';
 import type { SenderProfile } from './sender';
 import { normalizePhone, shippingAddressLine1, SHOPIFY_FIELDS } from './shopify';
 
+export type AddressOverride = {
+	zipcode: string;
+	address1: string;
+	address2: string;
+	name: string;
+	phone: string;
+};
+
+export const resolveAddress = (
+	order: Record<string, string>,
+	override?: AddressOverride
+): AddressOverride =>
+	override ?? {
+		name: order[SHOPIFY_FIELDS.SHIPPING_NAME] ?? '',
+		zipcode: order[SHOPIFY_FIELDS.SHIPPING_ZIP] ?? '',
+		address1: shippingAddressLine1(order),
+		address2: order[SHOPIFY_FIELDS.SHIPPING_ADDRESS2] ?? '',
+		phone: normalizePhone(order[SHOPIFY_FIELDS.SHIPPING_PHONE] ?? '')
+	};
+
 export const HEADERS: string[] = [
 	'お客様側管理番号',
 	'発送予定日',
@@ -132,7 +152,8 @@ export const extractSize = (shippingMethod: string): string => {
 
 export const mapToYupack = (
 	order: Record<string, string>,
-	sender: SenderProfile
+	sender: SenderProfile,
+	addressOverride?: AddressOverride
 ): Record<string, string> => {
 	const row: Record<string, string> = { ...EMPTY_ROW };
 
@@ -141,12 +162,13 @@ export const mapToYupack = (
 	row['保冷種別'] = '1'; // 1 = 冷蔵; derive from Shipping Method when product types expand
 	row['元／着払／代引'] = '0';
 	row['送り状種別'] = '1100780';
-	row['お届け先 郵便番号'] = (order[SHOPIFY_FIELDS.SHIPPING_ZIP] ?? '').replace(/-/g, '');
-	row['お届け先 住所１'] = shippingAddressLine1(order);
-	row['お届け先 住所２'] = order[SHOPIFY_FIELDS.SHIPPING_ADDRESS2] ?? '';
-	row['お届け先 名称１'] = order[SHOPIFY_FIELDS.SHIPPING_NAME] ?? '';
+	const addr = resolveAddress(order, addressOverride);
+	row['お届け先 郵便番号'] = addr.zipcode.replace(/-/g, '');
+	row['お届け先 住所１'] = addr.address1;
+	row['お届け先 住所２'] = addr.address2;
+	row['お届け先 名称１'] = addr.name;
 	row['お届け先 敬称区分'] = '0';
-	row['お届け先 電話番号'] = normalizePhone(order[SHOPIFY_FIELDS.SHIPPING_PHONE] ?? '');
+	row['お届け先 電話番号'] = normalizePhone(addr.phone);
 	row['お届け先 メールアドレス１'] = order[SHOPIFY_FIELDS.EMAIL] ?? '';
 	row['ご依頼主 郵便番号'] = sender.zipcode.replace(/-/g, '');
 	row['ご依頼主 住所１'] = sender.address;

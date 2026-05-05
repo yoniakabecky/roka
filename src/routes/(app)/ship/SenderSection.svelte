@@ -37,7 +37,7 @@
 		<div class="grid grid-cols-2 gap-4 px-6 py-4">
 			<div class="flex flex-col gap-1.5">
 				<Label for="sender-zip" class="text-xs">
-					Zip Code <span class="text-destructive">*</span>
+					Zipcode <span class="text-destructive">*</span>
 				</Label>
 				<Input
 					id="sender-zip"

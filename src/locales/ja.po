@@ -278,6 +278,7 @@ msgstr "フィルタ名"
 
 #: src/routes/(app)/csv-studio/SaveFilterButton.svelte
 #: src/routes/(app)/csv-studio/SaveFilterDialog.svelte
+#: src/routes/(app)/ship/AddressEditModal.svelte
 msgid "Cancel"
 msgstr "キャンセル"
 
@@ -396,7 +397,7 @@ msgid "<0/> Sender Info <1/>"
 msgstr "<0/> 送り主情報 <1/>"
 
 #: src/routes/(app)/ship/SenderSection.svelte
-msgid "Zip Code <0/>"
+msgid "Zipcode <0/>"
 msgstr "郵便番号 <0/>"
 
 #: src/routes/(app)/ship/SenderSection.svelte
@@ -429,7 +430,7 @@ msgid "Email"
 msgstr "メールアドレス"
 
 #: src/routes/(app)/ship/OrdersView.svelte
-msgid "Zip Code"
+msgid "Zipcode"
 msgstr "郵便番号"
 
 #: src/routes/(app)/ship/OrdersView.svelte
@@ -451,3 +452,23 @@ msgstr "送り主情報は不完全です。必須項目を入力してくださ
 #: src/routes/(app)/ship/OrdersView.svelte
 msgid "Export CSV"
 msgstr "CSV保存"
+
+#: src/routes/(app)/ship/AddressEditModal.svelte
+msgid "Edit Delivery Address"
+msgstr "配送先住所の編集"
+
+#: src/routes/(app)/ship/AddressEditModal.svelte
+msgid "Shipping Address"
+msgstr "配送先住所"
+
+#: src/routes/(app)/ship/AddressEditModal.svelte
+msgid "Custom"
+msgstr "カスタム"
+
+#: src/routes/(app)/ship/AddressEditModal.svelte
+msgid "Confirm"
+msgstr "確認"
+
+#: src/routes/(app)/ship/AddressEditModal.svelte
+msgid "Enter a custom address."
+msgstr "住所を入力する。"

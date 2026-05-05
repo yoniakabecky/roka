@@ -278,6 +278,7 @@ msgstr "Preset name"
 
 #: src/routes/(app)/csv-studio/SaveFilterButton.svelte
 #: src/routes/(app)/csv-studio/SaveFilterDialog.svelte
+#: src/routes/(app)/ship/AddressEditModal.svelte
 msgid "Cancel"
 msgstr "Cancel"
 
@@ -396,8 +397,8 @@ msgid "<0/> Sender Info <1/>"
 msgstr "<0/> Sender Info <1/>"
 
 #: src/routes/(app)/ship/SenderSection.svelte
-msgid "Zip Code <0/>"
-msgstr "Zip Code <0/>"
+msgid "Zipcode <0/>"
+msgstr "Zipcode <0/>"
 
 #: src/routes/(app)/ship/SenderSection.svelte
 msgid "Name <0/>"
@@ -429,8 +430,8 @@ msgid "Email"
 msgstr "Email"
 
 #: src/routes/(app)/ship/OrdersView.svelte
-msgid "Zip Code"
-msgstr "Zip Code"
+msgid "Zipcode"
+msgstr "Zipcode"
 
 #: src/routes/(app)/ship/OrdersView.svelte
 msgid "Customer Name"
@@ -451,3 +452,23 @@ msgstr "The sender information is incomplete. Please fill in the required fields
 #: src/routes/(app)/ship/OrdersView.svelte
 msgid "Export CSV"
 msgstr "Export CSV"
+
+#: src/routes/(app)/ship/AddressEditModal.svelte
+msgid "Edit Delivery Address"
+msgstr "Edit Delivery Address"
+
+#: src/routes/(app)/ship/AddressEditModal.svelte
+msgid "Shipping Address"
+msgstr "Shipping Address"
+
+#: src/routes/(app)/ship/AddressEditModal.svelte
+msgid "Custom"
+msgstr "Custom"
+
+#: src/routes/(app)/ship/AddressEditModal.svelte
+msgid "Confirm"
+msgstr "Confirm"
+
+#: src/routes/(app)/ship/AddressEditModal.svelte
+msgid "Enter a custom address."
+msgstr "Enter a custom address."

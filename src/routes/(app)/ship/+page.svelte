@@ -30,6 +30,8 @@
 			exporting={ship.exporting}
 			onexport={ship.exportYupack}
 			onclear={ship.clear}
+			addressOverrides={ship.addressOverrides}
+			onaddressoverride={(name, data) => ship.setAddressOverride(name, data)}
 		/>
 	{/if}
 </div>
