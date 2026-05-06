@@ -35,7 +35,8 @@ const identityRename = Object.fromEntries(allColumns.map((c) => [c, c]));
 
 // Get the mock doc instance created during the most recent exportPdf call.
 // When called with `new`, mock.instances holds the constructed `this` objects.
-const lastDoc = () => (jsPDF as unknown as Mock).mock.instances[0];
+type MockDoc = { addFileToVFS: Mock; addFont: Mock; output: Mock; save: Mock };
+const lastDoc = () => (jsPDF as unknown as Mock).mock.instances[0] as MockDoc;
 
 beforeEach(() => {
 	vi.clearAllMocks();
