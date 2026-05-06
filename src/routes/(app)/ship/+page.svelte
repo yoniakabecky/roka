@@ -2,6 +2,7 @@
 	import Dropzone from '$lib/components/Dropzone.svelte';
 	import OrdersView from './OrdersView.svelte';
 	import SenderSection from './SenderSection.svelte';
+	import ShippingSettingsSection from './ShippingSettingsSection.svelte';
 	import { useShip } from './ship.svelte';
 
 	const ship = useShip();
@@ -16,6 +17,7 @@
 
 <div class="flex flex-1 flex-col overflow-y-auto">
 	<SenderSection bind:sender={ship.sender} />
+	<ShippingSettingsSection />
 
 	{#if ship.loading}
 		<div class="flex flex-1 items-center justify-center gap-3 text-muted-foreground">

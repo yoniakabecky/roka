@@ -528,3 +528,23 @@ msgstr "If address is English, click edit and select custom. Use zip code lookup
 #: src/routes/+page.svelte
 msgid "Filter, sort, and export CSV files with ease."
 msgstr "Filter, sort, and export CSV files with ease."
+
+#: src/routes/(app)/ship/ShippingSettingsSection.svelte
+msgid "<0/> Shipping Settings"
+msgstr "<0/> Shipping Settings"
+
+#: src/routes/(app)/ship/ShippingSettingsSection.svelte
+msgid "Shipping Company"
+msgstr "Shipping Company"
+
+#: src/routes/(app)/ship/ShippingSettingsSection.svelte
+msgid "Invoice Type"
+msgstr "Invoice Type"
+
+#: src/routes/(app)/ship/ShippingSettingsSection.svelte
+msgid "ゆうパックシート(A4･2宛分)"
+msgstr "ゆうパックシート(A4･2宛分)"
+
+#: src/routes/(app)/ship/ShippingSettingsSection.svelte
+msgid "Japan Post"
+msgstr "Japan Post"

@@ -528,3 +528,23 @@ msgstr "届け先が英語になっている場合は、編集ボタンをクリ
 #: src/routes/+page.svelte
 msgid "Filter, sort, and export CSV files with ease."
 msgstr "必要な情報だけ再出力する君"
+
+#: src/routes/(app)/ship/ShippingSettingsSection.svelte
+msgid "<0/> Shipping Settings"
+msgstr "<0/> 配送設定"
+
+#: src/routes/(app)/ship/ShippingSettingsSection.svelte
+msgid "Shipping Company"
+msgstr "配送会社"
+
+#: src/routes/(app)/ship/ShippingSettingsSection.svelte
+msgid "Invoice Type"
+msgstr "送り状種別"
+
+#: src/routes/(app)/ship/ShippingSettingsSection.svelte
+msgid "ゆうパックシート(A4･2宛分)"
+msgstr ""
+
+#: src/routes/(app)/ship/ShippingSettingsSection.svelte
+msgid "Japan Post"
+msgstr "日本郵便"
