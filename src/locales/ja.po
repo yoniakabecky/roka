@@ -11,40 +11,25 @@ msgstr ""
 msgid "Welcome to Roka 🎉"
 msgstr ""
 
-#: src/lib/vitest-examples/Welcome.svelte
-msgid "SvelteKit"
-msgstr ""
-
-#: src/lib/vitest-examples/Welcome.svelte
-msgid "Vitest"
-msgstr ""
-
 #: src/lib/components/AppHeader.svelte
 #: src/routes/+page.svelte
 msgid "Roka"
 msgstr ""
 
+#: src/lib/components/HelpPopover.svelte
 #: src/routes/(app)/csv-studio/+page.svelte
 msgid "CSV Studio"
 msgstr ""
 
 #: src/lib/components/Dropzone.svelte
-#: src/lib/components/csv-studio/Dropzone.svelte
 msgid "Drop any CSV here"
 msgstr "CSVファイルをここにドロップ"
 
 #: src/lib/components/Dropzone.svelte
-#: src/lib/components/csv-studio/Dropzone.svelte
 msgid "File drop zone"
 msgstr ""
 
-#: src/lib/components/csv-studio/Dropzone.svelte
-msgid "Or click Import CSV to browse"
-msgstr "またはクリックしてファイルを選択"
-
-#. 0: MAX_ROWS; 1: sortedRows.length
 #. 0: MAX_ROWS; 1: rows.length
-#: src/lib/components/csv-studio/CsvTable.svelte
 #: src/routes/(app)/csv-studio/CsvTable.svelte
 msgid "Showing first {0} of {1} rows"
 msgstr ""
@@ -122,10 +107,6 @@ msgstr ""
 msgid "Reset"
 msgstr "リセット"
 
-#: src/lib/csv-studio/export-pdf.svelte.ts
-msgid "AbortError"
-msgstr ""
-
 #: src/routes/(app)/csv-studio/CsvToolbar.svelte
 msgid "<0/> Export CSV"
 msgstr "<0/> CSV保存"
@@ -133,10 +114,6 @@ msgstr "<0/> CSV保存"
 #: src/routes/(app)/csv-studio/CsvToolbar.svelte
 msgid "<0/> Export PDF"
 msgstr "<0/> PDF保存"
-
-#: src/lib/csv-studio/export-pdf.svelte.ts
-msgid "PDF file"
-msgstr ""
 
 #: src/routes/(app)/csv-studio/CsvToolbar.svelte
 #: src/routes/(app)/ship/OrdersView.svelte
@@ -188,7 +165,6 @@ msgid "End date"
 msgstr "終了日"
 
 #: src/lib/components/ui/date-picker/date-picker.svelte
-#: src/routes/(app)/csv-studio/DatePicker.svelte
 msgid "Pick a date"
 msgstr "日付を選択"
 
@@ -243,7 +219,6 @@ msgstr "該当するデータがありません"
 #: src/routes/(app)/csv-studio/CsvTable.svelte
 #: src/routes/(app)/csv-studio/FilterPresetDropdown.svelte
 #: src/routes/(app)/csv-studio/SaveFilterButton.svelte
-#: src/routes/(app)/csv-studio/SaveFilterDialog.svelte
 #: src/routes/(app)/ship/AddressEditModal.svelte
 msgid "Enter"
 msgstr ""
@@ -254,7 +229,6 @@ msgid "Rename {0}"
 msgstr "{0} の名前を変更"
 
 #: src/routes/(app)/csv-studio/SaveFilterButton.svelte
-#: src/routes/(app)/csv-studio/SaveFilterDialog.svelte
 #: src/routes/(app)/csv-studio/csv-studio.svelte.ts
 msgid "Name cannot be empty."
 msgstr "フィルタ名前の入力は必須です。"
@@ -268,28 +242,23 @@ msgid "<0/> Save Filter"
 msgstr "<0/> 条件を保存"
 
 #: src/routes/(app)/csv-studio/SaveFilterButton.svelte
-#: src/routes/(app)/csv-studio/SaveFilterDialog.svelte
 msgid "Save Filter Preset"
 msgstr "フィルタ条件を保存"
 
 #: src/routes/(app)/csv-studio/SaveFilterButton.svelte
-#: src/routes/(app)/csv-studio/SaveFilterDialog.svelte
 msgid "Preset name"
 msgstr "フィルタ名"
 
 #: src/routes/(app)/csv-studio/SaveFilterButton.svelte
-#: src/routes/(app)/csv-studio/SaveFilterDialog.svelte
 #: src/routes/(app)/ship/AddressEditModal.svelte
 msgid "Cancel"
 msgstr "キャンセル"
 
 #: src/routes/(app)/csv-studio/SaveFilterButton.svelte
-#: src/routes/(app)/csv-studio/SaveFilterDialog.svelte
 msgid "Overwrite"
 msgstr "上書き"
 
 #: src/routes/(app)/csv-studio/SaveFilterButton.svelte
-#: src/routes/(app)/csv-studio/SaveFilterDialog.svelte
 msgid "Save"
 msgstr "保存"
 
@@ -381,6 +350,7 @@ msgstr "オーダー番号"
 msgid "Address"
 msgstr "住所"
 
+#: src/lib/components/HelpPopover.svelte
 #: src/routes/(app)/ship/+page.svelte
 msgid "Ship It"
 msgstr ""
@@ -481,3 +451,75 @@ msgstr "郵便番号が見つかりません"
 #: src/routes/(app)/ship/ZipInput.svelte
 msgid "Network error"
 msgstr "通信エラーが発生しました"
+
+#: src/lib/components/HelpPopover.svelte
+msgid "Help"
+msgstr ""
+
+#: src/lib/components/HelpPopover.svelte
+msgid "Import, filter, and export CSV data."
+msgstr "フィルタをかけたCSVデータを簡単に作成する"
+
+#: src/lib/components/HelpPopover.svelte
+msgid "Drop a CSV file (or click to pick one)"
+msgstr "CSVファイルをドロップまたは選択"
+
+#: src/lib/components/HelpPopover.svelte
+msgid "Use the sidebar to filter, hide columns, or rename"
+msgstr "サイドバーで列のフィルタ、表示切り替え、ヘッダーの名前の変更をする"
+
+#: src/lib/components/HelpPopover.svelte
+msgid "Sort columns by clicking the header"
+msgstr "列のソートはテーブルのヘッダーをクリック"
+
+#: src/lib/components/HelpPopover.svelte
+msgid "Export the filtered data as CSV or PDF"
+msgstr "フィルタ結果をCSVかPDFで保存する"
+
+#: src/lib/components/HelpPopover.svelte
+msgid "Save a filter to quickly restore your view later"
+msgstr "条件を保存することで次回同じ結果が表示できます"
+
+#: src/lib/components/HelpPopover.svelte
+msgid "Date columns are auto-detected"
+msgstr "日付の列は自動で検出されます"
+
+#: src/lib/components/HelpPopover.svelte
+msgid "Hidden columns are excluded from exports"
+msgstr "非表示の列はダウンロードの結果に反映されません"
+
+#: src/lib/components/HelpPopover.svelte
+msgid "Reloading the page will clear data and filters, but not your saved filters"
+msgstr "ページの再読み込みはデータとフィルタを消します（保存した条件は消えません）"
+
+#: src/lib/components/HelpPopover.svelte
+msgid "Generate shipping labels from Shopify order data."
+msgstr "Shopifyのオーダーを送り状形式に変換します"
+
+#: src/lib/components/HelpPopover.svelte
+msgid "Fill in your sender information (one-time setup)"
+msgstr "送り主情報を入力してください（最初の1回のみ）"
+
+#: src/lib/components/HelpPopover.svelte
+msgid "Drop (or click to select) a Shopify orders CSV"
+msgstr "Shopifyのオーダー（CSV）をドロップまたは選択"
+
+#: src/lib/components/HelpPopover.svelte
+msgid "Edit any delivery addresses if needed"
+msgstr "届け先の住所が編集必要な場合は、編集ボタンをクリックして編集"
+
+#: src/lib/components/HelpPopover.svelte
+msgid "Export shipping labels"
+msgstr "送り状データを保存"
+
+#: src/lib/components/HelpPopover.svelte
+msgid "Sender info is saved in your browser"
+msgstr "送り主情報はブラウザに保存されます"
+
+#: src/lib/components/HelpPopover.svelte
+msgid "Check imported orders"
+msgstr "変換されたオーダーを確認"
+
+#: src/lib/components/HelpPopover.svelte
+msgid "If address is English, click edit and select custom. Use zip code lookup to auto-fill city and town in Japanese"
+msgstr "届け先が英語になっている場合は、編集ボタンをクリックし、カスタムを選択。郵便番号から自動で日本語の市町村名を入力できます"

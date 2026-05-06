@@ -10,6 +10,7 @@
 		NavigationMenuItem,
 		NavigationMenuLink
 	} from '$lib/components/ui/navigation-menu/index.js';
+	import HelpPopover from '$lib/components/HelpPopover.svelte';
 	import { navLinks } from '$lib/nav';
 	import { version } from '../../../package.json';
 	import { locales, type Locale } from '../../locales/data.js';
@@ -21,6 +22,7 @@
 		await loadLocale(newLocale);
 		await invalidateAll();
 	};
+
 </script>
 
 <header
@@ -51,6 +53,7 @@
 		{#if email}
 			<span class="text-sm text-muted-foreground">{email}</span>
 		{/if}
+		<HelpPopover />
 		<Tabs value={locale} onValueChange={(v) => switchLocale(v as Locale)}>
 			<TabsList>
 				{#each locales as l (l)}

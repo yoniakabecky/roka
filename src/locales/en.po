@@ -11,40 +11,25 @@ msgstr ""
 msgid "Welcome to Roka 🎉"
 msgstr "Welcome to Roka 🎉"
 
-#: src/lib/vitest-examples/Welcome.svelte
-msgid "SvelteKit"
-msgstr "SvelteKit"
-
-#: src/lib/vitest-examples/Welcome.svelte
-msgid "Vitest"
-msgstr "Vitest"
-
 #: src/lib/components/AppHeader.svelte
 #: src/routes/+page.svelte
 msgid "Roka"
 msgstr "Roka"
 
+#: src/lib/components/HelpPopover.svelte
 #: src/routes/(app)/csv-studio/+page.svelte
 msgid "CSV Studio"
 msgstr "CSV Studio"
 
 #: src/lib/components/Dropzone.svelte
-#: src/lib/components/csv-studio/Dropzone.svelte
 msgid "Drop any CSV here"
 msgstr "Drop any CSV here"
 
 #: src/lib/components/Dropzone.svelte
-#: src/lib/components/csv-studio/Dropzone.svelte
 msgid "File drop zone"
 msgstr "File drop zone"
 
-#: src/lib/components/csv-studio/Dropzone.svelte
-msgid "Or click Import CSV to browse"
-msgstr "Or click Import CSV to browse"
-
-#. 0: MAX_ROWS; 1: sortedRows.length
 #. 0: MAX_ROWS; 1: rows.length
-#: src/lib/components/csv-studio/CsvTable.svelte
 #: src/routes/(app)/csv-studio/CsvTable.svelte
 msgid "Showing first {0} of {1} rows"
 msgstr "Showing first {0} of {1} rows"
@@ -122,10 +107,6 @@ msgstr "Rename Columns"
 msgid "Reset"
 msgstr "Reset"
 
-#: src/lib/csv-studio/export-pdf.svelte.ts
-msgid "AbortError"
-msgstr "AbortError"
-
 #: src/routes/(app)/csv-studio/CsvToolbar.svelte
 msgid "<0/> Export CSV"
 msgstr "<0/> Export CSV"
@@ -133,10 +114,6 @@ msgstr "<0/> Export CSV"
 #: src/routes/(app)/csv-studio/CsvToolbar.svelte
 msgid "<0/> Export PDF"
 msgstr "<0/> Export PDF"
-
-#: src/lib/csv-studio/export-pdf.svelte.ts
-msgid "PDF file"
-msgstr "PDF file"
 
 #: src/routes/(app)/csv-studio/CsvToolbar.svelte
 #: src/routes/(app)/ship/OrdersView.svelte
@@ -188,7 +165,6 @@ msgid "End date"
 msgstr "End date"
 
 #: src/lib/components/ui/date-picker/date-picker.svelte
-#: src/routes/(app)/csv-studio/DatePicker.svelte
 msgid "Pick a date"
 msgstr "Pick a date"
 
@@ -243,7 +219,6 @@ msgstr "No data to display"
 #: src/routes/(app)/csv-studio/CsvTable.svelte
 #: src/routes/(app)/csv-studio/FilterPresetDropdown.svelte
 #: src/routes/(app)/csv-studio/SaveFilterButton.svelte
-#: src/routes/(app)/csv-studio/SaveFilterDialog.svelte
 #: src/routes/(app)/ship/AddressEditModal.svelte
 msgid "Enter"
 msgstr "Enter"
@@ -254,7 +229,6 @@ msgid "Rename {0}"
 msgstr "Rename {0}"
 
 #: src/routes/(app)/csv-studio/SaveFilterButton.svelte
-#: src/routes/(app)/csv-studio/SaveFilterDialog.svelte
 #: src/routes/(app)/csv-studio/csv-studio.svelte.ts
 msgid "Name cannot be empty."
 msgstr "Name cannot be empty."
@@ -268,28 +242,23 @@ msgid "<0/> Save Filter"
 msgstr "<0/> Save Filter"
 
 #: src/routes/(app)/csv-studio/SaveFilterButton.svelte
-#: src/routes/(app)/csv-studio/SaveFilterDialog.svelte
 msgid "Save Filter Preset"
 msgstr "Save Filter Preset"
 
 #: src/routes/(app)/csv-studio/SaveFilterButton.svelte
-#: src/routes/(app)/csv-studio/SaveFilterDialog.svelte
 msgid "Preset name"
 msgstr "Preset name"
 
 #: src/routes/(app)/csv-studio/SaveFilterButton.svelte
-#: src/routes/(app)/csv-studio/SaveFilterDialog.svelte
 #: src/routes/(app)/ship/AddressEditModal.svelte
 msgid "Cancel"
 msgstr "Cancel"
 
 #: src/routes/(app)/csv-studio/SaveFilterButton.svelte
-#: src/routes/(app)/csv-studio/SaveFilterDialog.svelte
 msgid "Overwrite"
 msgstr "Overwrite"
 
 #: src/routes/(app)/csv-studio/SaveFilterButton.svelte
-#: src/routes/(app)/csv-studio/SaveFilterDialog.svelte
 msgid "Save"
 msgstr "Save"
 
@@ -381,6 +350,7 @@ msgstr "Order #"
 msgid "Address"
 msgstr "Address"
 
+#: src/lib/components/HelpPopover.svelte
 #: src/routes/(app)/ship/+page.svelte
 msgid "Ship It"
 msgstr "Ship It"
@@ -481,3 +451,75 @@ msgstr "Postal code not found"
 #: src/routes/(app)/ship/ZipInput.svelte
 msgid "Network error"
 msgstr "Network error"
+
+#: src/lib/components/HelpPopover.svelte
+msgid "Help"
+msgstr "Help"
+
+#: src/lib/components/HelpPopover.svelte
+msgid "Import, filter, and export CSV data."
+msgstr "Import, filter, and export CSV data."
+
+#: src/lib/components/HelpPopover.svelte
+msgid "Drop a CSV file (or click to pick one)"
+msgstr "Drop a CSV file (or click to pick one)"
+
+#: src/lib/components/HelpPopover.svelte
+msgid "Use the sidebar to filter, hide columns, or rename"
+msgstr "Use the sidebar to filter, hide columns, or rename"
+
+#: src/lib/components/HelpPopover.svelte
+msgid "Sort columns by clicking the header"
+msgstr "Sort columns by clicking the header"
+
+#: src/lib/components/HelpPopover.svelte
+msgid "Export the filtered data as CSV or PDF"
+msgstr "Export the filtered data as CSV or PDF"
+
+#: src/lib/components/HelpPopover.svelte
+msgid "Save a filter to quickly restore your view later"
+msgstr "Save a filter to quickly restore your view later"
+
+#: src/lib/components/HelpPopover.svelte
+msgid "Date columns are auto-detected"
+msgstr "Date columns are auto-detected"
+
+#: src/lib/components/HelpPopover.svelte
+msgid "Hidden columns are excluded from exports"
+msgstr "Hidden columns are excluded from exports"
+
+#: src/lib/components/HelpPopover.svelte
+msgid "Reloading the page will clear data and filters, but not your saved filters"
+msgstr "Reloading the page will clear data and filters, but not your saved filters"
+
+#: src/lib/components/HelpPopover.svelte
+msgid "Generate shipping labels from Shopify order data."
+msgstr "Generate shipping labels from Shopify order data."
+
+#: src/lib/components/HelpPopover.svelte
+msgid "Fill in your sender information (one-time setup)"
+msgstr "Fill in your sender information (one-time setup)"
+
+#: src/lib/components/HelpPopover.svelte
+msgid "Drop (or click to select) a Shopify orders CSV"
+msgstr "Drop (or click to select) a Shopify orders CSV"
+
+#: src/lib/components/HelpPopover.svelte
+msgid "Edit any delivery addresses if needed"
+msgstr "Edit any delivery addresses if needed"
+
+#: src/lib/components/HelpPopover.svelte
+msgid "Export shipping labels"
+msgstr "Export shipping labels"
+
+#: src/lib/components/HelpPopover.svelte
+msgid "Sender info is saved in your browser"
+msgstr "Sender info is saved in your browser"
+
+#: src/lib/components/HelpPopover.svelte
+msgid "Check imported orders"
+msgstr "Check imported orders"
+
+#: src/lib/components/HelpPopover.svelte
+msgid "If address is English, click edit and select custom. Use zip code lookup to auto-fill city and town in Japanese"
+msgstr "If address is English, click edit and select custom. Use zip code lookup to auto-fill city and town in Japanese"
