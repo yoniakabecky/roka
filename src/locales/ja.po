@@ -356,6 +356,7 @@ msgid "Ship It"
 msgstr ""
 
 #: src/routes/(app)/ship/+page.svelte
+#: src/routes/+page.svelte
 msgid "Generate shipping labels from CSV order data."
 msgstr "送り状を作る君"
 
@@ -523,3 +524,7 @@ msgstr "変換されたオーダーを確認"
 #: src/lib/components/HelpPopover.svelte
 msgid "If address is English, click edit and select custom. Use zip code lookup to auto-fill city and town in Japanese"
 msgstr "届け先が英語になっている場合は、編集ボタンをクリックし、カスタムを選択。郵便番号から自動で日本語の市町村名を入力できます"
+
+#: src/routes/+page.svelte
+msgid "Filter, sort, and export CSV files with ease."
+msgstr "必要な情報だけ再出力する君"

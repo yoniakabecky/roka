@@ -5,16 +5,14 @@
 	import { navLinks, type NavLink } from '$lib/nav';
 	import { version } from '../../package.json';
 
-	const toolMeta = {
+	const toolColor = {
 		'/csv-studio': {
-			description: 'Filter, sort, and export CSV files with ease.',
 			shadowClass: 'group-hover:shadow-primary/50'
 		},
 		'/ship': {
-			description: 'Generate shipping labels from CSV order data.',
 			shadowClass: 'group-hover:shadow-secondary/50'
 		}
-	} satisfies Record<NavLink['path'], { description: string; shadowClass: string }>;
+	} satisfies Record<NavLink['path'], { shadowClass: string }>;
 </script>
 
 <svelte:head>
@@ -30,18 +28,22 @@
 
 	<div class="flex gap-4">
 		{#each navLinks as link (link.path)}
-			{@const meta = toolMeta[link.path]}
 			<a href={resolve(link.path)} class="group block w-56">
 				<Card.Root
 					class={[
 						'flex h-36 flex-col justify-between transition-all duration-200 group-hover:-translate-y-0.5 group-hover:border-foreground group-hover:shadow-lg',
-						meta.shadowClass
+						toolColor[link.path]
 					]}
 				>
 					<Card.Header>
 						<Card.Title class="text-lg font-semibold">{link.label}</Card.Title>
 						<Card.Description class="mt-1 text-xs text-muted-foreground">
-							{meta.description}
+							<!-- NOTE: to display translations, write description here -->
+							{#if link.path === '/csv-studio'}
+								Filter, sort, and export CSV files with ease.
+							{:else if link.path === '/ship'}
+								Generate shipping labels from CSV order data.
+							{/if}
 						</Card.Description>
 					</Card.Header>
 					<div
