@@ -22,7 +22,6 @@
 		await loadLocale(newLocale);
 		await invalidateAll();
 	};
-
 </script>
 
 <header

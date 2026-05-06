@@ -29,7 +29,16 @@
 </script>
 
 <div class="flex gap-1">
-	<Input bind:value {id} {placeholder} oninput={() => { error = null; oninput?.(); }} class={size === 'sm' ? 'h-7 text-xs' : ''} />
+	<Input
+		bind:value
+		{id}
+		{placeholder}
+		oninput={() => {
+			error = null;
+			oninput?.();
+		}}
+		class={size === 'sm' ? 'h-7 text-xs' : ''}
+	/>
 	<button
 		type="button"
 		onclick={handleLookup}
