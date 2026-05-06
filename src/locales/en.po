@@ -244,6 +244,7 @@ msgstr "No data to display"
 #: src/routes/(app)/csv-studio/FilterPresetDropdown.svelte
 #: src/routes/(app)/csv-studio/SaveFilterButton.svelte
 #: src/routes/(app)/csv-studio/SaveFilterDialog.svelte
+#: src/routes/(app)/ship/AddressEditModal.svelte
 msgid "Enter"
 msgstr "Enter"
 
@@ -472,3 +473,11 @@ msgstr "Confirm"
 #: src/routes/(app)/ship/AddressEditModal.svelte
 msgid "Enter a custom address."
 msgstr "Enter a custom address."
+
+#: src/routes/(app)/ship/ZipInput.svelte
+msgid "Postal code not found"
+msgstr "Postal code not found"
+
+#: src/routes/(app)/ship/ZipInput.svelte
+msgid "Network error"
+msgstr "Network error"

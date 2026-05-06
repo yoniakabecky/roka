@@ -244,6 +244,7 @@ msgstr "該当するデータがありません"
 #: src/routes/(app)/csv-studio/FilterPresetDropdown.svelte
 #: src/routes/(app)/csv-studio/SaveFilterButton.svelte
 #: src/routes/(app)/csv-studio/SaveFilterDialog.svelte
+#: src/routes/(app)/ship/AddressEditModal.svelte
 msgid "Enter"
 msgstr ""
 
@@ -472,3 +473,11 @@ msgstr "確認"
 #: src/routes/(app)/ship/AddressEditModal.svelte
 msgid "Enter a custom address."
 msgstr "住所を入力する。"
+
+#: src/routes/(app)/ship/ZipInput.svelte
+msgid "Postal code not found"
+msgstr "郵便番号が見つかりません"
+
+#: src/routes/(app)/ship/ZipInput.svelte
+msgid "Network error"
+msgstr "通信エラーが発生しました"

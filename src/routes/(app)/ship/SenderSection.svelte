@@ -5,6 +5,7 @@
 	import ChevronDownIcon from '@lucide/svelte/icons/chevron-down';
 	import ChevronUpIcon from '@lucide/svelte/icons/chevron-up';
 	import PackageIcon from '@lucide/svelte/icons/package';
+	import ZipInput from './ZipInput.svelte';
 
 	let { sender = $bindable() }: { sender: SenderProfile } = $props();
 
@@ -39,11 +40,16 @@
 				<Label for="sender-zip" class="text-xs">
 					Zipcode <span class="text-destructive">*</span>
 				</Label>
-				<Input
+				<ZipInput
 					id="sender-zip"
-					placeholder="123-4567"
 					bind:value={sender.zipcode}
+					size="sm"
+					placeholder="123-4567"
 					oninput={() => saveSender(sender)}
+					onlookup={(addr) => {
+						sender.address = addr;
+						saveSender(sender);
+					}}
 				/>
 			</div>
 			<div class="flex flex-col gap-1.5">

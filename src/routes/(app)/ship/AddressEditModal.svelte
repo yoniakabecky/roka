@@ -12,6 +12,7 @@
 	} from '$lib/components/ui/dialog';
 	import { Button } from '$lib/components/ui/button';
 	import { Input } from '$lib/components/ui/input';
+	import ZipInput from './ZipInput.svelte';
 
 	let {
 		order,
@@ -99,13 +100,18 @@
 				{/if}
 			</button>
 
-			<button
-				type="button"
-				class="relative flex-1 cursor-pointer rounded-lg border p-4 text-left transition-colors {mode ===
-				'custom'
-					? 'border-primary bg-primary/5'
-					: 'border-border hover:bg-muted/40'}"
+			<div
+				role="button"
+				aria-pressed={mode === 'custom'}
+				tabindex="0"
+				class={[
+					'relative flex-1 cursor-pointer rounded-lg border p-4 text-left transition-colors',
+					mode === 'custom' ? 'border-primary bg-primary/5' : 'border-border hover:bg-muted/40'
+				]}
 				onclick={() => selectMode('custom')}
+				onkeydown={(e) => {
+					if (e.key === 'Enter' || e.key === ' ') selectMode('custom');
+				}}
 			>
 				<p class="mb-2 text-sm font-semibold">Custom</p>
 				{#if mode === 'custom'}
@@ -115,7 +121,12 @@
 
 					<div class="space-y-1.5">
 						<Input bind:value={custom.name} placeholder={shippingName} class="h-7 text-xs" />
-						<Input bind:value={custom.zipcode} placeholder={shippingZip} class="h-7 text-xs" />
+						<ZipInput
+							bind:value={custom.zipcode}
+							placeholder={shippingZip}
+							size="sm"
+							onlookup={(addr) => (custom.address1 = addr)}
+						/>
 						<Input bind:value={custom.address1} placeholder={shippingAddr1} class="h-7 text-xs" />
 						<Input bind:value={custom.address2} placeholder={shippingAddr2} class="h-7 text-xs" />
 						<Input bind:value={custom.phone} placeholder={shippingPhone} class="h-7 text-xs" />
@@ -123,7 +134,7 @@
 				{:else}
 					<p class="text-xs text-muted-foreground">Enter a custom address.</p>
 				{/if}
-			</button>
+			</div>
 		</div>
 
 		<DialogFooter>
