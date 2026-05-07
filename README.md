@@ -1,6 +1,6 @@
 # Roka
 
-A personal productivity web app. Features a suite of small, focused tools — currently centered on CSV data wrangling, with more on the way.
+A personal productivity web app. Features a suite of small, focused tools for CSV data wrangling and shipping workflows.
 
 **Live demo:** _coming soon_
 
@@ -20,6 +20,16 @@ A safe import → export tool for CSV files. Load your file, filter down to exac
 - **Column renaming** — rename headers in the output without touching the source data
 - **Export** — download the result as CSV or PDF
 
+### Ship It
+
+A Shopify → Japan Post shipping label generator. Load a Shopify orders CSV export, configure your sender profile, and get a YuPack-formatted CSV ready to upload to Japan Post — encoded in Shift-JIS as required.
+
+- **Shopify import** — drag-and-drop a Shopify orders CSV; duplicate orders are automatically deduplicated
+- **Sender profile** — save your return address and contact details; persisted in localStorage
+- **Address overrides** — correct or override individual recipient addresses before export
+- **Zipcode lookup** — auto-fill address fields from a Japanese postal code
+- **YuPack export** — outputs a Shift-JIS CSV in Japan Post's YuPack import format
+
 ---
 
 ## Tech Stack
@@ -38,7 +48,6 @@ A safe import → export tool for CSV files. Load your file, filter down to exac
 ## Roadmap
 
 - [ ] **Auth** — Cloudflare Access integration
-- [ ] **Inventory Manager** — connect to an open API to track and manage inventory data
 - [ ] **More tools** — TBD based on personal workflow needs
 
 ---
@@ -54,3 +63,14 @@ pnpm dev
 pnpm test        # unit tests
 pnpm build       # production build
 ```
+
+### Zipcode lookup
+
+The zipcode lookup (`/api/postal-lookup`) runs as a Cloudflare Pages Function. `pnpm dev` won't serve it — you need Wrangler to handle the function alongside the Vite dev server:
+
+```bash
+pnpm pages:dev
+```
+
+Then open http://localhost:8788 instead of http://localhost:5173.
+This runs Wrangler as a proxy in front of the Vite dev server so the `/api/postal-lookup` function is available. It proxies requests to [zipcloud.ibsnet.co.jp](https://zipcloud.ibsnet.co.jp) — no API key required. Without it, the lookup silently fails and addresses can still be filled in manually.
