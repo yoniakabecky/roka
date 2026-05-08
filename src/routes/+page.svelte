@@ -32,7 +32,7 @@
 				<Card.Root
 					class={[
 						'flex h-36 flex-col justify-between transition-all duration-200 group-hover:-translate-y-0.5 group-hover:border-foreground group-hover:shadow-lg',
-						toolColor[link.path]
+						toolColor[link.path].shadowClass
 					]}
 				>
 					<Card.Header>
