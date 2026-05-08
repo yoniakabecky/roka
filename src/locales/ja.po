@@ -548,3 +548,7 @@ msgstr ""
 #: src/routes/(app)/ship/ShippingSettingsSection.svelte
 msgid "Japan Post"
 msgstr "日本郵便"
+
+#: src/routes/(app)/ship/+page.svelte
+msgid "Drop your Shopify orders CSV here"
+msgstr "Shopifyのオーダーをここにドロップ"

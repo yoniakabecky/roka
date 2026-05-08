@@ -24,7 +24,7 @@
 			<span class="text-sm">Parsing file…</span>
 		</div>
 	{:else if ship.orders.length === 0}
-		<Dropzone onfile={ship.handleFile} />
+		<Dropzone onfile={ship.handleFile} label="Drop your Shopify orders CSV here" />
 	{:else}
 		<OrdersView
 			orders={ship.orders}

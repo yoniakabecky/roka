@@ -1,7 +1,7 @@
 <script lang="ts">
 	import FolderOpenIcon from '@lucide/svelte/icons/folder-open';
 
-	let { onfile }: { onfile: (file: File) => void } = $props();
+	let { onfile, label }: { onfile: (file: File) => void; label?: string } = $props();
 
 	let isDragging = $state(false);
 	let fileInput: HTMLInputElement;
@@ -46,7 +46,7 @@
 	>
 		<FolderOpenIcon size={48} />
 
-		<h2 class="text-2xl font-bold text-foreground">Drop any CSV here</h2>
+		<h2 class="text-2xl font-bold text-foreground">{label || 'Drop any CSV here'}</h2>
 
 		<p class="text-sm text-muted-foreground">Or click here to browse files</p>
 
