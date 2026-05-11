@@ -459,7 +459,7 @@ msgstr ""
 
 #: src/lib/components/HelpPopover.svelte
 msgid "Import, filter, and export CSV data."
-msgstr "フィルタをかけたCSVデータを簡単に作成する"
+msgstr "フィルタをかけたCSVデータを作成します"
 
 #: src/lib/components/HelpPopover.svelte
 msgid "Drop a CSV file (or click to pick one)"
@@ -499,7 +499,7 @@ msgstr "Shopifyのオーダーを送り状形式に変換します"
 
 #: src/lib/components/HelpPopover.svelte
 msgid "Fill in your sender information (one-time setup)"
-msgstr "送り主情報を入力してください（最初の1回のみ）"
+msgstr "送り主情報を入力（最初の1回のみ）"
 
 #: src/lib/components/HelpPopover.svelte
 msgid "Drop (or click to select) a Shopify orders CSV"
