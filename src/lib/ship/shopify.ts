@@ -11,7 +11,8 @@ export const SHOPIFY_FIELDS = {
 	SHIPPING_METHOD: 'Shipping Method',
 	EMAIL: 'Email',
 	SUBTOTAL: 'Subtotal',
-	TOTAL: 'Total'
+	TOTAL: 'Total',
+	ATTRIBUTES: 'Note Attribute'
 } as const;
 
 export const JP_PREFECTURES: Record<string, string> = {
@@ -84,3 +85,14 @@ export const normalizePhone = (phone: string): string => phone.replace(/^'?\+81\
 
 export const shippingAddressLine1 = (order: Record<string, string>): string =>
 	`${JP_PREFECTURES[order[SHOPIFY_FIELDS.SHIPPING_PROVINCE] ?? ''] ?? ''}${order[SHOPIFY_FIELDS.SHIPPING_CITY] ?? ''}${order[SHOPIFY_FIELDS.SHIPPING_ADDRESS1] ?? ''}`;
+
+export const parseNoteAttributes = (attr: string): Record<string, string> => {
+	if (!attr) return {};
+	return Object.fromEntries(
+		attr.split(',').flatMap((pair) => {
+			const colon = pair.indexOf(':');
+			if (colon === -1) return [];
+			return [[pair.slice(0, colon).trim(), pair.slice(colon + 1).trim()]];
+		})
+	);
+};

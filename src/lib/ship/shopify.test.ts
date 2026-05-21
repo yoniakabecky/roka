@@ -1,5 +1,11 @@
 import { describe, it, expect } from 'vitest';
-import { deduplicateOrders, formatShopifyDate, normalizePhone, SHOPIFY_FIELDS } from './shopify';
+import {
+	deduplicateOrders,
+	formatShopifyDate,
+	normalizePhone,
+	parseNoteAttributes,
+	SHOPIFY_FIELDS
+} from './shopify';
 
 describe('normalizePhone', () => {
 	it('converts +81 with space to leading zero', () => {
@@ -74,5 +80,29 @@ describe('deduplicateOrders', () => {
 	it('preserves all rows when all names are unique', () => {
 		const rows = [makeOrder('#1001'), makeOrder('#1002'), makeOrder('#1003')];
 		expect(deduplicateOrders(rows)).toHaveLength(3);
+	});
+});
+
+describe('parseNoteAttributes', () => {
+	it('parses delivery-date and delivery-time from a combined attribute string', () => {
+		const result = parseNoteAttributes('delivery-date: 2026-05-15, delivery-time: 14-16');
+		expect(result['delivery-date']).toBe('2026-05-15');
+		expect(result['delivery-time']).toBe('14-16');
+	});
+
+	it('returns empty object for empty string', () => {
+		expect(parseNoteAttributes('')).toEqual({});
+	});
+
+	it('parses a single key-value pair without a comma', () => {
+		expect(parseNoteAttributes('delivery-date: 2026-06-01')).toEqual({
+			'delivery-date': '2026-06-01'
+		});
+	});
+
+	it('ignores segments with no colon', () => {
+		const result = parseNoteAttributes('no-colon, delivery-time: AM');
+		expect(result).not.toHaveProperty('no-colon');
+		expect(result['delivery-time']).toBe('AM');
 	});
 });

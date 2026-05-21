@@ -1,6 +1,12 @@
 import Papa from 'papaparse';
 import type { SenderProfile } from './sender';
-import { normalizePhone, shippingAddressLine1, SHOPIFY_FIELDS } from './shopify';
+import {
+	formatShopifyDate,
+	normalizePhone,
+	parseNoteAttributes,
+	shippingAddressLine1,
+	SHOPIFY_FIELDS
+} from './shopify';
 
 export type AddressOverride = {
 	zipcode: string;
@@ -144,6 +150,16 @@ export const HEADERS: string[] = [
 
 const EMPTY_ROW: Record<string, string> = Object.fromEntries(HEADERS.map((h) => [h, '']));
 
+const DELIVERY_TIME_CODES: Record<string, string> = {
+	Anytime: '00',
+	AM: '51',
+	'12-14': '52',
+	'14-16': '53',
+	'16-18': '54',
+	'18-20': '55',
+	'19-21': '57'
+};
+
 export const extractSize = (shippingMethod: string): string => {
 	const match = shippingMethod.match(/(\d+)サイズ/);
 	// If no size is found, leave it as '' (empty)
@@ -182,8 +198,12 @@ export const mapToYupack = (
 	row['逆さま厳禁区分'] = '0';
 	row['下積み厳禁区分'] = '0';
 	row['商品サイズ区分'] = extractSize(order[SHOPIFY_FIELDS.SHIPPING_METHOD] ?? '');
+	const attrs = parseNoteAttributes(order[SHOPIFY_FIELDS.ATTRIBUTES] ?? '');
 	row['速達・配達日指定種別'] = '0';
-	row['配達時間帯区分'] = '00';
+	if (attrs['delivery-date']) {
+		row['配達指定日／希望日'] = formatShopifyDate(attrs['delivery-date']);
+	}
+	row['配達時間帯区分'] = DELIVERY_TIME_CODES[attrs['delivery-time'] ?? 'Anytime'] ?? '00';
 	row['差出方法区分'] = '0';
 	row['ゆうパック複数個割引'] = '0';
 	row['ゆうパック同一割引'] = '0';

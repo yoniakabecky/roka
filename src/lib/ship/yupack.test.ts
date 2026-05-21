@@ -100,4 +100,60 @@ describe('mapToYupack', () => {
 		const row = mapToYupack(makeOrder({ [SHOPIFY_FIELDS.SHIPPING_METHOD]: '通常配送' }), SENDER);
 		expect(row['商品サイズ区分']).toBe('');
 	});
+
+	it('maps delivery-date and delivery-time from Note Attribute', () => {
+		const row = mapToYupack(
+			makeOrder({ [SHOPIFY_FIELDS.ATTRIBUTES]: 'delivery-date: 2026-05-15, delivery-time: 14-16' }),
+			SENDER
+		);
+		expect(row['配達指定日／希望日']).toBe('20260515');
+		expect(row['配達時間帯区分']).toBe('53');
+	});
+
+	it('defaults 配達時間帯区分 to 00 when no delivery-time is present', () => {
+		const row = mapToYupack(
+			makeOrder({ [SHOPIFY_FIELDS.ATTRIBUTES]: 'delivery-date: 2026-05-15' }),
+			SENDER
+		);
+		expect(row['配達指定日／希望日']).toBe('20260515');
+		expect(row['配達時間帯区分']).toBe('00');
+	});
+
+	it('leaves 配達指定日／希望日 empty when no delivery-date is present', () => {
+		const row = mapToYupack(
+			makeOrder({ [SHOPIFY_FIELDS.ATTRIBUTES]: 'delivery-time: AM' }),
+			SENDER
+		);
+		expect(row['配達指定日／希望日']).toBe('');
+		expect(row['配達時間帯区分']).toBe('51');
+	});
+
+	it('defaults both delivery fields when ATTRIBUTES is absent', () => {
+		const row = mapToYupack(makeOrder(), SENDER);
+		expect(row['配達指定日／希望日']).toBe('');
+		expect(row['配達時間帯区分']).toBe('00');
+	});
+
+	it('defaults 配達時間帯区分 to 00 for an unrecognized delivery-time value', () => {
+		const row = mapToYupack(
+			makeOrder({ [SHOPIFY_FIELDS.ATTRIBUTES]: 'delivery-time: 14-17' }),
+			SENDER
+		);
+		expect(row['配達時間帯区分']).toBe('00');
+	});
+
+	it.each([
+		['AM', '51'],
+		['12-14', '52'],
+		['14-16', '53'],
+		['16-18', '54'],
+		['18-20', '55'],
+		['19-21', '57']
+	])('maps delivery-time %s to code %s', (time, code) => {
+		const row = mapToYupack(
+			makeOrder({ [SHOPIFY_FIELDS.ATTRIBUTES]: `delivery-time: ${time}` }),
+			SENDER
+		);
+		expect(row['配達時間帯区分']).toBe(code);
+	});
 });
