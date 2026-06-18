@@ -85,7 +85,7 @@ describe('deduplicateOrders', () => {
 
 describe('parseNoteAttributes', () => {
 	it('parses delivery-date and delivery-time from a combined attribute string', () => {
-		const result = parseNoteAttributes('delivery-date: 2026-05-15, delivery-time: 14-16');
+		const result = parseNoteAttributes('delivery-date: 2026-05-15\ndelivery-time: 14-16');
 		expect(result['delivery-date']).toBe('2026-05-15');
 		expect(result['delivery-time']).toBe('14-16');
 	});
@@ -101,7 +101,7 @@ describe('parseNoteAttributes', () => {
 	});
 
 	it('ignores segments with no colon', () => {
-		const result = parseNoteAttributes('no-colon, delivery-time: AM');
+		const result = parseNoteAttributes('no-colon\ndelivery-time: AM');
 		expect(result).not.toHaveProperty('no-colon');
 		expect(result['delivery-time']).toBe('AM');
 	});

@@ -12,7 +12,7 @@ export const SHOPIFY_FIELDS = {
 	EMAIL: 'Email',
 	SUBTOTAL: 'Subtotal',
 	TOTAL: 'Total',
-	ATTRIBUTES: 'Note Attribute'
+	ATTRIBUTES: 'Note Attributes'
 } as const;
 
 export const JP_PREFECTURES: Record<string, string> = {
@@ -89,7 +89,7 @@ export const shippingAddressLine1 = (order: Record<string, string>): string =>
 export const parseNoteAttributes = (attr: string): Record<string, string> => {
 	if (!attr) return {};
 	return Object.fromEntries(
-		attr.split(',').flatMap((pair) => {
+		attr.split(/\r?\n/).flatMap((pair) => {
 			const colon = pair.indexOf(':');
 			if (colon === -1) return [];
 			return [[pair.slice(0, colon).trim(), pair.slice(colon + 1).trim()]];

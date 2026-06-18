@@ -103,7 +103,7 @@ describe('mapToYupack', () => {
 
 	it('maps delivery-date and delivery-time from Note Attribute', () => {
 		const row = mapToYupack(
-			makeOrder({ [SHOPIFY_FIELDS.ATTRIBUTES]: 'delivery-date: 2026-05-15, delivery-time: 14-16' }),
+			makeOrder({ [SHOPIFY_FIELDS.ATTRIBUTES]: 'delivery-date: 2026-05-15\ndelivery-time: 14-16' }),
 			SENDER
 		);
 		expect(row['配達指定日／希望日']).toBe('20260515');
