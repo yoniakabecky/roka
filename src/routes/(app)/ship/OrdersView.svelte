@@ -1,10 +1,11 @@
 <script lang="ts">
-	import { formatShopifyDate, SHOPIFY_FIELDS } from '$lib/ship/shopify';
+	import { formatShopifyDate, isForeignPhone, SHOPIFY_FIELDS } from '$lib/ship/shopify';
 	import { resolveAddress, type AddressOverride } from '$lib/ship/yupack';
 	import { Button } from '$lib/components/ui/button';
 	import DownloadIcon from '@lucide/svelte/icons/download';
 	import Trash2Icon from '@lucide/svelte/icons/trash-2';
 	import PencilIcon from '@lucide/svelte/icons/pencil';
+	import TriangleAlertIcon from '@lucide/svelte/icons/triangle-alert';
 	import AddressEditModal from './AddressEditModal.svelte';
 
 	let {
@@ -62,6 +63,8 @@
 			{#each orders as order (order[SHOPIFY_FIELDS.NAME])}
 				{@const override = addressOverrides.get(order[SHOPIFY_FIELDS.NAME])}
 				{@const display = resolveAddress(order, override)}
+				{@const phoneRemoved =
+					!override && isForeignPhone(order[SHOPIFY_FIELDS.SHIPPING_PHONE] ?? '')}
 				<tr class="border-b border-border/50 text-xs hover:bg-muted/30">
 					<td class="py-1.5 pr-4">
 						{order[SHOPIFY_FIELDS.NAME]}
@@ -74,7 +77,16 @@
 					</td>
 					<td class="py-1.5 pr-4"> {display.name}</td>
 					<td class="py-1.5 pr-4">{display.zipcode}</td>
-					<td class="py-1.5 pr-4">{display.phone}</td>
+					<td class="py-1.5 pr-4">
+						{#if phoneRemoved}
+							<span class="inline-flex items-center gap-1 text-amber-500">
+								<TriangleAlertIcon class="size-3" />
+								Overseas — removed
+							</span>
+						{:else}
+							{display.phone}
+						{/if}
+					</td>
 					<td class="py-1.5 pr-4">{display.address1}</td>
 					<td class="py-1.5 pr-4">{display.address2}</td>
 					<td class="py-1.5">

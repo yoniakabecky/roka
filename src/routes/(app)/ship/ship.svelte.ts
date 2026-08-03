@@ -3,7 +3,7 @@ import Encoding from 'encoding-japanese';
 import { SvelteMap } from 'svelte/reactivity';
 import { toast } from 'svelte-sonner';
 import { loadSender, isSenderComplete, type SenderProfile } from '$lib/ship/sender';
-import { deduplicateOrders, SHOPIFY_FIELDS } from '$lib/ship/shopify';
+import { deduplicateOrders, isForeignPhone, SHOPIFY_FIELDS } from '$lib/ship/shopify';
 import { mapToYupack, buildYupackCsv, type AddressOverride } from '$lib/ship/yupack';
 import { downloadBlob } from '$lib/download';
 
@@ -32,6 +32,14 @@ const createShip = () => {
 					orders = deduplicateOrders(result.data.filter((r) => r != null));
 					filename = file.name;
 					loading = false;
+					const removed = orders.filter((o) =>
+						isForeignPhone(o[SHOPIFY_FIELDS.SHIPPING_PHONE] ?? '')
+					).length;
+					if (removed > 0) {
+						toast.warning(
+							`Removed ${removed} overseas phone number(s). Japan Post only accepts Japanese numbers.`
+						);
+					}
 				},
 				error: () => {
 					loading = false;

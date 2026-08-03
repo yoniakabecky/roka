@@ -2,6 +2,7 @@ import { describe, it, expect } from 'vitest';
 import {
 	deduplicateOrders,
 	formatShopifyDate,
+	isForeignPhone,
 	normalizePhone,
 	parseNoteAttributes,
 	SHOPIFY_FIELDS
@@ -16,16 +17,66 @@ describe('normalizePhone', () => {
 		expect(normalizePhone('+8190-1234-5678')).toBe('090-1234-5678');
 	});
 
+	it('converts +81 followed by a hyphen', () => {
+		expect(normalizePhone('+81-90-1234-5678')).toBe('090-1234-5678');
+	});
+
 	it('strips leading single quote before +81', () => {
 		expect(normalizePhone("'+81 90-1234-5678")).toBe('090-1234-5678');
+	});
+
+	it('strips spaces separating the groups of a +81 number', () => {
+		expect(normalizePhone('+81 90 1234 5678')).toBe('09012345678');
 	});
 
 	it('leaves domestic numbers unchanged', () => {
 		expect(normalizePhone('090-1234-5678')).toBe('090-1234-5678');
 	});
 
+	it('strips spaces from domestic numbers', () => {
+		expect(normalizePhone('090 1234 5678')).toBe('09012345678');
+	});
+
+	it('keeps parentheses used for area codes', () => {
+		expect(normalizePhone('(03) 1234-5678')).toBe('(03)1234-5678');
+	});
+
+	it('folds full-width digits and dashes to half-width', () => {
+		expect(normalizePhone('０９０－１２３４－５６７８')).toBe('090-1234-5678');
+	});
+
+	it('removes numbers with a non-Japanese country code', () => {
+		expect(normalizePhone('+1 555-123-4567')).toBe('');
+	});
+
+	it('removes non-Japanese numbers written with a leading quote', () => {
+		expect(normalizePhone("'+44 20 7946 0958")).toBe('');
+	});
+
 	it('returns empty string unchanged', () => {
 		expect(normalizePhone('')).toBe('');
+	});
+});
+
+describe('isForeignPhone', () => {
+	it('flags a non-Japanese country code', () => {
+		expect(isForeignPhone('+1 555-123-4567')).toBe(true);
+	});
+
+	it('flags a non-Japanese country code behind a leading quote', () => {
+		expect(isForeignPhone("'+44 20 7946 0958")).toBe(true);
+	});
+
+	it('does not flag +81 numbers', () => {
+		expect(isForeignPhone('+81 90-1234-5678')).toBe(false);
+	});
+
+	it('does not flag domestic numbers', () => {
+		expect(isForeignPhone('090-1234-5678')).toBe(false);
+	});
+
+	it('does not flag an empty string', () => {
+		expect(isForeignPhone('')).toBe(false);
 	});
 });
 

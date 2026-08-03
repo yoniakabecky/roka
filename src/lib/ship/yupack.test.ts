@@ -71,6 +71,19 @@ describe('mapToYupack', () => {
 		expect(row['お届け先 電話番号']).toBe('090-9876-5432');
 	});
 
+	it('empties a non-Japanese recipient phone', () => {
+		const row = mapToYupack(
+			makeOrder({ [SHOPIFY_FIELDS.SHIPPING_PHONE]: '+1 555-123-4567' }),
+			SENDER
+		);
+		expect(row['お届け先 電話番号']).toBe('');
+	});
+
+	it('normalizes the sender phone', () => {
+		const row = mapToYupack(makeOrder(), { ...SENDER, phone: '+81 3-1234-5678' });
+		expect(row['ご依頼主 電話番号']).toBe('03-1234-5678');
+	});
+
 	it('builds address line 1 from province + city + address1', () => {
 		const row = mapToYupack(makeOrder(), SENDER);
 		expect(row['お届け先 住所１']).toBe('東京都渋谷区道玄坂1-2-3');

@@ -1,8 +1,14 @@
 <script lang="ts">
 	import CheckIcon from '@lucide/svelte/icons/circle-check';
+	import TriangleAlertIcon from '@lucide/svelte/icons/triangle-alert';
 	import { untrack } from 'svelte';
 	import type { AddressOverride } from '$lib/ship/yupack';
-	import { SHOPIFY_FIELDS, shippingAddressLine1, normalizePhone } from '$lib/ship/shopify';
+	import {
+		SHOPIFY_FIELDS,
+		shippingAddressLine1,
+		normalizePhone,
+		isForeignPhone
+	} from '$lib/ship/shopify';
 	import {
 		Dialog,
 		DialogContent,
@@ -33,6 +39,7 @@
 	const shippingAddr1 = $derived(shippingAddressLine1(order));
 	const shippingAddr2 = $derived(order[SHOPIFY_FIELDS.SHIPPING_ADDRESS2] ?? '');
 	const shippingPhone = $derived(normalizePhone(order[SHOPIFY_FIELDS.SHIPPING_PHONE] ?? ''));
+	const shippingPhoneRemoved = $derived(isForeignPhone(order[SHOPIFY_FIELDS.SHIPPING_PHONE] ?? ''));
 
 	let mode = $state<Mode>(untrack(() => (currentOverride ? 'custom' : 'shipping')));
 	let custom = $state<AddressOverride>(
@@ -57,7 +64,7 @@
 	};
 
 	const confirm = () => {
-		onconfirm(mode === 'shipping' ? null : { ...custom });
+		onconfirm(mode === 'shipping' ? null : { ...custom, phone: normalizePhone(custom.phone) });
 		onclose();
 	};
 </script>
@@ -90,7 +97,14 @@
 					{#if shippingAddr2}
 						<p>{shippingAddr2}</p>
 					{/if}
-					<p>{shippingPhone}</p>
+					{#if shippingPhoneRemoved}
+						<p class="inline-flex items-start gap-1 text-amber-500">
+							<TriangleAlertIcon class="size-3 shrink-0" />
+							Overseas number removed — select custom below and enter a Japanese phone number.
+						</p>
+					{:else}
+						<p>{shippingPhone}</p>
+					{/if}
 				</div>
 
 				{#if mode === 'shipping'}
@@ -130,6 +144,11 @@
 						<Input bind:value={custom.address1} placeholder={shippingAddr1} class="h-7 text-xs" />
 						<Input bind:value={custom.address2} placeholder={shippingAddr2} class="h-7 text-xs" />
 						<Input bind:value={custom.phone} placeholder={shippingPhone} class="h-7 text-xs" />
+						{#if isForeignPhone(custom.phone)}
+							<p class="text-xs text-destructive">
+								Overseas numbers aren't accepted and will be removed.
+							</p>
+						{/if}
 					</div>
 				{:else}
 					<p class="text-xs text-muted-foreground">Enter a custom address.</p>

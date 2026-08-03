@@ -552,3 +552,20 @@ msgstr "Japan Post"
 #: src/routes/(app)/ship/+page.svelte
 msgid "Drop your Shopify orders CSV here"
 msgstr "Drop your Shopify orders CSV here"
+
+#: src/routes/(app)/ship/OrdersView.svelte
+msgid "<0/> Overseas — removed"
+msgstr "<0/> Overseas — removed"
+
+#: src/routes/(app)/ship/AddressEditModal.svelte
+msgid "Overseas numbers aren't accepted and will be removed."
+msgstr "Overseas numbers aren't accepted and will be removed."
+
+#. 0: removed
+#: src/routes/(app)/ship/ship.svelte.ts
+msgid "Removed {0} overseas phone number(s). Japan Post only accepts Japanese numbers."
+msgstr "Removed {0} overseas phone number(s). Japan Post only accepts Japanese numbers."
+
+#: src/routes/(app)/ship/AddressEditModal.svelte
+msgid "<0/> Overseas number removed — select custom below and enter a Japanese phone number."
+msgstr "<0/> Overseas number removed — select custom below and enter a Japanese phone number."

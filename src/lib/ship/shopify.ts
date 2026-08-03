@@ -81,7 +81,28 @@ export const formatShopifyDate = (dateStr: string): string => {
 	return `${match[1]}${match[2]}${match[3]}`;
 };
 
-export const normalizePhone = (phone: string): string => phone.replace(/^'?\+81\s*/, '0');
+// Excel writes a leading ' to keep phone numbers as text
+const stripPhonePrefix = (phone: string): string => phone.trim().replace(/^'/, '');
+
+const toHalfWidth = (phone: string): string =>
+	phone
+		.replace(/[０-９（）]/g, (c) => String.fromCharCode(c.charCodeAt(0) - 0xfee0))
+		.replace(/[－ー−]/g, '-');
+
+/** A number carrying an international prefix other than Japan's +81. */
+export const isForeignPhone = (phone: string): boolean => {
+	const trimmed = stripPhonePrefix(phone);
+	return trimmed.startsWith('+') && !trimmed.startsWith('+81');
+};
+
+/** Normalizes to the YuPack-legal charset (digits, '-', '(', ')'). Returns '' for non-JP numbers. */
+export const normalizePhone = (phone: string): string => {
+	const trimmed = stripPhonePrefix(phone);
+	if (isForeignPhone(trimmed)) return '';
+	return toHalfWidth(trimmed)
+		.replace(/^\+81[\s-]*/, '0')
+		.replace(/[^0-9()-]/g, '');
+};
 
 export const shippingAddressLine1 = (order: Record<string, string>): string =>
 	`${JP_PREFECTURES[order[SHOPIFY_FIELDS.SHIPPING_PROVINCE] ?? ''] ?? ''}${order[SHOPIFY_FIELDS.SHIPPING_CITY] ?? ''}${order[SHOPIFY_FIELDS.SHIPPING_ADDRESS1] ?? ''}`;
