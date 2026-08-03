@@ -15,7 +15,7 @@ const createShip = () => {
 	let filename = $state('');
 	let loading = $state(false);
 	let exporting = $state(false);
-	let addressOverrides = new SvelteMap<string, AddressOverride>();
+	const addressOverrides = new SvelteMap<string, AddressOverride>();
 
 	const handleFile = (file: File) => {
 		loading = true;

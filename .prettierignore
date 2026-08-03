@@ -10,3 +10,6 @@ bun.lockb
 
 # Wuchale
 src/locales/
+
+# Claude Code local settings (git-ignored, rewritten by the tool)
+.claude/settings.local.json

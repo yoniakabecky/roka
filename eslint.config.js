@@ -37,6 +37,14 @@ export default defineConfig(
 		}
 	},
 	{
+		// shadcn-svelte generated primitives: regenerated via the CLI, so hand-fixes here
+		// would be overwritten.
+		files: ['src/lib/components/ui/**'],
+		rules: {
+			'svelte/no-navigation-without-resolve': 'off'
+		}
+	},
+	{
 		// Override or add rule settings here, such as:
 		// 'svelte/button-has-type': 'error'
 		rules: {}
