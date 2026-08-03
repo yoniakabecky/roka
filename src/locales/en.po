@@ -368,18 +368,22 @@ msgstr "Ship It - Roka"
 msgid "<0/> Sender Info <1/>"
 msgstr "<0/> Sender Info <1/>"
 
+#: src/routes/(app)/ship/AddressEditModal.svelte
 #: src/routes/(app)/ship/SenderSection.svelte
 msgid "Zipcode <0/>"
 msgstr "Zipcode <0/>"
 
+#: src/routes/(app)/ship/AddressEditModal.svelte
 #: src/routes/(app)/ship/SenderSection.svelte
 msgid "Name <0/>"
 msgstr "Name <0/>"
 
+#: src/routes/(app)/ship/AddressEditModal.svelte
 #: src/routes/(app)/ship/SenderSection.svelte
 msgid "Address <0/>"
 msgstr "Address <0/>"
 
+#: src/routes/(app)/ship/AddressEditModal.svelte
 #: src/routes/(app)/ship/OrdersView.svelte
 #: src/routes/(app)/ship/SenderSection.svelte
 msgid "Address 2"
@@ -409,6 +413,7 @@ msgstr "Zipcode"
 msgid "Customer Name"
 msgstr "Customer Name"
 
+#: src/routes/(app)/ship/AddressEditModal.svelte
 #: src/routes/(app)/ship/OrdersView.svelte
 msgid "Phone Number"
 msgstr "Phone Number"
@@ -557,6 +562,9 @@ msgstr "Drop your Shopify orders CSV here"
 msgid "<0/> Overseas — removed"
 msgstr "<0/> Overseas — removed"
 
+#~ msgid "<0/> Overseas number removed — enter a Japanese phone number below."
+#~ msgstr "<0/> Overseas number removed — enter a Japanese phone number below."
+
 #: src/routes/(app)/ship/AddressEditModal.svelte
 msgid "Overseas numbers aren't accepted and will be removed."
 msgstr "Overseas numbers aren't accepted and will be removed."
@@ -566,6 +574,24 @@ msgstr "Overseas numbers aren't accepted and will be removed."
 msgid "Removed {0} overseas phone number(s). Japan Post only accepts Japanese numbers."
 msgstr "Removed {0} overseas phone number(s). Japan Post only accepts Japanese numbers."
 
+#~ msgid "Name"
+#~ msgstr "Name"
+
+#: src/routes/(app)/ship/+page.svelte
+msgid "Drop your Shopify orders CSV here<<<<<<< HEAD======="
+msgstr "Drop your Shopify orders CSV here<<<<<<< HEAD======="
+
+#~ msgid "Name>>>>>>> 0d067fa (feat: enhance AddressEditModal with custom input labels and validation)"
+#~ msgstr "Name>>>>>>> 0d067fa (feat: enhance AddressEditModal with custom input labels and validation)"
+
 #: src/routes/(app)/ship/AddressEditModal.svelte
 msgid "<0/> Overseas number removed — select custom below and enter a Japanese phone number."
 msgstr "<0/> Overseas number removed — select custom below and enter a Japanese phone number."
+
+#. 0: removed
+#: src/routes/(app)/ship/ship.svelte.ts
+msgid "Removed {0} overseas phone number(s). Japan Post only accepts Japanese numbers.<<<<<<< HEAD"
+msgstr "Removed {0} overseas phone number(s). Japan Post only accepts Japanese numbers.<<<<<<< HEAD"
+
+#~ msgid "<0/> Overseas number removed — select custom below and enter a Japanese phone number.======="
+#~ msgstr "<0/> Overseas number removed — select custom below and enter a Japanese phone number.======="

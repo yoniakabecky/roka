@@ -18,6 +18,7 @@
 	} from '$lib/components/ui/dialog';
 	import { Button } from '$lib/components/ui/button';
 	import { Input } from '$lib/components/ui/input';
+	import { Label } from '$lib/components/ui/label';
 	import ZipInput from './ZipInput.svelte';
 
 	let {
@@ -62,6 +63,10 @@
 		}
 		mode = next;
 	};
+
+	const customComplete = $derived(
+		!!(custom.name.trim() && custom.zipcode.trim() && custom.address1.trim())
+	);
 
 	const confirm = () => {
 		onconfirm(mode === 'shipping' ? null : { ...custom, phone: normalizePhone(custom.phone) });
@@ -133,17 +138,59 @@
 						<CheckIcon class="inline-block size-4" />
 					</div>
 
-					<div class="space-y-1.5">
-						<Input bind:value={custom.name} placeholder={shippingName} class="h-7 text-xs" />
-						<ZipInput
-							bind:value={custom.zipcode}
-							placeholder={shippingZip}
-							size="sm"
-							onlookup={(addr) => (custom.address1 = addr)}
-						/>
-						<Input bind:value={custom.address1} placeholder={shippingAddr1} class="h-7 text-xs" />
-						<Input bind:value={custom.address2} placeholder={shippingAddr2} class="h-7 text-xs" />
-						<Input bind:value={custom.phone} placeholder={shippingPhone} class="h-7 text-xs" />
+					<div class="space-y-2">
+						<div class="flex flex-col gap-1">
+							<Label for="custom-name" class="text-xs text-muted-foreground">
+								Name <span class="text-destructive">*</span>
+							</Label>
+							<Input
+								id="custom-name"
+								bind:value={custom.name}
+								placeholder={shippingName}
+								class="h-7 text-xs"
+							/>
+						</div>
+						<div class="flex flex-col gap-1">
+							<Label for="custom-zip" class="text-xs text-muted-foreground">
+								Zipcode <span class="text-destructive">*</span>
+							</Label>
+							<ZipInput
+								id="custom-zip"
+								bind:value={custom.zipcode}
+								placeholder={shippingZip}
+								size="sm"
+								onlookup={(addr) => (custom.address1 = addr)}
+							/>
+						</div>
+						<div class="flex flex-col gap-1">
+							<Label for="custom-address1" class="text-xs text-muted-foreground">
+								Address <span class="text-destructive">*</span>
+							</Label>
+							<Input
+								id="custom-address1"
+								bind:value={custom.address1}
+								placeholder={shippingAddr1}
+								class="h-7 text-xs"
+							/>
+						</div>
+						<div class="flex flex-col gap-1">
+							<Label for="custom-address2" class="text-xs text-muted-foreground">Address 2</Label>
+							<Input
+								id="custom-address2"
+								bind:value={custom.address2}
+								placeholder={shippingAddr2}
+								class="h-7 text-xs"
+							/>
+						</div>
+						<div class="flex flex-col gap-1">
+							<Label for="custom-phone" class="text-xs text-muted-foreground">Phone Number</Label>
+							<Input
+								id="custom-phone"
+								bind:value={custom.phone}
+								placeholder={shippingPhone}
+								class="h-7 text-xs"
+							/>
+						</div>
 						{#if isForeignPhone(custom.phone)}
 							<p class="text-xs text-destructive">
 								Overseas numbers aren't accepted and will be removed.
@@ -158,7 +205,7 @@
 
 		<DialogFooter>
 			<Button variant="ghost" onclick={onclose}>Cancel</Button>
-			<Button onclick={confirm}>Confirm</Button>
+			<Button onclick={confirm} disabled={mode === 'custom' && !customComplete}>Confirm</Button>
 		</DialogFooter>
 	</DialogContent>
 </Dialog>

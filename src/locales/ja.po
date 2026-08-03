@@ -368,18 +368,22 @@ msgstr ""
 msgid "<0/> Sender Info <1/>"
 msgstr "<0/> 送り主情報 <1/>"
 
+#: src/routes/(app)/ship/AddressEditModal.svelte
 #: src/routes/(app)/ship/SenderSection.svelte
 msgid "Zipcode <0/>"
 msgstr "郵便番号 <0/>"
 
+#: src/routes/(app)/ship/AddressEditModal.svelte
 #: src/routes/(app)/ship/SenderSection.svelte
 msgid "Name <0/>"
 msgstr "名前 <0/>"
 
+#: src/routes/(app)/ship/AddressEditModal.svelte
 #: src/routes/(app)/ship/SenderSection.svelte
 msgid "Address <0/>"
 msgstr "住所 <0/>"
 
+#: src/routes/(app)/ship/AddressEditModal.svelte
 #: src/routes/(app)/ship/OrdersView.svelte
 #: src/routes/(app)/ship/SenderSection.svelte
 msgid "Address 2"
@@ -409,6 +413,7 @@ msgstr "郵便番号"
 msgid "Customer Name"
 msgstr "名前"
 
+#: src/routes/(app)/ship/AddressEditModal.svelte
 #: src/routes/(app)/ship/OrdersView.svelte
 msgid "Phone Number"
 msgstr "電話番号"
@@ -557,6 +562,9 @@ msgstr "Shopifyのオーダーをここにドロップ"
 msgid "<0/> Overseas — removed"
 msgstr "<0/> 海外番号のため削除"
 
+#~ msgid "<0/> Overseas number removed — enter a Japanese phone number below."
+#~ msgstr "<0/> 海外の電話番号は削除されました。下に日本の電話番号を入力してください。"
+
 #: src/routes/(app)/ship/AddressEditModal.svelte
 msgid "Overseas numbers aren't accepted and will be removed."
 msgstr "海外の電話番号は使用できないため削除されます。"
@@ -566,6 +574,24 @@ msgstr "海外の電話番号は使用できないため削除されます。"
 msgid "Removed {0} overseas phone number(s). Japan Post only accepts Japanese numbers."
 msgstr "海外の電話番号を{0}件削除しました。日本郵便は日本の電話番号のみ受け付けます。"
 
+#~ msgid "Name"
+#~ msgstr "名前"
+
+#: src/routes/(app)/ship/+page.svelte
+msgid "Drop your Shopify orders CSV here<<<<<<< HEAD======="
+msgstr "Shopifyのオーダーをここにドロップ<<<<<<< HEAD======="
+
+#~ msgid "Name>>>>>>> 0d067fa (feat: enhance AddressEditModal with custom input labels and validation)"
+#~ msgstr "名前>>>>>>> 0d067fa (feat: enhance AddressEditModal with custom input labels and validation)"
+
 #: src/routes/(app)/ship/AddressEditModal.svelte
 msgid "<0/> Overseas number removed — select custom below and enter a Japanese phone number."
 msgstr "<0/> 海外の電話番号は削除されました。カスタムを選択し、日本の電話番号を入力してください。"
+
+#. 0: removed
+#: src/routes/(app)/ship/ship.svelte.ts
+msgid "Removed {0} overseas phone number(s). Japan Post only accepts Japanese numbers.<<<<<<< HEAD"
+msgstr "海外の電話番号を{0}件削除しました。日本郵便は日本の電話番号のみ受け付けます。<<<<<<< HEAD"
+
+#~ msgid "<0/> Overseas number removed — select custom below and enter a Japanese phone number.======="
+#~ msgstr "<0/> 海外の電話番号は削除されました。カスタムを選択し、日本の電話番号を入力してください。======="
