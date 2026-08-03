@@ -47,6 +47,10 @@ export default defineConfig(
 	{
 		// Override or add rule settings here, such as:
 		// 'svelte/button-has-type': 'error'
-		rules: {}
+		rules: {
+			// wuchale directives (e.g. `placeholder={/* @wc-include */ 'foo'}`) scope an
+			// extraction override to a single attribute, so keep those mustaches.
+			'svelte/no-useless-mustaches': ['error', { ignoreIncludesComment: true }]
+		}
 	}
 );

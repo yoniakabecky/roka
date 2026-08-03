@@ -90,7 +90,7 @@
 				</Label>
 				<Input
 					id="sender-address"
-					placeholder="123 Main St"
+					placeholder={/* @wc-include */ '123 Main St'}
 					bind:value={sender.address}
 					oninput={() => saveSender(sender)}
 				/>
