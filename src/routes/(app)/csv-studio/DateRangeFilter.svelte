@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { Button } from '$lib/components/ui/button';
-	import { DatePicker } from '$lib/components/ui/date-picker';
+	import { Button } from '#lib/components/ui/button/index.js';
+	import { DatePicker } from '#lib/components/ui/date-picker/index.js';
 
 	let { from = $bindable(''), to = $bindable('') }: { from?: string; to?: string } = $props();
 

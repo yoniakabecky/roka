@@ -6,10 +6,10 @@
 		parseDate,
 		type DateValue
 	} from '@internationalized/date';
-	import { cn } from '$lib/utils.js';
-	import { Button, type ButtonSize } from '$lib/components/ui/button';
-	import { Calendar } from '$lib/components/ui/calendar';
-	import { Popover, PopoverContent, PopoverTrigger } from '$lib/components/ui/popover';
+	import { cn } from '#lib/utils.js';
+	import { Button, type ButtonSize } from '#lib/components/ui/button/index.js';
+	import { Calendar } from '#lib/components/ui/calendar/index.js';
+	import { Popover, PopoverContent, PopoverTrigger } from '#lib/components/ui/popover/index.js';
 
 	let {
 		value = $bindable(''),

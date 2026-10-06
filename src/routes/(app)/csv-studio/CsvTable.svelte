@@ -8,7 +8,7 @@
 		TableBody,
 		TableRow,
 		TableCell
-	} from '$lib/components/ui/table';
+	} from '#lib/components/ui/table/index.js';
 
 	let {
 		rows,

@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { deflateSync } from 'node:zlib';
-import { woffToBase64Ttf } from '$lib/csv-studio/woff-to-ttf';
+import { woffToBase64Ttf } from '#lib/csv-studio/woff-to-ttf.js';
 
 // ---------------------------------------------------------------------------
 // WOFF1 fixture builder

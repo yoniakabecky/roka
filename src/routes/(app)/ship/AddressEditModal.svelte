@@ -2,23 +2,23 @@
 	import CheckIcon from '@lucide/svelte/icons/circle-check';
 	import TriangleAlertIcon from '@lucide/svelte/icons/triangle-alert';
 	import { untrack } from 'svelte';
-	import type { AddressOverride } from '$lib/ship/yupack';
+	import type { AddressOverride } from '#lib/ship/yupack.js';
 	import {
 		SHOPIFY_FIELDS,
 		shippingAddressLine1,
 		normalizePhone,
 		isForeignPhone
-	} from '$lib/ship/shopify';
+	} from '#lib/ship/shopify.js';
 	import {
 		Dialog,
 		DialogContent,
 		DialogHeader,
 		DialogTitle,
 		DialogFooter
-	} from '$lib/components/ui/dialog';
-	import { Button } from '$lib/components/ui/button';
-	import { Input } from '$lib/components/ui/input';
-	import { Label } from '$lib/components/ui/label';
+	} from '#lib/components/ui/dialog/index.js';
+	import { Button } from '#lib/components/ui/button/index.js';
+	import { Input } from '#lib/components/ui/input/index.js';
+	import { Label } from '#lib/components/ui/label/index.js';
 	import ZipInput from './ZipInput.svelte';
 
 	let {

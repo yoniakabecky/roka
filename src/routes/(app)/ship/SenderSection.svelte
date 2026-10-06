@@ -1,7 +1,7 @@
 <script lang="ts">
-	import { isSenderComplete, saveSender, type SenderProfile } from '$lib/ship/sender';
-	import { Input } from '$lib/components/ui/input';
-	import { Label } from '$lib/components/ui/label';
+	import { isSenderComplete, saveSender, type SenderProfile } from '#lib/ship/sender.js';
+	import { Input } from '#lib/components/ui/input/index.js';
+	import { Label } from '#lib/components/ui/label/index.js';
 	import ChevronDownIcon from '@lucide/svelte/icons/chevron-down';
 	import ChevronUpIcon from '@lucide/svelte/icons/chevron-up';
 	import PackageIcon from '@lucide/svelte/icons/package';

@@ -2,10 +2,10 @@ import Papa from 'papaparse';
 import Encoding from 'encoding-japanese';
 import { SvelteMap } from 'svelte/reactivity';
 import { toast } from 'svelte-sonner';
-import { loadSender, isSenderComplete, type SenderProfile } from '$lib/ship/sender';
-import { deduplicateOrders, isForeignPhone, SHOPIFY_FIELDS } from '$lib/ship/shopify';
-import { mapToYupack, buildYupackCsv, type AddressOverride } from '$lib/ship/yupack';
-import { downloadBlob } from '$lib/download';
+import { loadSender, isSenderComplete, type SenderProfile } from '#lib/ship/sender.js';
+import { deduplicateOrders, isForeignPhone, SHOPIFY_FIELDS } from '#lib/ship/shopify.js';
+import { mapToYupack, buildYupackCsv, type AddressOverride } from '#lib/ship/yupack.js';
+import { downloadBlob } from '#lib/download.js';
 
 export type { AddressOverride };
 

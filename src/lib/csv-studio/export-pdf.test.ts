@@ -13,14 +13,14 @@ vi.mock('jspdf', () => ({
 		this.save = vi.fn();
 	})
 }));
-vi.mock('$lib/csv-studio/woff-to-ttf', () => ({
+vi.mock('#lib/csv-studio/woff-to-ttf.js', () => ({
 	woffToBase64Ttf: vi.fn().mockResolvedValue('mock-font-base64')
 }));
 vi.mock('@fontsource/noto-sans-jp/files/noto-sans-jp-japanese-400-normal.woff?url', () => ({
 	default: 'mock-woff-url'
 }));
 
-import { exportPdf } from '$lib/csv-studio/export-pdf';
+import { exportPdf } from '#lib/csv-studio/export-pdf.js';
 import { jsPDF } from 'jspdf';
 import autoTable from 'jspdf-autotable';
 
@@ -113,13 +113,13 @@ describe('exportPdf — font caching', () => {
 				this.save = vi.fn();
 			})
 		}));
-		vi.doMock('$lib/csv-studio/woff-to-ttf', () => ({
+		vi.doMock('#lib/csv-studio/woff-to-ttf.js', () => ({
 			woffToBase64Ttf: vi.fn().mockResolvedValue('mock-font-base64')
 		}));
 		vi.doMock('@fontsource/noto-sans-jp/files/noto-sans-jp-japanese-400-normal.woff?url', () => ({
 			default: 'mock-woff-url'
 		}));
-		const mod = await import('$lib/csv-studio/export-pdf');
+		const mod = await import('#lib/csv-studio/export-pdf.js');
 		return mod.exportPdf;
 	};
 

@@ -1,7 +1,7 @@
 <script lang="ts">
-	import { formatShopifyDate, isForeignPhone, SHOPIFY_FIELDS } from '$lib/ship/shopify';
-	import { resolveAddress, type AddressOverride } from '$lib/ship/yupack';
-	import { Button } from '$lib/components/ui/button';
+	import { formatShopifyDate, isForeignPhone, SHOPIFY_FIELDS } from '#lib/ship/shopify.js';
+	import { resolveAddress, type AddressOverride } from '#lib/ship/yupack.js';
+	import { Button } from '#lib/components/ui/button/index.js';
 	import DownloadIcon from '@lucide/svelte/icons/download';
 	import Trash2Icon from '@lucide/svelte/icons/trash-2';
 	import PencilIcon from '@lucide/svelte/icons/pencil';

@@ -2,16 +2,16 @@
 	import { loadLocale } from 'wuchale/load-utils';
 	import { resolve } from '$app/paths';
 	import { page } from '$app/state';
-	import { invalidateAll } from '$app/navigation';
-	import { Tabs, TabsList, TabsTrigger } from '$lib/components/ui/tabs/index.js';
+	import { refreshAll } from '$app/navigation';
+	import { Tabs, TabsList, TabsTrigger } from '#lib/components/ui/tabs/index.js';
 	import {
 		NavigationMenuRoot,
 		NavigationMenuList,
 		NavigationMenuItem,
 		NavigationMenuLink
-	} from '$lib/components/ui/navigation-menu/index.js';
-	import HelpPopover from '$lib/components/HelpPopover.svelte';
-	import { navLinks } from '$lib/nav';
+	} from '#lib/components/ui/navigation-menu/index.js';
+	import HelpPopover from '#lib/components/HelpPopover.svelte';
+	import { navLinks } from '#lib/nav.js';
 	import { version } from '../../../package.json';
 	import { locales, type Locale } from '../../locales/data.js';
 
@@ -20,7 +20,7 @@
 	const switchLocale = async (newLocale: Locale) => {
 		localStorage.setItem('locale', newLocale);
 		await loadLocale(newLocale);
-		await invalidateAll();
+		await refreshAll();
 	};
 </script>
 
@@ -38,7 +38,7 @@
 				<NavigationMenuItem>
 					<NavigationMenuLink
 						href={resolve(link.path)}
-						data-active={page.url.pathname.startsWith(link.path) ? true : undefined}
+						data-active={page.url.pathname.startsWith(`/${link.path}`) ? true : undefined}
 						class="px-4"
 					>
 						{link.label}

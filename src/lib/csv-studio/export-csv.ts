@@ -1,5 +1,5 @@
 import Papa from 'papaparse';
-import { downloadBlob } from '$lib/download';
+import { downloadBlob } from '#lib/download.js';
 
 type ShowSaveFilePicker = (options: {
 	suggestedName?: string;

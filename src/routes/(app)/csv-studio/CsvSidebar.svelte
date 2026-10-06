@@ -1,13 +1,13 @@
 <script lang="ts">
 	import FilterIcon from '@lucide/svelte/icons/filter';
 	import { slide } from 'svelte/transition';
-	import { Tooltip, TooltipTrigger, TooltipContent } from '$lib/components/ui/tooltip';
-	import { Checkbox } from '$lib/components/ui/checkbox';
-	import { Button } from '$lib/components/ui/button';
-	import { Combobox } from '$lib/components/ui/combobox';
-	import { Tabs, TabsList, TabsTrigger } from '$lib/components/ui/tabs';
-	import Label from '$lib/components/ui/label/label.svelte';
-	import Input from '$lib/components/ui/input/input.svelte';
+	import { Tooltip, TooltipTrigger, TooltipContent } from '#lib/components/ui/tooltip/index.js';
+	import { Checkbox } from '#lib/components/ui/checkbox/index.js';
+	import { Button } from '#lib/components/ui/button/index.js';
+	import { Combobox } from '#lib/components/ui/combobox/index.js';
+	import { Tabs, TabsList, TabsTrigger } from '#lib/components/ui/tabs/index.js';
+	import Label from '#lib/components/ui/label/label.svelte';
+	import Input from '#lib/components/ui/input/input.svelte';
 	import DateRangeFilter from './DateRangeFilter.svelte';
 	import { useCsvStudio } from './csv-studio.svelte';
 

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onDestroy } from 'svelte';
-	import * as Popover from '$lib/components/ui/popover/index.js';
+	import * as Popover from '#lib/components/ui/popover/index.js';
 	import HelpIcon from '@lucide/svelte/icons/circle-question-mark';
 	import { page } from '$app/state';
 

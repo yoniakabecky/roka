@@ -5,7 +5,7 @@
 	import Trash2Icon from '@lucide/svelte/icons/trash-2';
 	import UploadIcon from '@lucide/svelte/icons/upload';
 	import { toast } from 'svelte-sonner';
-	import { Button } from '$lib/components/ui/button';
+	import { Button } from '#lib/components/ui/button/index.js';
 	import { useCsvStudio, type SavedFilter } from './csv-studio.svelte';
 	import FilterPresetDropdown from './FilterPresetDropdown.svelte';
 	import SaveFilterButton from './SaveFilterButton.svelte';

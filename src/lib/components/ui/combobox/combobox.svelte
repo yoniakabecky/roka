@@ -1,10 +1,10 @@
 <script lang="ts">
 	import ChevronsUpDownIcon from '@lucide/svelte/icons/chevrons-up-down';
-	import * as Popover from '$lib/components/ui/popover';
-	import * as Command from '$lib/components/ui/command';
-	import { Button } from '$lib/components/ui/button';
-	import { Checkbox } from '$lib/components/ui/checkbox';
-	import { cn } from '$lib/utils.js';
+	import * as Popover from '#lib/components/ui/popover/index.js';
+	import * as Command from '#lib/components/ui/command/index.js';
+	import { Button } from '#lib/components/ui/button/index.js';
+	import { Checkbox } from '#lib/components/ui/checkbox/index.js';
+	import { cn } from '#lib/utils.js';
 
 	let {
 		options,

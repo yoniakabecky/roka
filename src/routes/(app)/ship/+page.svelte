@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Dropzone from '$lib/components/Dropzone.svelte';
+	import Dropzone from '#lib/components/Dropzone.svelte';
 	import OrdersView from './OrdersView.svelte';
 	import SenderSection from './SenderSection.svelte';
 	import ShippingSettingsSection from './ShippingSettingsSection.svelte';

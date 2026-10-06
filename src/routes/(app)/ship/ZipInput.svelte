@@ -1,7 +1,7 @@
 <script lang="ts">
-	import { Input } from '$lib/components/ui/input';
+	import { Input } from '#lib/components/ui/input/index.js';
 	import SearchIcon from '@lucide/svelte/icons/search';
-	import { lookupPostalCode } from '$lib/ship/postal-lookup';
+	import { lookupPostalCode } from '#lib/ship/postal-lookup.js';
 
 	type Props = {
 		value: string;

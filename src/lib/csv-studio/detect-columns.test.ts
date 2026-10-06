@@ -5,7 +5,7 @@ import {
 	buildColumnIndex,
 	computeFilteredRows,
 	computeCrossFilteredValues
-} from '$lib/csv-studio/detect-columns';
+} from '#lib/csv-studio/detect-columns.js';
 
 // Shared fixture used across the three new describe blocks
 const rows = [

@@ -1,14 +1,14 @@
 <script lang="ts">
 	import BookmarkIcon from '@lucide/svelte/icons/bookmark';
-	import { Button } from '$lib/components/ui/button';
+	import { Button } from '#lib/components/ui/button/index.js';
 	import {
 		Dialog,
 		DialogContent,
 		DialogHeader,
 		DialogTitle,
 		DialogFooter
-	} from '$lib/components/ui/dialog';
-	import Input from '$lib/components/ui/input/input.svelte';
+	} from '#lib/components/ui/dialog/index.js';
+	import Input from '#lib/components/ui/input/input.svelte';
 	import type { SavedFilter } from './csv-studio.svelte';
 
 	let {

@@ -1,14 +1,14 @@
 import Papa from 'papaparse';
 import { toast } from 'svelte-sonner';
-import { exportCsv } from '$lib/csv-studio/export-csv';
-import { exportPdf } from '$lib/csv-studio/export-pdf';
+import { exportCsv } from '#lib/csv-studio/export-csv.js';
+import { exportPdf } from '#lib/csv-studio/export-pdf.js';
 import {
 	isLikelyDate,
 	buildColumnIndex,
 	computeFilteredRows,
 	computeCrossFilteredValues,
 	type FullIndex
-} from '$lib/csv-studio/detect-columns';
+} from '#lib/csv-studio/detect-columns.js';
 
 const LOCALE_SORT_OPTS: Intl.CollatorOptions = { numeric: true, sensitivity: 'base' };
 const MAX_SAVED_FILTERS = 10;

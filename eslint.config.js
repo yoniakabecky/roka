@@ -6,7 +6,6 @@ import svelte from 'eslint-plugin-svelte';
 import { defineConfig } from 'eslint/config';
 import globals from 'globals';
 import ts from 'typescript-eslint';
-import svelteConfig from './svelte.config.js';
 
 const gitignorePath = path.resolve(import.meta.dirname, '.gitignore');
 
@@ -32,7 +31,7 @@ export default defineConfig(
 				projectService: true,
 				extraFileExtensions: ['.svelte'],
 				parser: ts.parser,
-				svelteConfig
+				svelteConfig: { compilerOptions: { runes: true } }
 			}
 		}
 	},
@@ -41,7 +40,8 @@ export default defineConfig(
 		// would be overwritten.
 		files: ['src/lib/components/ui/**'],
 		rules: {
-			'svelte/no-navigation-without-resolve': 'off'
+			'svelte/no-navigation-without-resolve': 'off',
+			'svelte/prefer-writable-derived': 'off'
 		}
 	},
 	{

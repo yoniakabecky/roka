@@ -1,15 +1,15 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
 	import { ArrowRight } from '@lucide/svelte';
-	import * as Card from '$lib/components/ui/card';
-	import { navLinks, type NavLink } from '$lib/nav';
+	import * as Card from '#lib/components/ui/card/index.js';
+	import { navLinks, type NavLink } from '#lib/nav.js';
 	import { version } from '../../package.json';
 
 	const toolColor = {
-		'/csv-studio': {
+		'csv-studio': {
 			shadowClass: 'group-hover:shadow-primary/50'
 		},
-		'/ship': {
+		ship: {
 			shadowClass: 'group-hover:shadow-secondary/50'
 		}
 	} satisfies Record<NavLink['path'], { shadowClass: string }>;
@@ -39,9 +39,9 @@
 						<Card.Title class="text-lg font-semibold">{link.label}</Card.Title>
 						<Card.Description class="mt-1 text-xs text-muted-foreground">
 							<!-- NOTE: to display translations, write description here -->
-							{#if link.path === '/csv-studio'}
+							{#if link.path === 'csv-studio'}
 								Filter, sort, and export CSV files with ease.
-							{:else if link.path === '/ship'}
+							{:else if link.path === 'ship'}
 								Generate shipping labels from CSV order data.
 							{/if}
 						</Card.Description>

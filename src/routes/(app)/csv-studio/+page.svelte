@@ -1,6 +1,6 @@
 <script lang="ts">
 	import TurtleIcon from '@lucide/svelte/icons/turtle';
-	import Dropzone from '$lib/components/Dropzone.svelte';
+	import Dropzone from '#lib/components/Dropzone.svelte';
 	import { useCsvStudio } from './csv-studio.svelte';
 	import CsvTable from './CsvTable.svelte';
 	import CsvToolbar from './CsvToolbar.svelte';
