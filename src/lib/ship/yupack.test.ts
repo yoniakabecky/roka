@@ -1,7 +1,8 @@
 import { describe, it, expect } from 'vitest';
 import type { SenderProfile } from './sender';
 import { SHOPIFY_FIELDS } from './shopify';
-import { extractSize, mapToYupack, HEADERS } from './yupack';
+import Papa from 'papaparse';
+import { extractSize, mapToYupack, buildYupackCsv, HEADERS } from './yupack';
 
 const SENDER: SenderProfile = {
 	zipcode: '123-4567',
@@ -168,5 +169,24 @@ describe('mapToYupack', () => {
 			SENDER
 		);
 		expect(row['配達時間帯区分']).toBe(code);
+	});
+});
+
+describe('buildYupackCsv', () => {
+	it('writes the header row in the exact Japan Post column order', () => {
+		const csv = buildYupackCsv([]);
+		expect(csv.split('\r\n')[0]).toBe(HEADERS.join(','));
+	});
+
+	it('writes one row per order, in header order', () => {
+		const row = mapToYupack(makeOrder(), SENDER);
+		const parsed = Papa.parse<string[]>(buildYupackCsv([row]), { skipEmptyLines: true });
+		expect(parsed.data).toHaveLength(2);
+		expect(parsed.data[1]).toEqual(HEADERS.map((h) => row[h] ?? ''));
+	});
+
+	it('quotes values that contain commas', () => {
+		const row = mapToYupack(makeOrder({ [SHOPIFY_FIELDS.SHIPPING_ADDRESS1]: '道玄坂1,2' }), SENDER);
+		expect(buildYupackCsv([row])).toContain('"');
 	});
 });
