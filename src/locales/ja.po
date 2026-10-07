@@ -584,3 +584,12 @@ msgstr "東京都渋谷区1-2-3"
 #: src/lib/components/ui/combobox/combobox.svelte
 msgid "{0} selected"
 msgstr "{0}件選択中"
+
+#: src/routes/(app)/ship/ZipInput.svelte
+msgid "Look up address"
+msgstr "住所を検索"
+
+#. 0: col
+#: src/routes/(app)/csv-studio/CsvSidebar.svelte
+msgid "Filter {0}"
+msgstr "{0}を絞り込む"

@@ -55,6 +55,7 @@
 									: 'text-muted-foreground'
 							]}
 							{...props}
+							aria-label="Filter {col}"
 							onclick={() => (studio.colFiltersOpen[col] = !studio.colFiltersOpen[col])}
 						>
 							<FilterIcon class="size-3" />

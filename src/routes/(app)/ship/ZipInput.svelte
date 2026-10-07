@@ -41,6 +41,7 @@
 	/>
 	<button
 		type="button"
+		aria-label="Look up address"
 		onclick={handleLookup}
 		disabled={loading}
 		class={[

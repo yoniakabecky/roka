@@ -584,3 +584,12 @@ msgstr "123 Main St"
 #: src/lib/components/ui/combobox/combobox.svelte
 msgid "{0} selected"
 msgstr "{0} selected"
+
+#: src/routes/(app)/ship/ZipInput.svelte
+msgid "Look up address"
+msgstr "Look up address"
+
+#. 0: col
+#: src/routes/(app)/csv-studio/CsvSidebar.svelte
+msgid "Filter {0}"
+msgstr "Filter {0}"
